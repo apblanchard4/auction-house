@@ -3,50 +3,62 @@
 import React, { useState } from 'react';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { Amplify } from 'aws-amplify';
-import outputs from '../../amplify_outputs.json'; // Your Amplify outputs
+import outputs from '../../amplify_outputs.json';
 import '@aws-amplify/ui-react/styles.css';
 
-// Configure Amplify
 Amplify.configure(outputs);
 
+/* Customize AWS Authenticator input to add role (buyer / seller) field */
+const formFields = {
+  signIn: {
+    username: {
+      label: 'Username:',
+      placeholder: 'Enter your username',
+    },
+    extraFields: {
+      label: 'Role:',
+      placeholder: 'Enter your role (buyer or seller)',
+      isRequired: true,
+      type: 'radio',
+      options: ['buyer', 'seller'],
+    },
+  },
+  signUp: {
+    email: {
+      placeholder: 'Enter your email',
+      label: 'Email:',
+      isRequired: true,
+      order: 1,
+    },
+    username: {
+      placeholder: 'Enter your username',
+      label: 'Username:',
+      isRequired: true,
+      order: 2,
+    }, password: {
+      label: 'Password:',
+      placeholder: 'Enter your Password:',
+      isRequired: false,
+      order: 3,
+    },
+    confirm_password: {
+      label: 'Confirm Password:',
+      order: 4,
+    },
+    extraFields: {
+      label: 'Role:',
+      placeholder: 'Enter your role (buyer or seller)',
+      isRequired: true,
+      order: 5,
+    },
+  }
+}
+
 const App = () => {
-  const [role, setRole] = useState<'buyer' | 'seller'>('buyer');
-
-  const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRole(event.target.value as 'buyer' | 'seller');
-  };
-
   return (
-    <Authenticator>
-      {({ signOut, user }) => (
-        <main style={{ padding: '2rem' }}>
-          <h1>Hello, {user?.username}</h1>
-          <p>Login as:</p>
-          <label>
-            <input
-              type="radio"
-              value="buyer"
-              checked={role === 'buyer'}
-              onChange={handleRoleChange}
-            />
-            Buyer
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="seller"
-              checked={role === 'seller'}
-              onChange={handleRoleChange}
-            />
-            Seller
-          </label>
-          <div style={{ marginTop: '1rem' }}>
-            <p>You are logged in as: {role}</p>
-          </div>
-          <button onClick={signOut}>Sign out</button>
-        </main>
-      )}
-    </Authenticator>
+    <Authenticator formFields={formFields}>
+      <h1>My App Content</h1>
+    </Authenticator >
   );
 };
 
