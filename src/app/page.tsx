@@ -1,24 +1,53 @@
-export default function Home() {
+"use client";
+
+import React, { useState } from 'react';
+import { Authenticator } from '@aws-amplify/ui-react';
+import { Amplify } from 'aws-amplify';
+import outputs from '../../amplify_outputs.json'; // Your Amplify outputs
+import '@aws-amplify/ui-react/styles.css';
+
+// Configure Amplify
+Amplify.configure(outputs);
+
+const App = () => {
+  const [role, setRole] = useState<'buyer' | 'seller'>('buyer');
+
+  const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRole(event.target.value as 'buyer' | 'seller');
+  };
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <title>Assembly Auction House</title>
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Welcome to the Assembly Auction House</h1>
-      <h2 className="text-2xl text-gray-700 mb-4">Log In</h2>
-      <div className="flex flex-col w-full max-w-sm space-y-4">
-        <input
-          type="text"
-          placeholder="Username"
-          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button className="mt-4 p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-          Log In
-        </button>
-      </div>
-    </div>
+    <Authenticator>
+      {({ signOut, user }) => (
+        <main style={{ padding: '2rem' }}>
+          <h1>Hello, {user?.username}</h1>
+          <p>Login as:</p>
+          <label>
+            <input
+              type="radio"
+              value="buyer"
+              checked={role === 'buyer'}
+              onChange={handleRoleChange}
+            />
+            Buyer
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="seller"
+              checked={role === 'seller'}
+              onChange={handleRoleChange}
+            />
+            Seller
+          </label>
+          <div style={{ marginTop: '1rem' }}>
+            <p>You are logged in as: {role}</p>
+          </div>
+          <button onClick={signOut}>Sign out</button>
+        </main>
+      )}
+    </Authenticator>
   );
-}
+};
+
+export default App;
