@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Authenticator } from '@aws-amplify/ui-react';
+import { Authenticator, Radio, RadioGroupField, SelectField } from '@aws-amplify/ui-react';
 import { Amplify } from 'aws-amplify';
 import outputs from '../../amplify_outputs.json';
 import '@aws-amplify/ui-react/styles.css';
@@ -56,9 +56,27 @@ const formFields = {
 
 const App = () => {
   return (
-    <Authenticator formFields={formFields}>
-      <h1>My App Content</h1>
-    </Authenticator >
+    <Authenticator
+                components={{
+                    SignUp: {
+                        FormFields() {
+            
+                        return (
+                            <>
+                                <Authenticator.SignUp.FormFields/>
+                                <RadioGroupField
+                                  legend="User Type"
+                                  name="user_type"
+                                >
+                                  <Radio value="Buyer">Buyer</Radio>
+                                  <Radio value="Seller">Seller</Radio>
+                                </RadioGroupField>
+                            </>
+                        );
+                        },
+                    },
+                    }}>
+                </Authenticator>
   );
 };
 
