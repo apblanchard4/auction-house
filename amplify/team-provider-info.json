@@ -57,9 +57,6 @@
       "api": {
         "loginSellerAccountFunction": {},
         "openSellerAccount": {}
-      },
-      "hosting": {
-        "S3AndCloudFront": {}
       }
     }
   }

@@ -30,7 +30,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/loginSellerAccountFunction-cloudformation-template.json",
         "logicalId": "apiloginSellerAccountFunction"
       },
-      "lastPushTimeStamp": "2024-11-04T02:41:13.901Z",
+      "lastPushTimeStamp": "2024-11-04T19:40:58.669Z",
       "output": {
         "ApiName": "loginSellerAccountFunction",
         "RootUrl": "https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod",
@@ -55,7 +55,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/openSellerAccount-cloudformation-template.json",
         "logicalId": "apiopenSellerAccount"
       },
-      "lastPushTimeStamp": "2024-11-04T02:41:13.904Z",
+      "lastPushTimeStamp": "2024-11-04T19:40:58.671Z",
       "output": {
         "ApiName": "openSellerAccount",
         "RootUrl": "https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod",
@@ -92,7 +92,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/auth/auctionhouseebecb491-cloudformation-template.json",
         "logicalId": "authauctionhouseebecb491"
       },
-      "lastPushTimeStamp": "2024-11-04T02:41:13.908Z",
+      "lastPushTimeStamp": "2024-11-04T19:40:58.672Z",
       "output": {
         "UserPoolId": "us-east-1_l0tPGNdNV",
         "AppClientIDWeb": "6an160j16m6a09hdvo898m9a5h",
@@ -122,7 +122,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
         "logicalId": "functionloginSellerAccount"
       },
-      "lastPushTimeStamp": "2024-11-04T02:41:13.910Z",
+      "lastPushTimeStamp": "2024-11-04T19:40:58.673Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRolee1d44b88-prod",
         "Region": "us-east-1",
@@ -136,9 +136,9 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "lastBuildTimeStamp": "2024-11-04T01:49:39.755Z",
+      "lastBuildTimeStamp": "2024-11-04T14:30:08.517Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2024-11-04T01:49:43.176Z",
+      "lastPackageTimeStamp": "2024-11-04T14:30:23.638Z",
       "distZipFilename": "openSellerAccount-56546e39415733446d59-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
@@ -148,7 +148,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openSellerAccount-cloudformation-template.json",
         "logicalId": "functionopenSellerAccount"
       },
-      "lastPushTimeStamp": "2024-11-04T02:41:13.912Z",
+      "lastPushTimeStamp": "2024-11-04T19:40:58.675Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRolee033d2f7-prod",
         "Region": "us-east-1",
@@ -159,26 +159,5 @@
       "lastPushDirHash": "bRdetHZkrfH756w6wvxVLKJze/E="
     }
   },
-  "hosting": {
-    "S3AndCloudFront": {
-      "service": "S3AndCloudFront",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "CloudFrontSecureURL": "https://d3oai10j4bci8i.cloudfront.net",
-        "S3BucketSecureURL": "https://auctionhouse-20241103213641-hostingbucket-prod.s3.amazonaws.com",
-        "CloudFrontOriginAccessIdentity": "E2MLTD9UE0PG5C",
-        "WebsiteURL": "http://auctionhouse-20241103213641-hostingbucket-prod.s3-website-us-east-1.amazonaws.com",
-        "CloudFrontDistributionID": "E22E7PKLYE0KB9",
-        "Region": "us-east-1",
-        "HostingBucketName": "auctionhouse-20241103213641-hostingbucket-prod",
-        "CloudFrontDomainName": "d3oai10j4bci8i.cloudfront.net"
-      },
-      "lastPushTimeStamp": "2024-11-04T02:41:14.586Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/hosting/template.json",
-        "logicalId": "hostingS3AndCloudFront"
-      },
-      "lastPushDirHash": "jjUssagr8f8jLPRRKWyBDVkRskw="
-    }
-  }
+  "hosting": {}
 }

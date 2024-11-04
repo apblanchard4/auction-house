@@ -316,16 +316,6 @@
         }
       }
     },
-    "hostingS3AndCloudFront": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/hosting/template.json",
-        "Parameters": {
-          "bucketName": "auctionhouse-20241103213641-hostingbucket",
-          "env": "prod"
-        }
-      }
-    },
     "UpdateRolesWithIDPFunction": {
       "DependsOn": [
         "AuthRole",
