@@ -6,14 +6,19 @@ const awsmobile = {
     "aws_cloud_logic_custom": [
         {
             "name": "loginSellerAccountFunction",
-            "endpoint": "https://dspwj3xprf.execute-api.us-east-1.amazonaws.com/dev",
+            "endpoint": "https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "openSellerAccount",
+            "endpoint": "https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
         }
     ],
-    "aws_cognito_identity_pool_id": "us-east-1:5525e92e-05f9-4651-b925-28ec85a429ba",
+    "aws_cognito_identity_pool_id": "us-east-1:56fb1efe-48b3-4e9f-a5de-b2c801ec0705",
     "aws_cognito_region": "us-east-1",
-    "aws_user_pools_id": "us-east-1_VoOcNxOgf",
-    "aws_user_pools_web_client_id": "7ia279pjuch7a0pjk49v5amn3t",
+    "aws_user_pools_id": "us-east-1_l0tPGNdNV",
+    "aws_user_pools_web_client_id": "6an160j16m6a09hdvo898m9a5h",
     "oauth": {},
     "aws_cognito_username_attributes": [],
     "aws_cognito_social_providers": [],
@@ -30,7 +35,10 @@ const awsmobile = {
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
-    ]
+    ],
+    "aws_content_delivery_bucket": "auctionhouse-20241103213641-hostingbucket-prod",
+    "aws_content_delivery_bucket_region": "us-east-1",
+    "aws_content_delivery_url": "https://d3oai10j4bci8i.cloudfront.net"
 };
 
 

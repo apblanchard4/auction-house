@@ -13,6 +13,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "openSellerAccount": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "openSellerAccount"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -46,6 +60,17 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "openSellerAccount": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "hosting": {
+    "S3AndCloudFront": {
+      "providerPlugin": "awscloudformation",
+      "service": "S3AndCloudFront"
     }
   },
   "parameters": {
@@ -62,6 +87,22 @@
         {
           "category": "function",
           "resourceName": "loginSellerAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_openSellerAccount_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "openSellerAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_openSellerAccount_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "openSellerAccount"
         }
       ]
     }
