@@ -1,5 +1,5 @@
 {
-  "Description": "Root Stack for AWS Amplify CLI",
+  "Description": "Root Stack for AWS Amplify Console",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "DeploymentBucketName": {
@@ -202,7 +202,7 @@
     "apiloginSellerAccountFunction": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-dev-cf976-deployment/amplify-cfn-templates/api/loginSellerAccountFunction-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/loginSellerAccountFunction-cloudformation-template.json",
         "Parameters": {
           "functionloginSellerAccountName": {
             "Fn::GetAtt": [
@@ -216,14 +216,35 @@
               "Outputs.Arn"
             ]
           },
-          "env": "dev"
+          "env": "prod"
+        }
+      }
+    },
+    "apiopenSellerAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/openSellerAccount-cloudformation-template.json",
+        "Parameters": {
+          "functionopenSellerAccountName": {
+            "Fn::GetAtt": [
+              "functionopenSellerAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionopenSellerAccountArn": {
+            "Fn::GetAtt": [
+              "functionopenSellerAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
         }
       }
     },
     "authauctionhouseebecb491": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-dev-cf976-deployment/amplify-cfn-templates/auth/auctionhouseebecb491-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/auth/auctionhouseebecb491-cloudformation-template.json",
         "Parameters": {
           "identityPoolName": "auctionhouseebecb491_identitypool_ebecb491",
           "allowUnauthenticatedIdentities": true,
@@ -269,18 +290,39 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "env": "dev"
+          "env": "prod"
         }
       }
     },
     "functionloginSellerAccount": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-dev-cf976-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-auctionhouse-dev-cf976-deployment",
-          "s3Key": "amplify-builds/loginSellerAccount-506c2b734d587739446c-build.zip",
-          "env": "dev"
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/loginSellerAccount-62304d517a683731414d-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionopenSellerAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openSellerAccount-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/openSellerAccount-56546e39415733446d59-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "hostingS3AndCloudFront": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/hosting/template.json",
+        "Parameters": {
+          "bucketName": "auctionhouse-20241103213641-hostingbucket",
+          "env": "prod"
         }
       }
     },
