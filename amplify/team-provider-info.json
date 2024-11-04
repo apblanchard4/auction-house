@@ -47,7 +47,7 @@
       "function": {
         "loginSellerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginSellerAccount-735836575252545a5955-build.zip"
+          "s3Key": "amplify-builds/loginSellerAccount-54457271694639795555-build.zip"
         },
         "openSellerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",

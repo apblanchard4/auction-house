@@ -32,19 +32,19 @@ const App = () => {
           throw new Error('Username and password are required');
         }
       }
-      const endpointBeginning = 'https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod/';
-      const sellerSignUpEndpoint = 'openSellerAccount';
-      const buyerSignUpEndpoint = ''; // TODO (AB): Add buyer sign up endpoint
-      const sellerLogInEndpoint = 'loginSellerAccount';
+      const sellerSignUpEndpoint = 'https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod/openSellerAccount';
 
-      let endpoint = endpointBeginning;
+      const buyerSignUpEndpoint = ''; // TODO (AB): Add buyer sign up endpoint
+      const sellerLogInEndpoint = 'https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod/loginSellerAccount';
+
+      let endpoint = '';
       let body;
 
       if (isSignUp) {
-        endpoint += userType === 'Buyer' ? buyerSignUpEndpoint : sellerSignUpEndpoint;
+        endpoint = userType === 'Buyer' ? buyerSignUpEndpoint : sellerSignUpEndpoint;
         body = JSON.stringify({ username, password, email });
       } else {
-        endpoint += userType === 'Buyer' ? buyerSignUpEndpoint : sellerLogInEndpoint;
+        endpoint = userType === 'Buyer' ? buyerSignUpEndpoint : sellerLogInEndpoint;
         body = JSON.stringify({ username, password });
       }
 

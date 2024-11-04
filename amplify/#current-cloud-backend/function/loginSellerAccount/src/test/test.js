@@ -1,5 +1,5 @@
 const lambdaFunction = require('../index.js');
-
+require('dotenv').config();
 const event = {
     body: JSON.stringify({
         username: 'ab',
