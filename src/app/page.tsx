@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Radio, RadioGroupField, Button } from '@aws-amplify/ui-react';
 import { Amplify } from 'aws-amplify';
 import outputs from '../../amplify_outputs.json';
@@ -10,13 +10,10 @@ Amplify.configure(outputs);
 
 const App = () => {
   const [userType, setUserType] = useState('Buyer');
-  const [isSignUp, setIsSignUp] = useState(false); // First tab seen will be log in
+  const [isSignUp, setIsSignUp] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-
-  useEffect(() => {
-  }, []);
 
   const handleUserTypeChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserType(event.target.value);
@@ -35,23 +32,20 @@ const App = () => {
           throw new Error('Username and password are required');
         }
       }
-
-      const sellerSignUpEndpoint = 'https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod/openSellerAccount';
+      const endpointBeginning = 'https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod/';
+      const sellerSignUpEndpoint = 'openSellerAccount';
       const buyerSignUpEndpoint = ''; // TODO (AB): Add buyer sign up endpoint
-      // TODO (AB): Add log in endpoints
+      const sellerLogInEndpoint = 'loginSellerAccount';
 
-      let endpoint = '';
+      let endpoint = endpointBeginning;
       let body;
 
       if (isSignUp) {
-        if (userType === 'Buyer') {
-          endpoint = buyerSignUpEndpoint;
-        } else {
-          endpoint = sellerSignUpEndpoint;
-        }
-        body = JSON.stringify({ username, password, email }); // Cognito requires email for sign up
+        endpoint += userType === 'Buyer' ? buyerSignUpEndpoint : sellerSignUpEndpoint;
+        body = JSON.stringify({ username, password, email });
       } else {
-        // TODO (AB): Add full sign in logic
+        endpoint += userType === 'Buyer' ? buyerSignUpEndpoint : sellerLogInEndpoint;
+        body = JSON.stringify({ username, password });
       }
 
       const response = await fetch(endpoint, {
@@ -70,7 +64,6 @@ const App = () => {
       console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully:`, result);
       alert(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
 
-      // Reset form fields
       setUsername('');
       setPassword('');
       setEmail('');
@@ -84,81 +77,37 @@ const App = () => {
     }
   };
 
-  const styles: { [key: string]: React.CSSProperties } = {
-    container: {
-      maxWidth: '500px',
-      margin: '0 auto',
-      padding: '30px',
-      border: '1px solid #ccc',
-      borderRadius: '8px',
-      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-      textAlign: 'center',
-      backgroundColor: '#fff',
-    },
-    button: {
-      flex: 1,
-      padding: '15px',
-      border: 'none',
-      borderRadius: '8px 8px 0 0',
-      cursor: 'pointer',
-      transition: 'background-color 0.3s ease',
-      fontSize: '16px',
-      fontWeight: 'bold',
-    },
-    loginButton: {
-      backgroundColor: isSignUp ? '#f0f0f0' : '#007bff',
-      color: isSignUp ? '#000' : '#fff',
-    },
-    signupButton: {
-      backgroundColor: isSignUp ? '#007bff' : '#f0f0f0',
-      color: isSignUp ? '#fff' : '#000',
-    },
-    input: {
-      display: 'block',
-      width: '100%',
-      padding: '15px',
-      margin: '10px 0',
-      border: '1px solid #ccc',
-      borderRadius: '5px',
-      fontSize: '16px',
-    },
-    title: {
-      fontSize: '28px',
-      marginBottom: '20px',
-    },
-    tabContainer: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '20px',
-    },
-  };
-
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>{isSignUp ? 'Sign Up' : 'Log In'}</h1>
-      <div style={styles.container}>
+    <div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg mt-10">
+      <h1 className="text-3xl font-semibold text-center mb-8">
+        {isSignUp ? 'Sign Up' : 'Log In'}
+      </h1>
+
+      <div className="flex justify-around mb-6">
         <button
-          style={{ ...styles.button, ...styles.loginButton }}
           onClick={() => setIsSignUp(false)}
+          className={`px-4 py-2 font-bold text-lg w-1/2 rounded-tl-lg border border-r-0 transition-colors duration-200 ${!isSignUp ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'
+            }`}
         >
           Log In
         </button>
         <button
-          style={{ ...styles.button, ...styles.signupButton }}
           onClick={() => setIsSignUp(true)}
+          className={`px-4 py-2 font-bold text-lg w-1/2 rounded-tr-lg border transition-colors duration-200 ${isSignUp ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'
+            }`}
         >
           Sign Up
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          style={styles.input}
+          className="w-full p-3 border rounded-lg focus:outline-none focus:border-blue-500"
         />
         <input
           type="password"
@@ -166,7 +115,7 @@ const App = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={styles.input}
+          className="w-full p-3 border rounded-lg focus:outline-none focus:border-blue-500"
         />
         {isSignUp && (
           <input
@@ -175,21 +124,24 @@ const App = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={styles.input}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:border-blue-500"
           />
         )}
+
         <RadioGroupField
           legend="User Type"
           name="user_type"
           value={userType}
           onChange={handleUserTypeChange}
+          className="text-sm text-gray-700"
         >
           <Radio value="Buyer">Buyer</Radio>
           <Radio value="Seller">Seller</Radio>
         </RadioGroupField>
+
         <Button
           type="submit"
-          style={styles.button}
+          className="w-full py-3 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200"
         >
           {isSignUp ? 'Sign Up' : 'Log In'}
         </Button>

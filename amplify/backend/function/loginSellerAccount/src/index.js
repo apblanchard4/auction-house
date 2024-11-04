@@ -20,7 +20,7 @@ exports.handler = async (event) => {
 
         // Query seller by username
         const [rows] = await connection.execute(
-            'SELECT password FROM sellers WHERE username = ?',
+            'SELECT password FROM Seller WHERE username = ?',
             [username]
         );
 

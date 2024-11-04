@@ -2,13 +2,12 @@ const lambdaFunction = require('../index.js');
 
 const event = {
     body: JSON.stringify({
-        username: 'testUser',
-        password: 'testPassword',
-        email: 'email.com'
+        username: 'ab',
+        password: 'pass123',
     }),
 };
 
-
+// Invoke the Lambda function
 lambdaFunction.handler(event).then(response => {
     console.log('Response:', response);
 }).catch(error => {
