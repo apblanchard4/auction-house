@@ -368,7 +368,7 @@
         "Name": "loginSellerAccountFunction"
       }
     },
-    "loginSellerAccountFunctionDefault4XXResponsee49977ca": {
+    "loginSellerAccountFunctionDefault4XXResponse336b9d12": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -383,7 +383,7 @@
         }
       }
     },
-    "loginSellerAccountFunctionDefault5XXResponsee49977ca": {
+    "loginSellerAccountFunctionDefault5XXResponse336b9d12": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -398,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWloginSellerAccountFunction737a9b9b": {
+    "DeploymentAPIGWloginSellerAccountFunction8dba1e91": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -416,8 +416,8 @@
         }
       },
       "DependsOn": [
-        "loginSellerAccountFunctionDefault4XXResponsee49977ca",
-        "loginSellerAccountFunctionDefault5XXResponsee49977ca"
+        "loginSellerAccountFunctionDefault4XXResponse336b9d12",
+        "loginSellerAccountFunctionDefault5XXResponse336b9d12"
       ]
     }
   }

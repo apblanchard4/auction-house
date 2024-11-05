@@ -33,9 +33,9 @@ const App = () => {
         }
       }
       const sellerSignUpEndpoint = 'https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod/openSellerAccount';
-
-      const buyerSignUpEndpoint = ''; // TODO (AB): Add buyer sign up endpoint
+      const buyerSignUpEndpoint = 'https://zenehpt22h.execute-api.us-east-1.amazonaws.com/prod/openBuyerAccount';
       const sellerLogInEndpoint = 'https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod/loginSellerAccount';
+      const buyerLogInEndpoint = 'https://5e1oyazlof.execute-api.us-east-1.amazonaws.com/prod/loginBuyerAccount';
 
       let endpoint = '';
       let body;
@@ -44,7 +44,7 @@ const App = () => {
         endpoint = userType === 'Buyer' ? buyerSignUpEndpoint : sellerSignUpEndpoint;
         body = JSON.stringify({ username, password, email });
       } else {
-        endpoint = userType === 'Buyer' ? buyerSignUpEndpoint : sellerLogInEndpoint;
+        endpoint = userType === 'Buyer' ? buyerLogInEndpoint : sellerLogInEndpoint;
         body = JSON.stringify({ username, password });
       }
 

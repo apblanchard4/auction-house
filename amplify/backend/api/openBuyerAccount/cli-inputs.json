@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/openBuyerAccount": {
+      "name": "/openBuyerAccount",
+      "lambdaFunction": "openBuyerAccount",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
