@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Radio, RadioGroupField, Button } from '@aws-amplify/ui-react';
 import { Amplify } from 'aws-amplify';
-import outputs from '../../amplify_outputs.json';
+import outputs from '../aws-exports';
 import '@aws-amplify/ui-react/styles.css';
 
 Amplify.configure(outputs);
