@@ -241,6 +241,48 @@
         }
       }
     },
+    "apiloginBuyerAccountFunction": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/loginBuyerAccountFunction-cloudformation-template.json",
+        "Parameters": {
+          "functionloginBuyerAccountName": {
+            "Fn::GetAtt": [
+              "functionloginBuyerAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionloginBuyerAccountArn": {
+            "Fn::GetAtt": [
+              "functionloginBuyerAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apiopenBuyerAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/openBuyerAccount-cloudformation-template.json",
+        "Parameters": {
+          "functionopenBuyerAccountName": {
+            "Fn::GetAtt": [
+              "functionopenBuyerAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionopenBuyerAccountArn": {
+            "Fn::GetAtt": [
+              "functionopenBuyerAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
     "authauctionhouseebecb491": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -312,6 +354,28 @@
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/openSellerAccount-56546e39415733446d59-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionloginBuyerAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginBuyerAccount-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/loginBuyerAccount-4372516e484a34446c50-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionopenBuyerAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openBuyerAccount-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/openBuyerAccount-7a436c75413436716a2b-build.zip",
           "env": "prod"
         }
       }

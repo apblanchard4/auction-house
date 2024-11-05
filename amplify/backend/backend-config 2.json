@@ -1,19 +1,5 @@
 {
   "api": {
-    "loginBuyerAccountFunction": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "loginBuyerAccount"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "loginSellerAccountFunction": {
       "dependsOn": [
         {
@@ -23,20 +9,6 @@
           ],
           "category": "function",
           "resourceName": "loginSellerAccount"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
-    "openBuyerAccount": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "openBuyerAccount"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -84,17 +56,7 @@
     }
   },
   "function": {
-    "loginBuyerAccount": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "loginSellerAccount": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "openBuyerAccount": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -107,22 +69,6 @@
   },
   "hosting": {},
   "parameters": {
-    "AMPLIFY_function_loginBuyerAccount_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "loginBuyerAccount"
-        }
-      ]
-    },
-    "AMPLIFY_function_loginBuyerAccount_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "loginBuyerAccount"
-        }
-      ]
-    },
     "AMPLIFY_function_loginSellerAccount_deploymentBucketName": {
       "usedBy": [
         {
@@ -136,22 +82,6 @@
         {
           "category": "function",
           "resourceName": "loginSellerAccount"
-        }
-      ]
-    },
-    "AMPLIFY_function_openBuyerAccount_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "openBuyerAccount"
-        }
-      ]
-    },
-    "AMPLIFY_function_openBuyerAccount_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "openBuyerAccount"
         }
       ]
     },

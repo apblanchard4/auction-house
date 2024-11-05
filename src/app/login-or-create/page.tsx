@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import { Radio, RadioGroupField, Button } from '@aws-amplify/ui-react';
 import { Amplify } from 'aws-amplify';
-import outputs from '../aws-exports';
+import outputs from '../../aws-exports';
+import { useRouter } from 'next/router';
 import '@aws-amplify/ui-react/styles.css';
 
 Amplify.configure(outputs);
 
 const App = () => {
+  const router = useRouter();
   const [userType, setUserType] = useState('Buyer');
   const [isSignUp, setIsSignUp] = useState(false);
   const [username, setUsername] = useState('');
@@ -63,6 +65,11 @@ const App = () => {
       const result = await response.json();
       console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully:`, result);
       alert(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
+
+      //route to sellerReviewItems page if seller
+      if(!isSignUp && userType === 'Seller') {
+        router.push('/sellerReviewItems');
+      }
 
       setUsername('');
       setPassword('');
