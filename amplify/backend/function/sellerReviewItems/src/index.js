@@ -1,12 +1,7 @@
 const AWS = require('aws-sdk');
-<<<<<<< HEAD
 const mysql = require('mysql2/promise');
-=======
 const { stat } = require('fs');
 const mysql = require('mysql2/promise');
-require('dotenv').config(); //TODO REMOVE AT END!!!!
->>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
-
 AWS.config.update({ region: 'us-east-1' });
 
 /**
