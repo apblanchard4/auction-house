@@ -5,11 +5,17 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
+<<<<<<< HEAD
     "aws-sdk": "^2.1691.0",
     "aws-serverless-express": "^3.3.5",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "mysql2": "^3.11.3"
+=======
+    "aws-serverless-express": "^3.3.5",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+>>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92"

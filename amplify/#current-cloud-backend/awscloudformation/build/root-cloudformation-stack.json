@@ -334,6 +334,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "apisellerReviewItems": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -376,6 +377,8 @@
         }
       }
     },
+=======
+>>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
     "authauctionhouseebecb491": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -473,6 +476,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "functionsellerReviewItems": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -495,6 +499,8 @@
         }
       }
     },
+=======
+>>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
     "UpdateRolesWithIDPFunction": {
       "DependsOn": [
         "AuthRole",

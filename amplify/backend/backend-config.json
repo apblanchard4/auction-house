@@ -69,6 +69,7 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+<<<<<<< HEAD
     },
     "sellerUnpublishItem": {
       "dependsOn": [
@@ -83,6 +84,8 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+=======
+>>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
     }
   },
   "auth": {
@@ -136,11 +139,14 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+<<<<<<< HEAD
     },
     "sellerUnpublishItem": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+=======
+>>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
     }
   },
   "hosting": {},
