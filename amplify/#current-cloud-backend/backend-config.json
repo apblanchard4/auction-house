@@ -55,6 +55,34 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "sellerReviewItems": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerReviewItems"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "sellerUnpublishItem": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerUnpublishItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -100,6 +128,16 @@
       "service": "Lambda"
     },
     "openSellerAccount": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sellerReviewItems": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sellerUnpublishItem": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -168,6 +206,38 @@
         {
           "category": "function",
           "resourceName": "openSellerAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerReviewItems_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerReviewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerReviewItems_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerReviewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerUnpublishItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerUnpublishItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerUnpublishItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerUnpublishItem"
         }
       ]
     }

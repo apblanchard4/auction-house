@@ -199,6 +199,57 @@
         }
       }
     },
+    "APIGatewayAuthStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+        "Parameters": {
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "env": "prod",
+          "loginSellerAccountFunction": {
+            "Fn::GetAtt": [
+              "apiloginSellerAccountFunction",
+              "Outputs.ApiId"
+            ]
+          },
+          "openSellerAccount": {
+            "Fn::GetAtt": [
+              "apiopenSellerAccount",
+              "Outputs.ApiId"
+            ]
+          },
+          "loginBuyerAccountFunction": {
+            "Fn::GetAtt": [
+              "apiloginBuyerAccountFunction",
+              "Outputs.ApiId"
+            ]
+          },
+          "openBuyerAccount": {
+            "Fn::GetAtt": [
+              "apiopenBuyerAccount",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerReviewItems": {
+            "Fn::GetAtt": [
+              "apisellerReviewItems",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerUnpublishItem": {
+            "Fn::GetAtt": [
+              "apisellerUnpublishItem",
+              "Outputs.ApiId"
+            ]
+          }
+        }
+      }
+    },
     "apiloginSellerAccountFunction": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -276,6 +327,48 @@
           "functionopenBuyerAccountArn": {
             "Fn::GetAtt": [
               "functionopenBuyerAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerReviewItems": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerReviewItems-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerReviewItemsName": {
+            "Fn::GetAtt": [
+              "functionsellerReviewItems",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerReviewItemsArn": {
+            "Fn::GetAtt": [
+              "functionsellerReviewItems",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerUnpublishItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerUnpublishItem-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerUnpublishItemName": {
+            "Fn::GetAtt": [
+              "functionsellerUnpublishItem",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerUnpublishItemArn": {
+            "Fn::GetAtt": [
+              "functionsellerUnpublishItem",
               "Outputs.Arn"
             ]
           },
@@ -376,6 +469,28 @@
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/openBuyerAccount-7a436c75413436716a2b-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerReviewItems": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerReviewItems-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerReviewItems-3857556446454c6f3251-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerUnpublishItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerUnpublishItem-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerUnpublishItem-4f4d7163635241787264-build.zip",
           "env": "prod"
         }
       }

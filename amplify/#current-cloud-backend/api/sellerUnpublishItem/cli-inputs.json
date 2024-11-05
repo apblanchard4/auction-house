@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/seller/unpublishItem": {
+      "name": "/seller/unpublishItem",
+      "lambdaFunction": "sellerUnpublishItem",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}
