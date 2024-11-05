@@ -52,7 +52,8 @@
         "openSellerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/openSellerAccount-56546e39415733446d59-build.zip"
-        }
+        },
+        "sellerReviewItems": {}
       },
       "api": {
         "loginSellerAccountFunction": {},
