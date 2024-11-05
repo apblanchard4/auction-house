@@ -1,6 +1,16 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
+    "loginBuyerAccountFunction": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "loginSellerAccountFunction": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "openBuyerAccount": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
@@ -23,7 +33,21 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "loginBuyerAccount": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "loginSellerAccount": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "openBuyerAccount": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

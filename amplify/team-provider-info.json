@@ -52,11 +52,21 @@
         "openSellerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/openSellerAccount-56546e39415733446d59-build.zip"
+        },
+        "loginBuyerAccount": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/loginBuyerAccount-4372516e484a34446c50-build.zip"
+        },
+        "openBuyerAccount": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/openBuyerAccount-7a436c75413436716a2b-build.zip"
         }
       },
       "api": {
         "loginSellerAccountFunction": {},
-        "openSellerAccount": {}
+        "openSellerAccount": {},
+        "loginBuyerAccountFunction": {},
+        "openBuyerAccount": {}
       }
     }
   },
