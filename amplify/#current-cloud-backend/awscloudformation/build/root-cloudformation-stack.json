@@ -300,7 +300,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginSellerAccount-62304d517a683731414d-build.zip",
+          "s3Key": "amplify-builds/loginSellerAccount-54457271694639795555-build.zip",
           "env": "prod"
         }
       }
@@ -312,16 +312,6 @@
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/openSellerAccount-56546e39415733446d59-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "hostingS3AndCloudFront": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/hosting/template.json",
-        "Parameters": {
-          "bucketName": "auctionhouse-20241103213641-hostingbucket",
           "env": "prod"
         }
       }

@@ -1,5 +1,5 @@
 {
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.13.0\",\"stackType\":\"api-API Gateway\",\"metadata\":{\"whyContinueWithGen1\":\"Prefer not to answer\"}}",
+  "Description": "API Gateway Resource for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionopenSellerAccountName": {
@@ -368,7 +368,7 @@
         "Name": "openSellerAccount"
       }
     },
-    "openSellerAccountDefault4XXResponsefb31e150": {
+    "openSellerAccountDefault4XXResponsee3f0c7e3": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -383,7 +383,7 @@
         }
       }
     },
-    "openSellerAccountDefault5XXResponsefb31e150": {
+    "openSellerAccountDefault5XXResponsee3f0c7e3": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -398,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWopenSellerAccountf569786d": {
+    "DeploymentAPIGWopenSellerAccount676bdd4f": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -416,8 +416,8 @@
         }
       },
       "DependsOn": [
-        "openSellerAccountDefault4XXResponsefb31e150",
-        "openSellerAccountDefault5XXResponsefb31e150"
+        "openSellerAccountDefault4XXResponsee3f0c7e3",
+        "openSellerAccountDefault5XXResponsee3f0c7e3"
       ]
     }
   }
