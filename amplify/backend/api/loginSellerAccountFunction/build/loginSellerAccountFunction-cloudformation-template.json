@@ -1,5 +1,5 @@
 {
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.13.0\",\"stackType\":\"api-API Gateway\",\"metadata\":{\"whyContinueWithGen1\":\"\"}}",
+  "Description": "API Gateway Resource for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionloginSellerAccountName": {
@@ -368,12 +368,7 @@
         "Name": "loginSellerAccountFunction"
       }
     },
-<<<<<<< HEAD
-    "loginSellerAccountFunctionDefault4XXResponseee495c42": {
-=======
-    "loginSellerAccountFunctionDefault4XXResponsee49977ca": {
-    "loginSellerAccountFunctionDefault4XXResponsee7ceff82": {
->>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
+    "loginSellerAccountFunctionDefault4XXResponsedc995173": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -388,7 +383,7 @@
         }
       }
     },
-    "loginSellerAccountFunctionDefault5XXResponseee495c42": {
+    "loginSellerAccountFunctionDefault5XXResponsedc995173": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -403,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWloginSellerAccountFunction749199dd": {
+    "DeploymentAPIGWloginSellerAccountFunctionc9efcbff": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -421,13 +416,8 @@
         }
       },
       "DependsOn": [
-<<<<<<< HEAD
-        "loginSellerAccountFunctionDefault4XXResponseee495c42",
-        "loginSellerAccountFunctionDefault5XXResponseee495c42"
-=======
-        "loginSellerAccountFunctionDefault4XXResponsee7ceff82",
-        "loginSellerAccountFunctionDefault5XXResponsee7ceff82"
->>>>>>> eb1e1e8314d06ca127e3316338bdb5aa0d57afd1
+        "loginSellerAccountFunctionDefault4XXResponsedc995173",
+        "loginSellerAccountFunctionDefault5XXResponsedc995173"
       ]
     }
   }

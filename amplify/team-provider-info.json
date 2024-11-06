@@ -52,7 +52,7 @@
         },
         "openSellerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/openSellerAccount-56546e39415733446d59-build.zip"
+          "s3Key": "amplify-builds/openSellerAccount-73474766483675455530-build.zip"
         },
         "loginBuyerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
@@ -64,11 +64,11 @@
         },
         "sellerReviewItems": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerReviewItems-3857556446454c6f3251-build.zip"
+          "s3Key": "amplify-builds/sellerReviewItems-34473241506630716a72-build.zip"
         },
         "sellerUnpublishItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerUnpublishItem-4f4d7163635241787264-build.zip"
+          "s3Key": "amplify-builds/sellerUnpublishItem-30785262727857756d50-build.zip"
         }
       },
       "api": {
