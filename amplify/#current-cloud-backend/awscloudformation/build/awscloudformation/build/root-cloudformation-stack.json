@@ -430,6 +430,48 @@
         }
       }
     },
+    "apiloginBuyerAccountFunction": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/loginBuyerAccountFunction-cloudformation-template.json",
+        "Parameters": {
+          "functionloginBuyerAccountName": {
+            "Fn::GetAtt": [
+              "functionloginBuyerAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionloginBuyerAccountArn": {
+            "Fn::GetAtt": [
+              "functionloginBuyerAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apiopenBuyerAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/openBuyerAccount-cloudformation-template.json",
+        "Parameters": {
+          "functionopenBuyerAccountName": {
+            "Fn::GetAtt": [
+              "functionopenBuyerAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionopenBuyerAccountArn": {
+            "Fn::GetAtt": [
+              "functionopenBuyerAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
     "authauctionhouseebecb491": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {

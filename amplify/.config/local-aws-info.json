@@ -8,5 +8,8 @@
     "configLevel": "project",
     "useProfile": true,
     "profileName": "Amanda"
+  },
+  "test": {
+    "configLevel": "amplifyAdmin"
   }
 }

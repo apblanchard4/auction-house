@@ -77,10 +77,42 @@
         "sellerpublishItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/sellerpublishItem-4831576568702b39337a-build.zip"
+        },
+        "loginBuyerAccount": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/loginBuyerAccount-4372516e484a34446c50-build.zip"
+        },
+        "openBuyerAccount": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/openBuyerAccount-7a436c75413436716a2b-build.zip"
         }
       },
       "api": {
         "loginSellerAccountFunction": {},
+        "openSellerAccount": {},
+        "loginBuyerAccountFunction": {},
+        "openBuyerAccount": {}
+      }
+    }
+  },
+  "test": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-auctionhouse-test-53660-authRole",
+      "UnauthRoleArn": "arn:aws:iam::345594594475:role/amplify-auctionhouse-test-53660-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::345594594475:role/amplify-auctionhouse-test-53660-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-auctionhouse-test-53660-deployment",
+      "UnauthRoleName": "amplify-auctionhouse-test-53660-unauthRole",
+      "StackName": "amplify-auctionhouse-test-53660",
+      "StackId": "arn:aws:cloudformation:us-east-1:345594594475:stack/amplify-auctionhouse-test-53660/49a6a780-9aed-11ef-bd42-120c603cce89",
+      "AmplifyAppId": "d1cv4wqep5iomw"
+    },
+    "categories": {
+      "auth": {
+        "auctionhouseebecb491": {}
+      },
+      "function": {
+        "loginSellerAccount": {},
         "openSellerAccount": {},
         "loginBuyerAccountFunction": {},
         "openBuyerAccount": {},
@@ -88,9 +120,6 @@
         "sellerUnpublishItem": {},
         "SellerEditItemFunction": {},
         "SellerPublishItemFunction": {}
-      },
-      "hosting": {
-        "S3AndCloudFront": {}
       }
     }
   }
