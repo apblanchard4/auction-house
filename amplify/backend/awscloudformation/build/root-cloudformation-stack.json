@@ -489,7 +489,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginSellerAccount-54457271694639795555-build.zip",
+          "s3Key": "amplify-builds/loginSellerAccount-72775163704b50665a39-build.zip",
           "env": "prod"
         }
       }
@@ -500,7 +500,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openSellerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/openSellerAccount-73474766483675455530-build.zip",
+          "s3Key": "amplify-builds/openSellerAccount-5974346b6e6e66496639-build.zip",
           "env": "prod"
         }
       }
@@ -511,7 +511,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginBuyerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginBuyerAccount-4372516e484a34446c50-build.zip",
+          "s3Key": "amplify-builds/loginBuyerAccount-5a347679505830493763-build.zip",
           "env": "prod"
         }
       }
@@ -522,7 +522,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openBuyerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/openBuyerAccount-7a436c75413436716a2b-build.zip",
+          "s3Key": "amplify-builds/openBuyerAccount-486177314d6637417674-build.zip",
           "env": "prod"
         }
       }
@@ -533,7 +533,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerReviewItems-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerReviewItems-3857556446454c6f3251-build.zip",
+          "s3Key": "amplify-builds/sellerReviewItems-63537967617a3073345a-build.zip",
           "env": "prod"
         }
       }
@@ -544,7 +544,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerUnpublishItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerUnpublishItem-4f4d7163635241787264-build.zip",
+          "s3Key": "amplify-builds/sellerUnpublishItem-67764666744767355947-build.zip",
           "env": "prod"
         }
       }
@@ -555,7 +555,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellereditItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellereditItem-4a467068385742435770-build.zip",
+          "s3Key": "amplify-builds/sellereditItem-4e586568514257364257-build.zip",
           "env": "prod"
         }
       }
@@ -566,7 +566,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerpublishItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerpublishItem-4831576568702b39337a-build.zip",
+          "s3Key": "amplify-builds/sellerpublishItem-4457516e6843546c3874-build.zip",
           "env": "prod"
         }
       }

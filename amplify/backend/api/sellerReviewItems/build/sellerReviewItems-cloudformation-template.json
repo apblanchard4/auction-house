@@ -378,7 +378,7 @@
         "Name": "sellerReviewItems"
       }
     },
-    "sellerReviewItemsDefault4XXResponse095573d8": {
+    "sellerReviewItemsDefault4XXResponse30fdf34a": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -393,7 +393,7 @@
         }
       }
     },
-    "sellerReviewItemsDefault5XXResponse095573d8": {
+    "sellerReviewItemsDefault5XXResponse30fdf34a": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -408,7 +408,7 @@
         }
       }
     },
-    "DeploymentAPIGWsellerReviewItems8298f77a": {
+    "DeploymentAPIGWsellerReviewItemsa77b8078": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -426,8 +426,8 @@
         }
       },
       "DependsOn": [
-        "sellerReviewItemsDefault4XXResponse095573d8",
-        "sellerReviewItemsDefault5XXResponse095573d8"
+        "sellerReviewItemsDefault4XXResponse30fdf34a",
+        "sellerReviewItemsDefault5XXResponse30fdf34a"
       ]
     }
   }
