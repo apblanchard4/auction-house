@@ -1,0 +1,47 @@
+[
+  {
+    "category": "api",
+    "resourceName": "loginSellerAccountFunction",
+    "service": "API Gateway"
+  },
+  {
+    "category": "api",
+    "resourceName": "openSellerAccount",
+    "service": "API Gateway"
+  },
+  {
+    "category": "api",
+    "resourceName": "loginBuyerAccountFunction",
+    "service": "API Gateway"
+  },
+  {
+    "category": "api",
+    "resourceName": "openBuyerAccount",
+    "service": "API Gateway"
+  },
+  {
+    "category": "auth",
+    "resourceName": "auctionhouseebecb491",
+    "service": "Cognito"
+  },
+  {
+    "category": "function",
+    "resourceName": "loginSellerAccount",
+    "service": "Lambda"
+  },
+  {
+    "category": "function",
+    "resourceName": "openSellerAccount",
+    "service": "Lambda"
+  },
+  {
+    "category": "function",
+    "resourceName": "loginBuyerAccount",
+    "service": "Lambda"
+  },
+  {
+    "category": "function",
+    "resourceName": "openBuyerAccount",
+    "service": "Lambda"
+  }
+]

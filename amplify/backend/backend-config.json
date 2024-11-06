@@ -1,5 +1,47 @@
 {
   "api": {
+    "SellerEditItemFunction": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellereditItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "SellerPublishItemFunction": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerpublishItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "loginBuyerAccountFunction": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "loginBuyerAccount"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "loginSellerAccountFunction": {
       "dependsOn": [
         {
@@ -14,6 +56,20 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "openBuyerAccount": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "openBuyerAccount"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "openSellerAccount": {
       "dependsOn": [
         {
@@ -23,6 +79,34 @@
           ],
           "category": "function",
           "resourceName": "openSellerAccount"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "sellerReviewItems": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerReviewItems"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "sellerUnpublishItem": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerUnpublishItem"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -56,7 +140,17 @@
     }
   },
   "function": {
+    "loginBuyerAccount": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "loginSellerAccount": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "openBuyerAccount": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -65,15 +159,46 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "hosting": {
-    "S3AndCloudFront": {
+    },
+    "sellerReviewItems": {
+      "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "S3AndCloudFront"
+      "service": "Lambda"
+    },
+    "sellerUnpublishItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sellereditItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sellerpublishItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
+  "hosting": {},
   "parameters": {
+    "AMPLIFY_function_loginBuyerAccount_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "loginBuyerAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_loginBuyerAccount_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "loginBuyerAccount"
+        }
+      ]
+    },
     "AMPLIFY_function_loginSellerAccount_deploymentBucketName": {
       "usedBy": [
         {
@@ -90,6 +215,22 @@
         }
       ]
     },
+    "AMPLIFY_function_openBuyerAccount_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "openBuyerAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_openBuyerAccount_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "openBuyerAccount"
+        }
+      ]
+    },
     "AMPLIFY_function_openSellerAccount_deploymentBucketName": {
       "usedBy": [
         {
@@ -103,6 +244,70 @@
         {
           "category": "function",
           "resourceName": "openSellerAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerReviewItems_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerReviewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerReviewItems_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerReviewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerUnpublishItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerUnpublishItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerUnpublishItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerUnpublishItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellereditItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellereditItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellereditItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellereditItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerpublishItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerpublishItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerpublishItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerpublishItem"
         }
       ]
     }
