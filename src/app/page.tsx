@@ -2,11 +2,7 @@
 
 import React, { useState } from 'react';
 import { Radio, RadioGroupField, Button } from '@aws-amplify/ui-react';
-import { Amplify } from 'aws-amplify';
-import outputs from '../../amplify_outputs.json';
 import '@aws-amplify/ui-react/styles.css';
-
-Amplify.configure(outputs);
 
 const App = () => {
   const [userType, setUserType] = useState('Buyer');
@@ -14,6 +10,7 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleUserTypeChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserType(event.target.value);
@@ -21,17 +18,19 @@ const App = () => {
 
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
+    setErrorMessage(''); // Reset previous error message
 
     try {
       if (!username || !password) {
         if (isSignUp && !email) {
-          alert('Username, password, and email are required');
+          setErrorMessage('Username, password, and email are required');
           throw new Error('Username, password, and email are required');
         } else {
-          alert('Username and password are required');
+          setErrorMessage('Username and password are required');
           throw new Error('Username and password are required');
         }
       }
+
       const sellerSignUpEndpoint = 'https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod/openSellerAccount';
       const buyerSignUpEndpoint = 'https://zenehpt22h.execute-api.us-east-1.amazonaws.com/prod/openBuyerAccount';
       const sellerLogInEndpoint = 'https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod/loginSellerAccount';
@@ -41,10 +40,10 @@ const App = () => {
       let body;
 
       if (isSignUp) {
-        endpoint = userType === 'Buyer' ? buyerSignUpEndpoint : sellerSignUpEndpoint;
+        endpoint = userType === 'Seller' ? sellerSignUpEndpoint : buyerSignUpEndpoint;
         body = JSON.stringify({ username, password, email });
       } else {
-        endpoint = userType === 'Buyer' ? buyerLogInEndpoint : sellerLogInEndpoint;
+        endpoint = userType === 'Seller' ? sellerLogInEndpoint : buyerLogInEndpoint;
         body = JSON.stringify({ username, password });
       }
 
@@ -56,14 +55,19 @@ const App = () => {
         body: body,
       });
 
-      if (!response.ok) {
-        throw new Error(isSignUp ? 'Failed to create user' : 'Failed to log in');
+      const responseData = await response.json();
+      console.log('Response:', responseData.body);
+
+      if (responseData.statusCode !== 200) {
+        const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
+        setErrorMessage(message);
+        throw new Error(message);
       }
 
-      const result = await response.json();
-      console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully:`, result);
+      console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully:`);
       alert(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
 
+      // Clear form fields
       setUsername('');
       setPassword('');
       setEmail('');
@@ -138,6 +142,10 @@ const App = () => {
           <Radio value="Buyer">Buyer</Radio>
           <Radio value="Seller">Seller</Radio>
         </RadioGroupField>
+
+        {errorMessage && (
+          <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+        )}
 
         <Button
           type="submit"

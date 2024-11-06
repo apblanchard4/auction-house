@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/seller/reviewItems": {
+      "name": "/seller/reviewItems",
+      "lambdaFunction": "sellerReviewItems",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

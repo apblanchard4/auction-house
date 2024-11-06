@@ -19,7 +19,7 @@
     "bootstrap": "^5.2.1",
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.11.3",
+    "mysql2": "^3.11.4",
     "next": "^15.0.1",
     "react": "^18",
     "react-dom": "^18",
