@@ -5,6 +5,7 @@ import { Radio, RadioGroupField, Button } from '@aws-amplify/ui-react';
 import { Amplify } from 'aws-amplify';
 import outputs from '../../amplify_outputs.json';
 import '@aws-amplify/ui-react/styles.css';
+import { useRouter } from 'next/navigation';
 
 Amplify.configure(outputs);
 
@@ -14,6 +15,7 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const handleUserTypeChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserType(event.target.value);
@@ -69,6 +71,11 @@ const App = () => {
       setUsername('');
       setPassword('');
       setEmail('');
+
+      if (userType === 'Seller'){
+        router.push('/seller/reviewItems');
+      }
+
     } catch (error) {
       console.error('Error:', error);
       if (error instanceof Error) {
