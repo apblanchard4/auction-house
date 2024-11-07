@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import { Radio, RadioGroupField, Button } from '@aws-amplify/ui-react';
-import { Amplify } from 'aws-amplify';
-import outputs from '../../amplify_outputs.json';
 import '@aws-amplify/ui-react/styles.css';
 import { useRouter } from 'next/navigation';
 import { Amplify } from 'aws-amplify';
