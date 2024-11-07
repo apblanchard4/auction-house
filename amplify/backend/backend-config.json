@@ -28,6 +28,34 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "addItem": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "addItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "customerReviewItems": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "customerReviewItems"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "loginBuyerAccountFunction": {
       "dependsOn": [
         {
@@ -111,6 +139,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "sellerremoveInactiveItem": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerremoveInactiveItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -140,6 +182,16 @@
     }
   },
   "function": {
+    "addItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "customerReviewItems": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "loginBuyerAccount": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -179,10 +231,47 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "sellerremoveInactiveItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "hosting": {},
   "parameters": {
+    "AMPLIFY_function_addItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_addItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_customerReviewItems_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "customerReviewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_customerReviewItems_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "customerReviewItems"
+        }
+      ]
+    },
     "AMPLIFY_function_loginBuyerAccount_deploymentBucketName": {
       "usedBy": [
         {
@@ -308,6 +397,22 @@
         {
           "category": "function",
           "resourceName": "sellerpublishItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerremoveInactiveItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerremoveInactiveItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerremoveInactiveItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerremoveInactiveItem"
         }
       ]
     }
