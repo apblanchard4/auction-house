@@ -40,3 +40,13 @@ yarn.lock
 .amplify
 amplify_outputs
 amplifyconfiguration*
+aws-exports.js
+awsconfiguration.json
+amplify/.config/local-*
+amplify/.config/awsmobilejs/*
+amplify/.config/local-env-info.json
+amplify/backend/amplify-meta.json
+amplify/backend/awscloudformation/*
+amplify/#current-cloud-backend
+amplify/backend/.temp
+amplify/.temp

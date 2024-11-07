@@ -75,7 +75,7 @@
         },
         "sellereditItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellereditItem-4e586568514257364257-build.zip"
+          "s3Key": "amplify-builds/sellereditItem-41546f2b663662775854-build.zip"
         },
         "sellerpublishItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
