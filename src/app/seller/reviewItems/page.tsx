@@ -109,6 +109,45 @@ function SellerReviewItems() {
         alert('An error occurred while unpublishing the item');
       }
     }
+    
+    //Pubish
+    if (action === 'Publish') {
+      const item = filteredItems.find((item) => item.id === itemId);
+      if(item?.status !== 'Inactive') {
+        alert('Item is already published');
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod/seller/publishItem`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sellerUsername: username,
+              itemID: itemId,
+            }),
+          }
+        );
+        const result = await response.json();
+        if (response.ok) {
+          alert('Item published successfully');
+          setFilteredItems((prevItems) =>
+            prevItems.map((item) =>
+              item.id === itemId ? { ...item, status: 'Active' } : item
+            )
+          );
+        } else {
+          alert(result.message || 'Failed to publish item');
+        }
+      } catch {
+        alert('An error occurred while publishing the item');
+      }
+    }
     // Add other actions here
   };
 
