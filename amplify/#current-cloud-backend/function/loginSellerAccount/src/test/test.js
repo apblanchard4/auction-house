@@ -1,10 +1,9 @@
 const lambdaFunction = require('../index.js');
 require('dotenv').config();
 const event = {
-    body: JSON.stringify({
-        username: 'ab',
-        password: 'pass123',
-    }),
+    username: 'amanda1',
+    password: 'amanda1',
+
 };
 
 // Invoke the Lambda function

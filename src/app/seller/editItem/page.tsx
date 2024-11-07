@@ -7,9 +7,9 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 interface Item {
   id: number;
   itemName: string;
+  description: string;
   price: number;
   startDate: string;
-  endDate: string;
   status: string;
 }
 
@@ -41,7 +41,7 @@ function SellerEditItems() {
 
     try {
       const response = await fetch(
-        `https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod/seller/editItems`,
+        'https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod/seller/editItem',
         {
           method: 'POST',
           headers: {
@@ -88,11 +88,50 @@ function SellerEditItems() {
     }));
   };
 
-  const handleActionButtonClick = (itemId: number) => {
+  const handleActionButtonClick = async (itemId: number) => {
     const action = selectedActions[itemId];
     if (action) {
-      console.log(`Performing action: ${action} on item ID: ${itemId}`);
-      //TODO: Implement logic for each action
+      const updatedItem = items.find(item => item.id === itemId);
+      if (updatedItem) {
+        try {
+          const accessToken = localStorage.getItem('accessToken');
+          if (!accessToken) {
+            alert('You must log in first.');
+            router.push('/'); // Redirect to login if no token is found
+            return;
+          }
+
+    const body = JSON.stringify({
+    sellerUsername: username,
+    itemId: itemId,
+    newName: updatedItem.itemName,
+    newDescription: updatedItem.description,
+    newPrice: updatedItem.price,
+    newStartDate: updatedItem.startDate,
+     });
+
+     const response = await fetch(
+        `https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod/seller/editItem`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: body,
+        }
+      );
+
+      const responseData = await response.json();
+          if (responseData.statusCode === 200) {
+            alert('Item updated successfully!');
+          } else {
+            alert('Failed to update item');
+          }
+        } catch (error) {
+          alert('Error updating item');
+        }
+      }
     } else {
       alert('Please select an action first.');
     }
@@ -102,6 +141,7 @@ function SellerEditItems() {
     const idToken = localStorage.getItem('idToken');
     if (idToken) {
       const decodedUsername = getUsernameFromToken(idToken);
+      console.log(decodedUsername);
       if (decodedUsername) {
         setUsername(decodedUsername);
         fetchItems(decodedUsername); // Fetch items after setting username
@@ -115,20 +155,14 @@ function SellerEditItems() {
     }
   }, [router]);
 
-  const handleItemClick = (itemId: number) => {
-    router.push(`/editItem/${itemId}`);
+  const handleItemChange = (itemId: number, field: string, value: string) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, [field]: value } : item
+      )
+    );
   };
 
-    const [text, setText] = useState<string>('Click to edit');
-    const [isEditing, setIsEditing] = useState<boolean>(false);
-  
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setText(event.target.value);
-    };
-  
-    const handleBlur = () => {
-      setIsEditing(false);
-    };
 
   return (
     <div className="seller-edit-items">
@@ -145,10 +179,6 @@ function SellerEditItems() {
         <button onClick={() => router.push('/addItem')}>Add Item</button>
       </div>
 
-      {/* <div className="search-bar">
-        <input type="text" placeholder="Enter text to search" />
-        <button>🔍</button>
-      </div> */}
 
       {error && <div className="error-message">{error}</div>}
 
@@ -156,19 +186,35 @@ function SellerEditItems() {
       <label className="field-label">Item Name:</label>
         <input
           type="text"
-          value={0}
+        //   value={newitemName}
         //   onChange={(e) => setItemName(e.target.value)}
-          onBlur={handleBlur}
           className="editable-input"
         />
         </div>
       <div className="editable-field">
-        <label className="field-label">Description:</label>
+        <label className="field-label">Description</label>
+        <input
+          type="text"
+        //   value={}
+        //   onChange={(e) => setDescription(e.target.value)}
+          className="editable-input"
+        />
+      </div>
+      <div className="editable-field">
+        <label className="field-label">Initial Price</label>
         <input
           type="text"
           value={0}
         //   onChange={(e) => setDescription(e.target.value)}
-          onBlur={handleBlur}
+          className="editable-input"
+        />
+      </div>
+      <div className="editable-field">
+        <label className="field-label">Start Date</label>
+        <input
+          type="text"
+          value={0}
+        //   onChange={(e) => setDescription(e.target.value)}
           className="editable-input"
         />
       </div>

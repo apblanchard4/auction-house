@@ -1,4 +1,5 @@
 const lambdaFunction = require('../index.js');
+
 const event = {
     username: 'testUser',
     password: 'testPassword',
