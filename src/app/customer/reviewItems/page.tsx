@@ -5,16 +5,18 @@ import './reviewItem.css';
 
 interface Item {
     id: number;
-    itemName: string;
-    price: number;
+    name: string;
+    initialPrice: number;
     startDate: string;
     endDate: string;
 }
 
 function CustomerReviewItems() {
     const router = useRouter();
-    const [items, setItems] = useState<Item[]>([]);  // Initializing items as an empty array
+    const [items, setItems] = useState<Item[]>([]);
+    const [filteredItems, setFilteredItems] = useState<Item[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     const fetchItems = async () => {
         try {
@@ -38,6 +40,7 @@ function CustomerReviewItems() {
             const itemsData = responseData;
             if (itemsData.length) {
                 setItems(itemsData);
+                setFilteredItems(itemsData);
             } else {
                 throw new Error('Response body is not an array');
             }
@@ -50,11 +53,28 @@ function CustomerReviewItems() {
 
     useEffect(() => {
         fetchItems();
-    }, [items]);
+    }, []);
 
     const handleItemClick = (itemId: number) => {
         router.push(`/viewItem/${itemId}`);
     };
+
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const searchValue = event.target.value.toLowerCase();
+        setSearchTerm(searchValue);
+
+        // Filter items based on the search term across all columns
+        const filtered = items.filter(item => {
+            return (
+                (item.name && item.name.toLowerCase().includes(searchValue)) ||
+                (item.initialPrice && item.initialPrice.toString().includes(searchValue)) ||
+                (item.startDate && item.startDate.toLowerCase().includes(searchValue)) ||
+                (item.endDate && item.endDate.toLowerCase().includes(searchValue))
+            );
+        });
+        setFilteredItems(filtered);
+    };
+
 
     return (
         <div className="seller-review-items">
@@ -66,7 +86,12 @@ function CustomerReviewItems() {
             </header>
 
             <div className="search-bar">
-                <input type="text" placeholder="Enter text to search" />
+                <input
+                    type="text"
+                    placeholder="Enter text to search"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                />
                 <button>🔍</button>
             </div>
 
@@ -82,15 +107,15 @@ function CustomerReviewItems() {
                     </tr>
                 </thead>
                 <tbody>
-                    {Array.isArray(items) && items.length > 0 ? (
-                        items.map((item) => (
+                    {Array.isArray(filteredItems) && filteredItems.length > 0 ? (
+                        filteredItems.map((item) => (
                             <tr key={item.id}>
                                 <td>
                                     <button className="item-name" onClick={() => handleItemClick(item.id)}>
-                                        {item.itemName}
+                                        {item.name}
                                     </button>
                                 </td>
-                                <td>${item.price}</td>
+                                <td>${item.initialPrice}</td>
                                 <td>{item.startDate}</td>
                                 <td>{item.endDate}</td>
                             </tr>

@@ -52,7 +52,7 @@ function SellerReviewItems() {
     if (value) {
       setFilteredItems(items.filter(item => item.itemName.toLowerCase().includes(value.toLowerCase())));
     } else {
-      setFilteredItems(items); 
+      setFilteredItems(items);
     }
   };
 
@@ -66,7 +66,7 @@ function SellerReviewItems() {
   const handleActionButtonClick = async (itemId: number) => {
     const action = selectedActions[itemId];
     const accessToken = localStorage.getItem('accessToken');
-    if(!accessToken) {
+    if (!accessToken) {
       alert('You must log in first');
       router.push('/');
       return;
@@ -74,7 +74,7 @@ function SellerReviewItems() {
 
     if (action === 'Unpublish') {
       const item = filteredItems.find((item) => item.id === itemId);
-      if(item?.status !== 'Active') {
+      if (item?.status !== 'Active') {
         alert('Item is already unpublished');
         return;
       }
@@ -111,7 +111,7 @@ function SellerReviewItems() {
     }
     // Add other actions here
   };
-  
+
   useEffect(() => {
     const fetchItems = async (user: string) => {
       const accessToken = localStorage.getItem('accessToken');
@@ -120,9 +120,9 @@ function SellerReviewItems() {
         router.push('/');
         return;
       }
-  
+
       const body = JSON.stringify({ sellerUsername: user });
-  
+
       try {
         const response = await fetch(
           `https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod/seller/reviewItems`,
@@ -135,26 +135,26 @@ function SellerReviewItems() {
             body: body,
           }
         );
-  
+
         const responseData = await response.json();
-  
+
         if (responseData.statusCode !== 200) {
           const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
           throw new Error(message);
         }
-  
+
         let itemsData = responseData.body;
         if (typeof itemsData === 'string') {
           itemsData = JSON.parse(itemsData);
         }
-  
+
         if (Array.isArray(itemsData)) {
           setItems(itemsData);
-          setFilteredItems(itemsData); 
+          setFilteredItems(itemsData);
         } else {
           throw new Error('Response body is not an array');
         }
-  
+
       } catch {
         alert('An error occurred while fetching items');
       }
