@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './SellerReviewItems.css';
@@ -23,21 +24,23 @@ function getUsernameFromToken(idToken: string) {
 
 function SellerReviewItems() {
   const router = useRouter();
-  const [items, setItems] = useState<Item[]>([]);  // Initializing items as an empty array
+  const [items, setItems] = useState<Item[]>([]);
+  const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
-  const [selectedActions, setSelectedActions] = useState<{ [key: number]: string }>({}); //track what action is selected
+  const [selectedActions, setSelectedActions] = useState<{ [key: number]: string }>({});
+  const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const fetchItems = async (user: string) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
       alert('You must log in first.');
-      router.push('/'); // Redirect to login if no token is found
+      router.push('/');
       return;
     }
 
     const body = JSON.stringify({ sellerUsername: user });
-    console.log("Request body:", body);
 
     try {
       const response = await fetch(
@@ -53,7 +56,6 @@ function SellerReviewItems() {
       );
 
       const responseData = await response.json();
-      console.log("Response data:", responseData);
 
       if (responseData.statusCode !== 200) {
         const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
@@ -62,15 +64,12 @@ function SellerReviewItems() {
 
       let itemsData = responseData.body;
       if (typeof itemsData === 'string') {
-        try {
-          itemsData = JSON.parse(itemsData);  // Parse the string into JSON
-        } catch (error) {
-          throw new Error('Failed to parse response body as JSON');
-        }
+        itemsData = JSON.parse(itemsData);
       }
 
       if (Array.isArray(itemsData)) {
         setItems(itemsData);
+        setFilteredItems(itemsData); 
       } else {
         throw new Error('Response body is not an array');
       }
@@ -81,6 +80,31 @@ function SellerReviewItems() {
     }
   };
 
+  const handleSort = (key: keyof Item) => {
+    let direction: 'asc' | 'desc' = 'asc';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+
+    const sortedItems = [...filteredItems].sort((a, b) => {
+      if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
+      if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+    setFilteredItems(sortedItems);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    if (value) {
+      setFilteredItems(items.filter(item => item.itemName.toLowerCase().includes(value.toLowerCase())));
+    } else {
+      setFilteredItems(items); 
+    }
+  };
+
   const handleActionChange = (itemId: number, action: string) => {
     setSelectedActions((prevState) => ({
       ...prevState,
@@ -88,36 +112,70 @@ function SellerReviewItems() {
     }));
   };
 
-  const handleActionButtonClick = (itemId: number) => {
+  const handleActionButtonClick = async (itemId: number) => {
     const action = selectedActions[itemId];
-    if (action) {
-      console.log(`Performing action: ${action} on item ID: ${itemId}`);
-      //TODO: Implement logic for each action
-    } else {
-      alert('Please select an action first.');
+    const accessToken = localStorage.getItem('accessToken');
+    if(!accessToken) {
+      alert('You must log in first');
+      router.push('/');
+      return;
     }
-  };
 
+    if (action === 'Unpublish') {
+      const item = filteredItems.find((item) => item.id === itemId);
+      if(item?.status !== 'Active') {
+        alert('Item is already unpublished');
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://hzob7hmuph.execute-api.us-east-1.amazonaws.com/prod/seller/unpublishItem`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sellerUsername: username,
+              itemID: itemId,
+            }),
+          }
+        );
+        const result = await response.json();
+        if (response.ok) {
+          alert('Item unpublished successfully');
+          setFilteredItems((prevItems) =>
+            prevItems.map((item) =>
+              item.id === itemId ? { ...item, status: 'Inactive' } : item
+            )
+          );
+        } else {
+          alert(result.message || 'Failed to unpublish item');
+        }
+      } catch (error) {
+        alert('An error occurred while unpublishing the item');
+      }
+    }
+    //Add other actions here
+  };
   useEffect(() => {
     const idToken = localStorage.getItem('idToken');
     if (idToken) {
       const decodedUsername = getUsernameFromToken(idToken);
       if (decodedUsername) {
         setUsername(decodedUsername);
-        fetchItems(decodedUsername); // Fetch items after setting username
+        fetchItems(decodedUsername);
       } else {
         alert('Failed to decode token or username not found.');
-        router.push('/'); // Redirect to login if username is not found in token
+        router.push('/');
       }
     } else {
       alert('No token found. Please log in.');
       router.push('/');
     }
   }, [router]);
-
-  const handleItemClick = (itemId: number) => {
-    router.push(`/editItem/${itemId}`);
-  };
 
   return (
     <div className="seller-review-items">
@@ -130,12 +188,17 @@ function SellerReviewItems() {
 
       <div className="navigation">
         <button onClick={() => router.push('/account')}>Account</button>
-        <button className="active" onClick={() => router.push('/sellerReviewItems')}>My Items</button>
+        <button className="active" onClick={() => router.push('/editItem')}>My Items</button>
         <button onClick={() => router.push('/addItem')}>Add Item</button>
       </div>
 
       <div className="search-bar">
-        <input type="text" placeholder="Enter text to search" />
+        <input
+          type="text"
+          placeholder="Enter text to search"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
         <button>🔍</button>
       </div>
 
@@ -145,20 +208,20 @@ function SellerReviewItems() {
         <thead>
           <tr>
             <th>Item Name</th>
-            <th>Price <span className="sort-arrows">⇅</span></th>
-            <th>Start Date <span className="sort-arrows">⇅</span></th>
-            <th>End Date <span className="sort-arrows">⇅</span></th>
+            <th onClick={() => handleSort('price')}>Price <span className="sort-arrows">⇅</span></th>
+            <th onClick={() => handleSort('startDate')}>Start Date <span className="sort-arrows">⇅</span></th>
+            <th onClick={() => handleSort('endDate')}>End Date <span className="sort-arrows">⇅</span></th>
             <th>Status</th>
             <th>Seller Actions</th>
-            <th>Action</th> {/* New column for the action button */}
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(items) && items.length > 0 ? (
-            items.map((item) => (
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item) => (
               <tr key={item.id}>
                 <td>
-                  <button className="item-name" onClick={() => handleItemClick(item.id)}>
+                  <button className="item-name" onClick={() => router.push(`/editItem/${item.id}`)}>
                     {item.itemName}
                   </button>
                 </td>
@@ -182,18 +245,19 @@ function SellerReviewItems() {
                   </select>
                 </td>
                 <td>
-                  <button className="bg-gray-400 text-white py-2 px-4 rounded-lg"
+                  <button
+                    className="bg-gray-400 text-white py-2 px-4 rounded-lg"
                     onClick={() => handleActionButtonClick(item.id)}
                     disabled={!selectedActions[item.id]}
                   >
                     Perform Action
                   </button>
-                </td> {/* Action button */}
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={7}>No items found</td> {/* Adjusted colspan for the new column */}
+              <td colSpan={7}>No items found</td>
             </tr>
           )}
         </tbody>

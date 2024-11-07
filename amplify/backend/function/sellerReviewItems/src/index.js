@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const mysql = require('mysql2/promise');
-const { stat } = require('fs');
+
 AWS.config.update({ region: 'us-east-1' });
 
 /**

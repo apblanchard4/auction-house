@@ -33,6 +33,21 @@ const awsmobile = {
             "name": "sellerUnpublishItem",
             "endpoint": "https://hzob7hmuph.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
+        },
+        {
+            "name": "SellerEditItemFunction",
+            "endpoint": "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "SellerPublishItemFunction",
+            "endpoint": "https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "customerReviewItems",
+            "endpoint": "https://6haebl2d68.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
         }
     ],
     "aws_cognito_identity_pool_id": "us-east-1:56fb1efe-48b3-4e9f-a5de-b2c801ec0705",
