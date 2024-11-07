@@ -11,6 +11,8 @@
       "StackId": "arn:aws:cloudformation:us-east-1:345594594475:stack/amplify-auctionhouse-prod-5f64c/54648a50-989c-11ef-b2ab-0affe6150ddd",
       "AmplifyAppId": "d1cv4wqep5iomw",
       "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "AmplifyAppId": "d1cv4wqep5iomw",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     }
   },
   "api": {
@@ -85,6 +87,7 @@
         "RootUrl": "https://5e1oyazlof.execute-api.us-east-1.amazonaws.com/prod",
         "ApiId": "5e1oyazlof"
       },
+      "lastPushDirHash": "p6ZRLHMoLPckf3irurEwaC04Ges="
       "lastPushDirHash": "p6ZRLHMoLPckf3irurEwaC04Ges="
     },
     "openBuyerAccount": {
@@ -298,6 +301,7 @@
       "s3Bucket": {
         "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
         "s3Key": "amplify-builds/loginSellerAccount-327730624c466a446839-build.zip"
+        "s3Key": "amplify-builds/loginSellerAccount-327730624c466a446839-build.zip"
       },
       "lastBuildTimeStamp": "2024-11-07T11:51:26.266Z",
       "lastBuildType": "PROD",
@@ -330,6 +334,13 @@
       "lastPackageTimeStamp": "2024-11-06T20:20:44.033Z",
       "distZipFilename": "openSellerAccount-5974346b6e6e66496639-build.zip",
       "lastPushDirHash": "C0afBMfZj/CxzdmoVqT9CiTHcm8="
+        "s3Key": "amplify-builds/openSellerAccount-5974346b6e6e66496639-build.zip"
+      },
+      "lastBuildTimeStamp": "2024-11-06T20:20:31.645Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2024-11-06T20:20:44.033Z",
+      "distZipFilename": "openSellerAccount-5974346b6e6e66496639-build.zip",
+      "lastPushDirHash": "C0afBMfZj/CxzdmoVqT9CiTHcm8="
     },
     "loginBuyerAccount": {
       "build": true,
@@ -341,6 +352,7 @@
       "distZipFilename": "loginBuyerAccount-75526759664f482b3270-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+        "s3Key": "amplify-builds/loginBuyerAccount-75526759664f482b3270-build.zip"
         "s3Key": "amplify-builds/loginBuyerAccount-75526759664f482b3270-build.zip"
       },
       "providerMetadata": {
@@ -355,6 +367,7 @@
         "Name": "loginBuyerAccount-prod",
         "LambdaExecutionRole": "auctionhouseLambdaRole900ec357-prod"
       },
+      "lastPushDirHash": "OA/OmbwiKYBGzPhwV1tUfyhoXVk="
       "lastPushDirHash": "OA/OmbwiKYBGzPhwV1tUfyhoXVk="
     },
     "openBuyerAccount": {
