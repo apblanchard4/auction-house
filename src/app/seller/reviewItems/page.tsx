@@ -1,9 +1,8 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './SellerReviewItems.css';
-import outputs from '../../../aws-exports.js';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface Item {
   id: number;
@@ -14,74 +13,105 @@ interface Item {
   status: string;
 }
 
+function getUsernameFromToken(idToken: string) {
+  if (idToken) {
+    const decoded = jwtDecode(idToken);
+    return (decoded as JwtPayload & { 'cognito:username': string })['cognito:username'];
+  }
+  return null;
+}
+
 function SellerReviewItems() {
   const router = useRouter();
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>([]);  // Initializing items as an empty array
   const [error, setError] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const [selectedActions, setSelectedActions] = useState<{ [key: number]: string }>({}); //track what action is selected
 
-  // Function to decode JWT token and extract username
-  const decodeToken = (token: string) => {
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1])); // Decode the token and parse the payload
-      return payload?.username; // Assuming 'username' is stored in the token payload
-    } catch (err) {
-      console.error('Error decoding token:', err);
-      return null;
-    }
-  };
-
-  // Function to fetch the user's items from the API
-  const fetchItems = async () => {
-    if (!username) {
-      setError('Username not found.');
-      return;
-    }
-
-    const token = localStorage.getItem('idToken');
-    if (!token) {
+  const fetchItems = async (user: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
       alert('You must log in first.');
-      router.push('/login'); // Redirect to the login page if no token is found
+      router.push('/'); // Redirect to login if no token is found
       return;
     }
+
+    const body = JSON.stringify({ sellerUsername: user });
+    console.log("Request body:", body);
 
     try {
       const response = await fetch(
-        `https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod/seller/${username}`,
+        `https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod/seller/reviewItems`,
         {
+          method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`, // Include the JWT token in the Authorization header
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
           },
+          body: body,
         }
       );
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch items');
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+
+      if (responseData.statusCode !== 200) {
+        const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
+        throw new Error(message);
       }
 
-      const data = await response.json();
-      setItems(data);
+      let itemsData = responseData.body;
+      if (typeof itemsData === 'string') {
+        try {
+          itemsData = JSON.parse(itemsData);  // Parse the string into JSON
+        } catch (error) {
+          throw new Error('Failed to parse response body as JSON');
+        }
+      }
+
+      if (Array.isArray(itemsData)) {
+        setItems(itemsData);
+      } else {
+        throw new Error('Response body is not an array');
+      }
+
     } catch (err) {
       const typedError = err instanceof Error ? err : new Error('An unknown error occurred');
       setError(typedError.message);
     }
   };
 
+  const handleActionChange = (itemId: number, action: string) => {
+    setSelectedActions((prevState) => ({
+      ...prevState,
+      [itemId]: action,
+    }));
+  };
+
+  const handleActionButtonClick = (itemId: number) => {
+    const action = selectedActions[itemId];
+    if (action) {
+      console.log(`Performing action: ${action} on item ID: ${itemId}`);
+      //TODO: Implement logic for each action
+    } else {
+      alert('Please select an action first.');
+    }
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem('idToken');
-    if (token) {
-      // Decode the token to get the username
-      const decodedUsername = decodeToken(token);
+    const idToken = localStorage.getItem('idToken');
+    if (idToken) {
+      const decodedUsername = getUsernameFromToken(idToken);
       if (decodedUsername) {
-        setUsername(decodedUsername); // Set the username state
-        fetchItems(); // After fetching the username, fetch the items
+        setUsername(decodedUsername);
+        fetchItems(decodedUsername); // Fetch items after setting username
       } else {
         alert('Failed to decode token or username not found.');
-        router.push('/login'); // Redirect to login if username is not found in token
+        router.push('/'); // Redirect to login if username is not found in token
       }
     } else {
       alert('No token found. Please log in.');
-      router.push('/login'); // Redirect to login if no token is found
+      router.push('/');
     }
   }, [router]);
 
@@ -120,10 +150,11 @@ function SellerReviewItems() {
             <th>End Date <span className="sort-arrows">⇅</span></th>
             <th>Status</th>
             <th>Seller Actions</th>
+            <th>Action</th> {/* New column for the action button */}
           </tr>
         </thead>
         <tbody>
-          {items.length > 0 ? (
+          {Array.isArray(items) && items.length > 0 ? (
             items.map((item) => (
               <tr key={item.id}>
                 <td>
@@ -136,21 +167,33 @@ function SellerReviewItems() {
                 <td>{item.endDate}</td>
                 <td>{item.status}</td>
                 <td>
-                  <select>
-                    <option>Publish Item</option>
-                    <option>Unpublish Item</option>
-                    <option>Edit Item</option>
-                    <option>Fulfill Item</option>
-                    <option>Request Item</option>
-                    <option>Unfreeze</option>
-                    <option>Archive Item</option>
+                  <select
+                    onChange={(e) => handleActionChange(item.id, e.target.value)}
+                    defaultValue=""
+                  >
+                    <option value="">Select Action</option>
+                    <option value="Publish">Publish Item</option>
+                    <option value="Unpublish">Unpublish Item</option>
+                    <option value="Edit">Edit Item</option>
+                    <option value="Fulfill">Fulfill Item</option>
+                    <option value="Request">Request Item</option>
+                    <option value="Unfreeze">Unfreeze</option>
+                    <option value="Archive">Archive Item</option>
                   </select>
                 </td>
+                <td>
+                  <button className="bg-gray-400 text-white py-2 px-4 rounded-lg"
+                    onClick={() => handleActionButtonClick(item.id)}
+                    disabled={!selectedActions[item.id]}
+                  >
+                    Perform Action
+                  </button>
+                </td> {/* Action button */}
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={6}>No items found</td>
+              <td colSpan={7}>No items found</td> {/* Adjusted colspan for the new column */}
             </tr>
           )}
         </tbody>

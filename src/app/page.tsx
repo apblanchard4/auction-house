@@ -62,7 +62,6 @@ const App = () => {
       });
 
       const responseData = await response.json();
-      console.log('Response:', responseData.body);
 
       if (responseData.statusCode !== 200) {
         const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
@@ -70,11 +69,12 @@ const App = () => {
         throw new Error(message);
       }
 
-      const token = JSON.parse(responseData.body).token;  
-      localStorage.setItem('idToken', token);
+      const idToken = JSON.parse(responseData.body).idToken;
+      const accessToken = JSON.parse(responseData.body).accessToken;
+      localStorage.setItem('idToken', idToken);
+      localStorage.setItem('accessToken', accessToken);
 
-
-      console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully:`);
+      console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
       alert(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
 
       // Clear form fields
@@ -82,7 +82,7 @@ const App = () => {
       setPassword('');
       setEmail('');
 
-      if (userType === 'Seller'){ router.push('/seller/reviewItems'); }
+      if (userType === 'Seller') { router.push('/seller/reviewItems'); }
 
     } catch (error) {
       console.error('Error:', error);
