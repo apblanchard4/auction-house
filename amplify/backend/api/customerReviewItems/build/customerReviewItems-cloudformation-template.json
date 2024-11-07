@@ -368,7 +368,11 @@
         "Name": "customerReviewItems"
       }
     },
+<<<<<<< HEAD
     "customerReviewItemsDefault4XXResponseebb6e3ae": {
+=======
+    "customerReviewItemsDefault4XXResponse6269d545": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -383,7 +387,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "customerReviewItemsDefault5XXResponseebb6e3ae": {
+=======
+    "customerReviewItemsDefault5XXResponse6269d545": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -398,7 +406,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "DeploymentAPIGWcustomerReviewItems79dd9b48": {
+=======
+    "DeploymentAPIGWcustomerReviewItems8fddebbf": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -416,8 +428,13 @@
         }
       },
       "DependsOn": [
+<<<<<<< HEAD
         "customerReviewItemsDefault4XXResponseebb6e3ae",
         "customerReviewItemsDefault5XXResponseebb6e3ae"
+=======
+        "customerReviewItemsDefault4XXResponse6269d545",
+        "customerReviewItemsDefault5XXResponse6269d545"
+>>>>>>> main
       ]
     }
   }

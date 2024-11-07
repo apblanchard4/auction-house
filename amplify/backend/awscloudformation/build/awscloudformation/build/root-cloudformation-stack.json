@@ -604,7 +604,11 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/customerReviewItems-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+<<<<<<< HEAD
           "s3Key": "amplify-builds/customerReviewItems-4e41687957396e736837-build.zip",
+=======
+          "s3Key": "amplify-builds/customerReviewItems-67697170515356746258-build.zip",
+>>>>>>> main
           "env": "prod"
         }
       }

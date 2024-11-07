@@ -368,7 +368,11 @@
         "Name": "loginSellerAccountFunction"
       }
     },
+<<<<<<< HEAD
     "loginSellerAccountFunctionDefault4XXResponse4781dd8d": {
+=======
+    "loginSellerAccountFunctionDefault4XXResponse6bc178c6": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -383,7 +387,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "loginSellerAccountFunctionDefault5XXResponse4781dd8d": {
+=======
+    "loginSellerAccountFunctionDefault5XXResponse6bc178c6": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -398,7 +406,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "DeploymentAPIGWloginSellerAccountFunction85598d63": {
+=======
+    "DeploymentAPIGWloginSellerAccountFunctionf3be0450": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -416,8 +428,13 @@
         }
       },
       "DependsOn": [
+<<<<<<< HEAD
         "loginSellerAccountFunctionDefault4XXResponse4781dd8d",
         "loginSellerAccountFunctionDefault5XXResponse4781dd8d"
+=======
+        "loginSellerAccountFunctionDefault4XXResponse6bc178c6",
+        "loginSellerAccountFunctionDefault5XXResponse6bc178c6"
+>>>>>>> main
       ]
     }
   }

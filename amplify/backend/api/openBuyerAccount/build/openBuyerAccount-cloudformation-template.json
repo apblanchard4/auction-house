@@ -1,5 +1,6 @@
 {
   "Description": "API Gateway Resource for AWS Amplify CLI",
+  "Description": "API Gateway Resource for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionopenBuyerAccountName": {
@@ -368,7 +369,11 @@
         "Name": "openBuyerAccount"
       }
     },
+<<<<<<< HEAD
     "openBuyerAccountDefault4XXResponse68f11c62": {
+=======
+    "openBuyerAccountDefault4XXResponse8b3666ea": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -383,7 +388,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "openBuyerAccountDefault5XXResponse68f11c62": {
+=======
+    "openBuyerAccountDefault5XXResponse8b3666ea": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -398,7 +407,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "DeploymentAPIGWopenBuyerAccount24366e4f": {
+=======
+    "DeploymentAPIGWopenBuyerAccountc9559cca": {
+>>>>>>> main
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -416,8 +429,13 @@
         }
       },
       "DependsOn": [
+<<<<<<< HEAD
         "openBuyerAccountDefault4XXResponse68f11c62",
         "openBuyerAccountDefault5XXResponse68f11c62"
+=======
+        "openBuyerAccountDefault4XXResponse8b3666ea",
+        "openBuyerAccountDefault5XXResponse8b3666ea"
+>>>>>>> main
       ]
     }
   }
