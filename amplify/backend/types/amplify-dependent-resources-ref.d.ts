@@ -10,6 +10,11 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiName": "string",
       "RootUrl": "string"
     },
+    "addItem": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "customerReviewItems": {
       "ApiId": "string",
       "ApiName": "string",
@@ -44,6 +49,11 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
+    },
+    "sellerremoveInactiveItem": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
     }
   },
   "auth": {
@@ -58,6 +68,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "addItem": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "customerReviewItems": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
@@ -115,6 +132,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "sellerpublishItem": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "sellerremoveInactiveItem": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

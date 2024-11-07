@@ -1,3 +1,4 @@
+
 const AWS = require('aws-sdk');
 const mysql = require('mysql2/promise');
 
@@ -40,13 +41,79 @@ exports.handler = async (event) => {
     connection = await mysql.createConnection(connectConfig);
     console.log('Connection to database successful');
 
-    // Update the item to set the 'published' status to true
-    const updateQuery = `
-      UPDATE Item 
-      SET published = true 
-      WHERE id = ? AND sellerUsername = ? AND published = false`;
+    const selectQuery = `
+      SELECT name, description, image, initialPrice, published 
+      FROM Item 
+      WHERE id = ? AND sellerUsername = ?`;
+    const [rows] = await connection.execute(selectQuery, [itemId, sellerUsername]);
 
-    const [result] = await connection.execute(updateQuery, [itemId, sellerUsername]);
+
+    if (rows.length === 0) {
+      return {
+        statusCode: 404,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Item not found' }),
+      };
+    }
+
+    const item = rows[0];
+    const { name, description, image, initialPrice, published } = item;
+
+    // Validation checks
+    if (!name || name.trim() === '') {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Item must have a name' }),
+      };
+    }
+
+    if (!description || description.trim() === '') {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Item must have a description' }),
+      };
+    }
+
+    if (!image || image.trim() === '') {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Item must have at least one image' }),
+      };
+    }
+
+    if (!initialPrice || initialPrice < 1) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Initial price must be at least $1' }),
+      };
+    }
+
+     // Update the item to set the 'published' status to true
+     const updateQuery = `
+     UPDATE Item 
+     SET published = true 
+     WHERE id = ? AND sellerUsername = ? AND published = false`;
+
+   const [result] = await connection.execute(updateQuery, [itemId, sellerUsername]);
 
     // Check if the item was found and updated
     if (result.affectedRows === 0) {
