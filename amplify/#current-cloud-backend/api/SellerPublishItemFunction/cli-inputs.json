@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/seller/publishItem": {
+      "name": "/seller/publishItem",
+      "lambdaFunction": "sellerpublishItem",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

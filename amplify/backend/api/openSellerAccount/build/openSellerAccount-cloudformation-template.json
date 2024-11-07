@@ -368,7 +368,7 @@
         "Name": "openSellerAccount"
       }
     },
-    "openSellerAccountDefault4XXResponse392a7c97": {
+    "openSellerAccountDefault4XXResponse9e43a770": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -383,7 +383,7 @@
         }
       }
     },
-    "openSellerAccountDefault5XXResponse392a7c97": {
+    "openSellerAccountDefault5XXResponse9e43a770": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -398,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWopenSellerAccount32cc5ff9": {
+    "DeploymentAPIGWopenSellerAccount05d3d9db": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -416,8 +416,8 @@
         }
       },
       "DependsOn": [
-        "openSellerAccountDefault4XXResponse392a7c97",
-        "openSellerAccountDefault5XXResponse392a7c97"
+        "openSellerAccountDefault4XXResponse9e43a770",
+        "openSellerAccountDefault5XXResponse9e43a770"
       ]
     }
   }
