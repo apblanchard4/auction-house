@@ -10,6 +10,11 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiName": "string",
       "RootUrl": "string"
     },
+    "customerReviewItems": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "loginBuyerAccountFunction": {
       "ApiId": "string",
       "ApiName": "string",
@@ -53,6 +58,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "customerReviewItems": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "loginBuyerAccount": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
