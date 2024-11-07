@@ -40,6 +40,7 @@ yarn.lock
 .amplify
 amplify_outputs
 amplifyconfiguration*
+amplify-meta.json
 aws-exports.js
 awsconfiguration.json
 amplify/.config/local-*

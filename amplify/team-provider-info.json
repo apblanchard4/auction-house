@@ -83,7 +83,7 @@
         },
         "customerReviewItems": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/customerReviewItems-67697170515356746258-build.zip"
+          "s3Key": "amplify-builds/customerReviewItems-4e41687957396e736837-build.zip"
         }
       },
       "api": {
