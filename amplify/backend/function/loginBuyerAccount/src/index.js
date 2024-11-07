@@ -60,13 +60,16 @@ exports.handler = async (event) => {
     };
 
     const authResult = await cognito.initiateAuth(params).promise();
-    const token = authResult.AuthenticationResult.IdToken;
+    const idToken = authResult.AuthenticationResult.IdToken;
+    const accessToken = authResult.AuthenticationResult.AccessToken;
+
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Login successful',
-        token,
+        idToken,
+        accessToken
       }),
     };
 

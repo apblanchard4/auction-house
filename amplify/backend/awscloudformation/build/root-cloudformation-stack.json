@@ -489,7 +489,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginSellerAccount-78584a2b6a472b6b4c72-build.zip",
+          "s3Key": "amplify-builds/loginSellerAccount-327730624c466a446839-build.zip",
           "env": "prod"
         }
       }
@@ -511,7 +511,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginBuyerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginBuyerAccount-432b6a39416658304246-build.zip",
+          "s3Key": "amplify-builds/loginBuyerAccount-75526759664f482b3270-build.zip",
           "env": "prod"
         }
       }
