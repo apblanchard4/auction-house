@@ -35,7 +35,7 @@ function CustomerReviewItems() {
                 throw new Error(message);
             }
 
-            let itemsData = responseData;
+            const itemsData = responseData;
             if (itemsData.length) {
                 setItems(itemsData);
             } else {
