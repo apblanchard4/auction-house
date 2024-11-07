@@ -34,6 +34,9 @@
     },
     "SellerPublishItemFunction": {
       "Type": "String"
+    },
+    "customerReviewItems": {
+      "Type": "String"
     }
   },
   "Conditions": {

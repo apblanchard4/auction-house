@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { Radio, RadioGroupField, Button } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+import { useRouter } from 'next/navigation';
+
+Amplify.configure(outputs);
 
 const App = () => {
   const [userType, setUserType] = useState('Buyer');
@@ -11,6 +14,7 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
 
   const handleUserTypeChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserType(event.target.value);
@@ -18,6 +22,7 @@ const App = () => {
 
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
+    setErrorMessage(''); // Reset previous error message
     setErrorMessage(''); // Reset previous error message
 
     try {
@@ -56,7 +61,6 @@ const App = () => {
       });
 
       const responseData = await response.json();
-      console.log('Response:', responseData.body);
 
       if (responseData.statusCode !== 200) {
         const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
@@ -64,13 +68,21 @@ const App = () => {
         throw new Error(message);
       }
 
-      console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully:`);
+      const idToken = JSON.parse(responseData.body).idToken;
+      const accessToken = JSON.parse(responseData.body).accessToken;
+      localStorage.setItem('idToken', idToken);
+      localStorage.setItem('accessToken', accessToken);
+
+      console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
       alert(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
 
       // Clear form fields
       setUsername('');
       setPassword('');
       setEmail('');
+
+      if (userType === 'Seller') { router.push('/seller/reviewItems'); }
+
     } catch (error) {
       console.error('Error:', error);
       if (error instanceof Error) {

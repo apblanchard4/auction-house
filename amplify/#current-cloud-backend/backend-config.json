@@ -28,6 +28,20 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "customerReviewItems": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "customerReviewItems"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "loginBuyerAccountFunction": {
       "dependsOn": [
         {
@@ -140,6 +154,11 @@
     }
   },
   "function": {
+    "customerReviewItems": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "loginBuyerAccount": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -183,6 +202,22 @@
   },
   "hosting": {},
   "parameters": {
+    "AMPLIFY_function_customerReviewItems_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "customerReviewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_customerReviewItems_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "customerReviewItems"
+        }
+      ]
+    },
     "AMPLIFY_function_loginBuyerAccount_deploymentBucketName": {
       "usedBy": [
         {

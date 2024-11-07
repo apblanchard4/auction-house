@@ -1,5 +1,6 @@
 {
   "Description": "API Gateway Resource for AWS Amplify CLI",
+  "Description": "API Gateway Resource for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionloginBuyerAccountName": {
@@ -368,7 +369,7 @@
         "Name": "loginBuyerAccountFunction"
       }
     },
-    "loginBuyerAccountFunctionDefault4XXResponse575e45e1": {
+    "loginBuyerAccountFunctionDefault4XXResponse1c9dce7e": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -383,7 +384,7 @@
         }
       }
     },
-    "loginBuyerAccountFunctionDefault5XXResponse575e45e1": {
+    "loginBuyerAccountFunctionDefault5XXResponse1c9dce7e": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -398,7 +399,7 @@
         }
       }
     },
-    "DeploymentAPIGWloginBuyerAccountFunction1aea747a": {
+    "DeploymentAPIGWloginBuyerAccountFunction42e1c547": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -416,8 +417,8 @@
         }
       },
       "DependsOn": [
-        "loginBuyerAccountFunctionDefault4XXResponse575e45e1",
-        "loginBuyerAccountFunctionDefault5XXResponse575e45e1"
+        "loginBuyerAccountFunctionDefault4XXResponse1c9dce7e",
+        "loginBuyerAccountFunctionDefault5XXResponse1c9dce7e"
       ]
     }
   }
