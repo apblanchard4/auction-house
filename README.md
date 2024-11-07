@@ -35,3 +35,28 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # auction-house
+
+# USE CASES FOR ITERATION 1
+
+1. Seller - Create Account
+ to test - go to login page and select create account and select seller. Enter valid username and password that don't already exsist 
+
+2. Seller - Login Account
+
+3. Buyer - Create Account
+
+4. Buyer - Login Account
+
+5. Seller - Review Items
+
+6. Seller - Publish Items
+
+7. Seller - Unpublish Item
+
+8. Customer - Search Item
+
+9. Customer - Sort Item
+
+10. Customer - View Item
+
+
