@@ -1,0 +1,103 @@
+/* SellereditItems.css */
+
+.seller-edit-items {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+  }
+  
+  .user-info {
+    font-size: 14px;
+  }
+  
+  .navigation {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .navigation button {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .navigation .active {
+    background-color: #ddd;
+  }
+  
+  
+  .search-bar button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .item-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .item-table th, .item-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .item-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .sort-arrows {
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .item-name {
+    color: blue;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  select {
+    padding: 6px;
+    font-size: 14px;
+  }
+  
+  .editable-text-field {
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  .editable-text {
+    cursor: pointer;
+    color: #333;
+    padding: 5px;
+    border: 1px solid transparent;
+  }
+  
+  .editable-text:hover {
+    border: 1px solid #aaa;
+    background-color: #f9f9f9;
+  }
+  
+  .editable-input {
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    width: 100%;
+    box-sizing: border-box;
+  }
