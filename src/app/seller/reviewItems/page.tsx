@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './SellerReviewItems.css';
+import './sellerReviewItems.css';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface Item {
@@ -26,59 +26,10 @@ function SellerReviewItems() {
   const router = useRouter();
   const [items, setItems] = useState<Item[]>([]);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [selectedActions, setSelectedActions] = useState<{ [key: number]: string }>({});
   const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
-
-  const fetchItems = async (user: string) => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      alert('You must log in first.');
-      router.push('/');
-      return;
-    }
-
-    const body = JSON.stringify({ sellerUsername: user });
-
-    try {
-      const response = await fetch(
-        `https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod/seller/reviewItems`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: body,
-        }
-      );
-
-      const responseData = await response.json();
-
-      if (responseData.statusCode !== 200) {
-        const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
-        throw new Error(message);
-      }
-
-      let itemsData = responseData.body;
-      if (typeof itemsData === 'string') {
-        itemsData = JSON.parse(itemsData);
-      }
-
-      if (Array.isArray(itemsData)) {
-        setItems(itemsData);
-        setFilteredItems(itemsData); 
-      } else {
-        throw new Error('Response body is not an array');
-      }
-
-    } catch (err) {
-      const typedError = err instanceof Error ? err : new Error('An unknown error occurred');
-      setError(typedError.message);
-    }
-  };
 
   const handleSort = (key: keyof Item) => {
     let direction: 'asc' | 'desc' = 'asc';
@@ -154,13 +105,61 @@ function SellerReviewItems() {
         } else {
           alert(result.message || 'Failed to unpublish item');
         }
-      } catch (error) {
+      } catch {
         alert('An error occurred while unpublishing the item');
       }
     }
-    //Add other actions here
+    // Add other actions here
   };
+  
   useEffect(() => {
+    const fetchItems = async (user: string) => {
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) {
+        alert('You must log in first.');
+        router.push('/');
+        return;
+      }
+  
+      const body = JSON.stringify({ sellerUsername: user });
+  
+      try {
+        const response = await fetch(
+          `https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod/seller/reviewItems`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: body,
+          }
+        );
+  
+        const responseData = await response.json();
+  
+        if (responseData.statusCode !== 200) {
+          const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
+          throw new Error(message);
+        }
+  
+        let itemsData = responseData.body;
+        if (typeof itemsData === 'string') {
+          itemsData = JSON.parse(itemsData);
+        }
+  
+        if (Array.isArray(itemsData)) {
+          setItems(itemsData);
+          setFilteredItems(itemsData); 
+        } else {
+          throw new Error('Response body is not an array');
+        }
+  
+      } catch {
+        alert('An error occurred while fetching items');
+      }
+    };
+
     const idToken = localStorage.getItem('idToken');
     if (idToken) {
       const decodedUsername = getUsernameFromToken(idToken);
@@ -201,8 +200,6 @@ function SellerReviewItems() {
         />
         <button>🔍</button>
       </div>
-
-      {error && <div className="error-message">{error}</div>}
 
       <table className="item-table">
         <thead>

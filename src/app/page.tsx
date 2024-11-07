@@ -6,6 +6,8 @@ import { Amplify } from 'aws-amplify';
 import outputs from '../../amplify_outputs.json';
 import '@aws-amplify/ui-react/styles.css';
 import { useRouter } from 'next/navigation';
+import { Amplify } from 'aws-amplify';
+import outputs from '../aws-exports';
 
 Amplify.configure(outputs);
 
