@@ -28,6 +28,7 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+<<<<<<< HEAD
     "addItem": {
       "dependsOn": [
         {
@@ -42,6 +43,8 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+=======
+>>>>>>> main
     "customerReviewItems": {
       "dependsOn": [
         {
@@ -139,6 +142,7 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+<<<<<<< HEAD
     },
     "sellerremoveInactiveItem": {
       "dependsOn": [
@@ -153,6 +157,8 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+=======
+>>>>>>> main
     }
   },
   "auth": {
@@ -182,11 +188,14 @@
     }
   },
   "function": {
+<<<<<<< HEAD
     "addItem": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+=======
+>>>>>>> main
     "customerReviewItems": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -231,15 +240,19 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+<<<<<<< HEAD
     },
     "sellerremoveInactiveItem": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+=======
+>>>>>>> main
     }
   },
   "hosting": {},
   "parameters": {
+<<<<<<< HEAD
     "AMPLIFY_function_addItem_deploymentBucketName": {
       "usedBy": [
         {
@@ -256,6 +269,8 @@
         }
       ]
     },
+=======
+>>>>>>> main
     "AMPLIFY_function_customerReviewItems_deploymentBucketName": {
       "usedBy": [
         {
@@ -399,6 +414,7 @@
           "resourceName": "sellerpublishItem"
         }
       ]
+<<<<<<< HEAD
     },
     "AMPLIFY_function_sellerremoveInactiveItem_deploymentBucketName": {
       "usedBy": [
@@ -415,6 +431,8 @@
           "resourceName": "sellerremoveInactiveItem"
         }
       ]
+=======
+>>>>>>> main
     }
   }
 }

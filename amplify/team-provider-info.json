@@ -40,6 +40,11 @@
       "StackId": "arn:aws:cloudformation:us-east-1:345594594475:stack/amplify-auctionhouse-prod-5f64c/54648a50-989c-11ef-b2ab-0affe6150ddd",
       "AmplifyAppId": "d1cv4wqep5iomw",
       "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+<<<<<<< HEAD
+=======
+      "AmplifyAppId": "d1cv4wqep5iomw",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+>>>>>>> main
     },
     "categories": {
       "auth": {
@@ -57,6 +62,10 @@
         "loginBuyerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/loginBuyerAccount-75526759664f482b3270-build.zip"
+<<<<<<< HEAD
+=======
+          "s3Key": "amplify-builds/loginBuyerAccount-75526759664f482b3270-build.zip"
+>>>>>>> main
         },
         "openBuyerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
@@ -76,6 +85,7 @@
         },
         "sellerpublishItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+<<<<<<< HEAD
           "s3Key": "amplify-builds/sellerpublishItem-63456972664274654476-build.zip"
         },
         "customerReviewItems": {
@@ -89,6 +99,13 @@
         "sellerremoveInactiveItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/sellerremoveInactiveItem-4969514c454b4b666e6d-build.zip"
+=======
+          "s3Key": "amplify-builds/sellerpublishItem-4457516e6843546c3874-build.zip"
+        },
+        "customerReviewItems": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/customerReviewItems-67697170515356746258-build.zip"
+>>>>>>> main
         }
       },
       "api": {
@@ -100,9 +117,13 @@
         "sellerUnpublishItem": {},
         "SellerEditItemFunction": {},
         "SellerPublishItemFunction": {},
+<<<<<<< HEAD
         "customerReviewItems": {},
         "addItem": {},
         "sellerremoveInactiveItem": {}
+=======
+        "customerReviewItems": {}
+>>>>>>> main
       }
     }
   },

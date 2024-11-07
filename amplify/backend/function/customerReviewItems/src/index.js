@@ -28,7 +28,15 @@ exports.handler = async () => {
     const currentDate = new Date();
 
     items.forEach(item => {
+<<<<<<< HEAD
       const { id, name, initialPrice, startDate, length } = item;
+=======
+<<<<<<< HEAD
+      const { id, name, initialPrice, startDate, length } = item;
+=======
+      const { id, itemName, price, startDate, length } = item;
+>>>>>>> main
+>>>>>>> main
       console.log(startDate, length);
       const startDateObj = new Date(startDate);
       const endDateObj = new Date(startDate);
@@ -38,8 +46,18 @@ exports.handler = async () => {
       if (currentDate >= startDateObj && currentDate <= endDateObj) {
         categorizedItems.push({
           id,
+<<<<<<< HEAD
           name,
           initialPrice,
+=======
+<<<<<<< HEAD
+          name,
+          initialPrice,
+=======
+          itemName,
+          price,
+>>>>>>> main
+>>>>>>> main
           startDate: startDateObj.toISOString().split('T')[0],
           endDate: endDateObj.toISOString().split('T')[0]
         });

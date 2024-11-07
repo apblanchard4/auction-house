@@ -37,12 +37,15 @@
     },
     "customerReviewItems": {
       "Type": "String"
+<<<<<<< HEAD
     },
     "addItem": {
       "Type": "String"
     },
     "sellerremoveInactiveItem": {
       "Type": "String"
+=======
+>>>>>>> main
     }
   },
   "Conditions": {
@@ -307,6 +310,7 @@
                       "/*/seller/publishItem"
                     ]
                   ]
+<<<<<<< HEAD
                 },
                 {
                   "Fn::Join": [
@@ -427,6 +431,8 @@
                       "/*/seller/removeInactiveItem"
                     ]
                   ]
+=======
+>>>>>>> main
                 }
               ]
             }

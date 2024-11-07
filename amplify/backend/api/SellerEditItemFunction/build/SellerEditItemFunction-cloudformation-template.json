@@ -378,7 +378,15 @@
         "Name": "SellerEditItemFunction"
       }
     },
+<<<<<<< HEAD
     "SellerEditItemFunctionDefault4XXResponse53d47db9": {
+=======
+<<<<<<< HEAD
+    "SellerEditItemFunctionDefault4XXResponseaed27813": {
+=======
+    "SellerEditItemFunctionDefault4XXResponse9c97e3d5": {
+>>>>>>> main
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -393,7 +401,15 @@
         }
       }
     },
+<<<<<<< HEAD
     "SellerEditItemFunctionDefault5XXResponse53d47db9": {
+=======
+<<<<<<< HEAD
+    "SellerEditItemFunctionDefault5XXResponseaed27813": {
+=======
+    "SellerEditItemFunctionDefault5XXResponse9c97e3d5": {
+>>>>>>> main
+>>>>>>> main
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -408,7 +424,15 @@
         }
       }
     },
+<<<<<<< HEAD
     "DeploymentAPIGWSellerEditItemFunction227376df": {
+=======
+<<<<<<< HEAD
+    "DeploymentAPIGWSellerEditItemFunctione35dc870": {
+=======
+    "DeploymentAPIGWSellerEditItemFunction9c476593": {
+>>>>>>> main
+>>>>>>> main
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -426,8 +450,18 @@
         }
       },
       "DependsOn": [
+<<<<<<< HEAD
         "SellerEditItemFunctionDefault4XXResponse53d47db9",
         "SellerEditItemFunctionDefault5XXResponse53d47db9"
+=======
+<<<<<<< HEAD
+        "SellerEditItemFunctionDefault4XXResponseaed27813",
+        "SellerEditItemFunctionDefault5XXResponseaed27813"
+=======
+        "SellerEditItemFunctionDefault4XXResponse9c97e3d5",
+        "SellerEditItemFunctionDefault5XXResponse9c97e3d5"
+>>>>>>> main
+>>>>>>> main
       ]
     }
   }

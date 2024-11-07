@@ -264,6 +264,7 @@
               "apicustomerReviewItems",
               "Outputs.ApiId"
             ]
+<<<<<<< HEAD
           },
           "addItem": {
             "Fn::GetAtt": [
@@ -276,6 +277,8 @@
               "apisellerremoveInactiveItem",
               "Outputs.ApiId"
             ]
+=======
+>>>>>>> main
           }
         }
       }
@@ -469,6 +472,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "apiaddItem": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -511,6 +515,8 @@
         }
       }
     },
+=======
+>>>>>>> main
     "authauctionhouseebecb491": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -647,7 +653,11 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerpublishItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+<<<<<<< HEAD
           "s3Key": "amplify-builds/sellerpublishItem-63456972664274654476-build.zip",
+=======
+          "s3Key": "amplify-builds/sellerpublishItem-4457516e6843546c3874-build.zip",
+>>>>>>> main
           "env": "prod"
         }
       }
@@ -658,6 +668,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/customerReviewItems-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+<<<<<<< HEAD
           "s3Key": "amplify-builds/customerReviewItems-4e41687957396e736837-build.zip",
           "env": "prod"
         }
@@ -681,6 +692,13 @@
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/sellerremoveInactiveItem-4969514c454b4b666e6d-build.zip",
+=======
+<<<<<<< HEAD
+          "s3Key": "amplify-builds/customerReviewItems-4e41687957396e736837-build.zip",
+=======
+          "s3Key": "amplify-builds/customerReviewItems-67697170515356746258-build.zip",
+>>>>>>> main
+>>>>>>> main
           "env": "prod"
         }
       }
