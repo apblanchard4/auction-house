@@ -48,7 +48,7 @@
       "function": {
         "loginSellerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginSellerAccount-72775163704b50665a39-build.zip"
+          "s3Key": "amplify-builds/loginSellerAccount-78584a2b6a472b6b4c72-build.zip"
         },
         "openSellerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
@@ -56,11 +56,11 @@
         },
         "loginBuyerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginBuyerAccount-5a347679505830493763-build.zip"
+          "s3Key": "amplify-builds/loginBuyerAccount-432b6a39416658304246-build.zip"
         },
         "openBuyerAccount": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/openBuyerAccount-486177314d6637417674-build.zip"
+          "s3Key": "amplify-builds/openBuyerAccount-4b4a4d7245682f34482b-build.zip"
         },
         "sellerReviewItems": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
@@ -83,7 +83,11 @@
         "loginSellerAccountFunction": {},
         "openSellerAccount": {},
         "loginBuyerAccountFunction": {},
-        "openBuyerAccount": {}
+        "openBuyerAccount": {},
+        "sellerReviewItems": {},
+        "sellerUnpublishItem": {},
+        "SellerEditItemFunction": {},
+        "SellerPublishItemFunction": {}
       }
     }
   },
