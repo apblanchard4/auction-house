@@ -45,3 +45,7 @@ aws-exports.js
 awsconfiguration.json
 amplify/**
 !amplify/**/index.js
+amplify/team-provider-info.json
+amplify/#current-cloud-backend/amplify-meta.json
+amplify/#current-cloud-backend/awscloudformation/build/awscloudformation/build/root-cloudformation-stack.json
+amplify/backend/api/*/build/*-cloudformation-template.json
