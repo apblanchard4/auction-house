@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/seller/addItem": {
+      "name": "/seller/addItem",
+      "lambdaFunction": "addItem",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

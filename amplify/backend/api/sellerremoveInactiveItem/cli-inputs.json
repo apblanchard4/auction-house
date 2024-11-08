@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/seller/removeInactiveItem": {
+      "name": "/seller/removeInactiveItem",
+      "lambdaFunction": "sellerremoveInactiveItem",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}
