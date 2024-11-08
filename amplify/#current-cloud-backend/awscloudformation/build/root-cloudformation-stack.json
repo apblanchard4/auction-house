@@ -264,6 +264,7 @@
               "apicustomerReviewItems",
               "Outputs.ApiId"
             ]
+<<<<<<< HEAD
           },
           "addItem": {
             "Fn::GetAtt": [
@@ -276,6 +277,8 @@
               "apisellerremoveInactiveItem",
               "Outputs.ApiId"
             ]
+=======
+>>>>>>> main
           }
         }
       }
@@ -469,6 +472,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "apiaddItem": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -511,6 +515,8 @@
         }
       }
     },
+=======
+>>>>>>> main
     "authauctionhouseebecb491": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -663,6 +669,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "functionaddItem": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -685,6 +692,8 @@
         }
       }
     },
+=======
+>>>>>>> main
     "UpdateRolesWithIDPFunction": {
       "DependsOn": [
         "AuthRole",

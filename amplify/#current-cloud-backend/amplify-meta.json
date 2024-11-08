@@ -32,7 +32,11 @@
         "RootUrl": "https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod",
         "ApiId": "pzvpd6xqdh"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.087Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.335Z",
+>>>>>>> main
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/loginSellerAccountFunction-cloudformation-template.json",
         "logicalId": "apiloginSellerAccountFunction"
@@ -56,7 +60,11 @@
         "RootUrl": "https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod",
         "ApiId": "ftzq7wjyef"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.091Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.359Z",
+>>>>>>> main
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/openSellerAccount-cloudformation-template.json",
         "logicalId": "apiopenSellerAccount"
@@ -79,7 +87,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/loginBuyerAccountFunction-cloudformation-template.json",
         "logicalId": "apiloginBuyerAccountFunction"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.092Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.446Z",
+>>>>>>> main
       "output": {
         "ApiName": "loginBuyerAccountFunction",
         "RootUrl": "https://5e1oyazlof.execute-api.us-east-1.amazonaws.com/prod",
@@ -104,7 +116,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/openBuyerAccount-cloudformation-template.json",
         "logicalId": "apiopenBuyerAccount"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.095Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.533Z",
+>>>>>>> main
       "output": {
         "ApiName": "openBuyerAccount",
         "RootUrl": "https://zenehpt22h.execute-api.us-east-1.amazonaws.com/prod",
@@ -129,7 +145,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerReviewItems-cloudformation-template.json",
         "logicalId": "apisellerReviewItems"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.096Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.568Z",
+>>>>>>> main
       "output": {
         "ApiName": "sellerReviewItems",
         "RootUrl": "https://hoobnngov9.execute-api.us-east-1.amazonaws.com/prod",
@@ -154,7 +174,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerUnpublishItem-cloudformation-template.json",
         "logicalId": "apisellerUnpublishItem"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.099Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.640Z",
+>>>>>>> main
       "output": {
         "ApiName": "sellerUnpublishItem",
         "RootUrl": "https://hzob7hmuph.execute-api.us-east-1.amazonaws.com/prod",
@@ -179,7 +203,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/SellerEditItemFunction-cloudformation-template.json",
         "logicalId": "apiSellerEditItemFunction"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.101Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.683Z",
+>>>>>>> main
       "output": {
         "ApiName": "SellerEditItemFunction",
         "RootUrl": "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod",
@@ -204,7 +232,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/SellerPublishItemFunction-cloudformation-template.json",
         "logicalId": "apiSellerPublishItemFunction"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.103Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.732Z",
+>>>>>>> main
       "output": {
         "ApiName": "SellerPublishItemFunction",
         "RootUrl": "https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod",
@@ -229,13 +261,18 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/customerReviewItems-cloudformation-template.json",
         "logicalId": "apicustomerReviewItems"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.105Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.796Z",
+>>>>>>> main
       "output": {
         "ApiName": "customerReviewItems",
         "RootUrl": "https://6haebl2d68.execute-api.us-east-1.amazonaws.com/prod",
         "ApiId": "6haebl2d68"
       },
       "lastPushDirHash": "or8sqRgSTSEfDiWcsSJwb2HVC1c="
+<<<<<<< HEAD
     },
     "addItem": {
       "service": "API Gateway",
@@ -286,6 +323,8 @@
         "ApiId": "dezgzbir75"
       },
       "lastPushDirHash": "NlfByq0Ll69pI+5bHmbn3tTxCDA="
+=======
+>>>>>>> main
     }
   },
   "auth": {
@@ -321,7 +360,11 @@
         "IdentityPoolName": "auctionhouseebecb491_identitypool_ebecb491__prod",
         "UserPoolName": "auctionhouseebecb491_userpool_ebecb491"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.111Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.885Z",
+>>>>>>> main
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/auth/auctionhouseebecb491-cloudformation-template.json",
         "logicalId": "authauctionhouseebecb491"
@@ -340,7 +383,11 @@
         "Name": "loginSellerAccount-prod",
         "LambdaExecutionRole": "auctionhouseLambdaRolee1d44b88-prod"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.112Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.945Z",
+>>>>>>> main
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
         "logicalId": "functionloginSellerAccount"
@@ -366,7 +413,11 @@
         "Name": "openSellerAccount-prod",
         "LambdaExecutionRole": "auctionhouseLambdaRolee033d2f7-prod"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.114Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:35.977Z",
+>>>>>>> main
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openSellerAccount-cloudformation-template.json",
         "logicalId": "functionopenSellerAccount"
@@ -397,7 +448,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginBuyerAccount-cloudformation-template.json",
         "logicalId": "functionloginBuyerAccount"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.116Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:36.046Z",
+>>>>>>> main
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRole900ec357-prod",
         "Region": "us-east-1",
@@ -423,7 +478,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openBuyerAccount-cloudformation-template.json",
         "logicalId": "functionopenBuyerAccount"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.118Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:36.126Z",
+>>>>>>> main
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRole5139857c-prod",
         "Region": "us-east-1",
@@ -449,7 +508,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerReviewItems-cloudformation-template.json",
         "logicalId": "functionsellerReviewItems"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.120Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:36.219Z",
+>>>>>>> main
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRole9a2d2c23-prod",
         "Region": "us-east-1",
@@ -475,7 +538,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerUnpublishItem-cloudformation-template.json",
         "logicalId": "functionsellerUnpublishItem"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.121Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:36.347Z",
+>>>>>>> main
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRoleb87211f9-prod",
         "Region": "us-east-1",
@@ -501,7 +568,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellereditItem-cloudformation-template.json",
         "logicalId": "functionsellereditItem"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.123Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:38.044Z",
+>>>>>>> main
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRole6a109252-prod",
         "Region": "us-east-1",
@@ -527,7 +598,11 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerpublishItem-cloudformation-template.json",
         "logicalId": "functionsellerpublishItem"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.125Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:36.522Z",
+>>>>>>> main
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRole9f64926f-prod",
         "Region": "us-east-1",
@@ -541,6 +616,7 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
+<<<<<<< HEAD
       "lastBuildTimeStamp": "2024-11-07T17:51:58.823Z",
       "lastBuildType": "PROD",
       "lastPackageTimeStamp": "2024-11-07T17:52:02.701Z",
@@ -548,12 +624,25 @@
       "s3Bucket": {
         "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
         "s3Key": "amplify-builds/customerReviewItems-4e41687957396e736837-build.zip"
+=======
+      "lastBuildTimeStamp": "2024-11-07T14:18:30.694Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2024-11-07T14:18:33.897Z",
+      "distZipFilename": "customerReviewItems-67697170515356746258-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+        "s3Key": "amplify-builds/customerReviewItems-67697170515356746258-build.zip"
+>>>>>>> main
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/customerReviewItems-cloudformation-template.json",
         "logicalId": "functioncustomerReviewItems"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2024-11-07T20:46:48.127Z",
+=======
+      "lastPushTimeStamp": "2024-11-07T17:45:36.615Z",
+>>>>>>> main
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::345594594475:role/auctionhouseLambdaRole3747d266-prod",
         "Region": "us-east-1",
@@ -561,6 +650,7 @@
         "Name": "customerReviewItems-prod",
         "LambdaExecutionRole": "auctionhouseLambdaRole3747d266-prod"
       },
+<<<<<<< HEAD
       "lastPushDirHash": "Z/KFUUJfK2zhszCJay+uFKKfRUo="
     },
     "addItem": {
@@ -614,6 +704,9 @@
         "LambdaExecutionRole": "auctionhouseLambdaRole92df74ac-prod"
       },
       "lastPushDirHash": "kveWpE7I+bOY2wPaEugrBm2gBdk="
+=======
+      "lastPushDirHash": "MwjXNTkMhT6zOwsLbXZKZ9YnEcs="
+>>>>>>> main
     }
   },
   "hosting": {}

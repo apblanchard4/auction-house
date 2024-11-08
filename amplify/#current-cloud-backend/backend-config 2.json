@@ -1,64 +1,5 @@
 {
   "api": {
-    "SellerEditItemFunction": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "sellereditItem"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
-    "SellerPublishItemFunction": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "sellerpublishItem"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
-<<<<<<< HEAD
-    "addItem": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "addItem"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
-=======
->>>>>>> main
-    "customerReviewItems": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "customerReviewItems"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "loginBuyerAccountFunction": {
       "dependsOn": [
         {
@@ -142,20 +83,6 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
-    },
-    "sellerremoveInactiveItem": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "sellerremoveInactiveItem"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
     }
   },
   "auth": {
@@ -185,19 +112,6 @@
     }
   },
   "function": {
-<<<<<<< HEAD
-    "addItem": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-=======
->>>>>>> main
-    "customerReviewItems": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "loginBuyerAccount": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -227,60 +141,10 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    },
-    "sellereditItem": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "sellerpublishItem": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "sellerremoveInactiveItem": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "hosting": {},
   "parameters": {
-<<<<<<< HEAD
-    "AMPLIFY_function_addItem_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "addItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_addItem_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "addItem"
-        }
-      ]
-    },
-=======
->>>>>>> main
-    "AMPLIFY_function_customerReviewItems_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "customerReviewItems"
-        }
-      ]
-    },
-    "AMPLIFY_function_customerReviewItems_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "customerReviewItems"
-        }
-      ]
-    },
     "AMPLIFY_function_loginBuyerAccount_deploymentBucketName": {
       "usedBy": [
         {
@@ -374,54 +238,6 @@
         {
           "category": "function",
           "resourceName": "sellerUnpublishItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_sellereditItem_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "sellereditItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_sellereditItem_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "sellereditItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_sellerpublishItem_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "sellerpublishItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_sellerpublishItem_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "sellerpublishItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_sellerremoveInactiveItem_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "sellerremoveInactiveItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_sellerremoveInactiveItem_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "sellerremoveInactiveItem"
         }
       ]
     }
