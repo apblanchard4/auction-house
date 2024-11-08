@@ -80,10 +80,8 @@
         },
         "customerReviewItems": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-<<<<<<< HEAD
+
           "s3Key": "amplify-builds/customerReviewItems-4e41687957396e736837-build.zip"
-=======
-          "s3Key": "amplify-builds/customerReviewItems-4432726c6b2f4b635531-build.zip"
         },
         "addItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
@@ -92,7 +90,6 @@
         "sellerremoveInactiveItem": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/sellerremoveInactiveItem-4969514c454b4b666e6d-build.zip"
->>>>>>> recovery-branch
         }
       },
       "api": {
