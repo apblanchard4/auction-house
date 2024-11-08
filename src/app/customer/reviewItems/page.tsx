@@ -40,11 +40,6 @@ function CustomerReviewItems() {
             }
 
             const itemsData = responseData;
-<<<<<<< HEAD
-            if (Array.isArray(itemsData)) {
-                setItems(itemsData);
-                setFilteredItems(itemsData);
-=======
             if (itemsData.length) {
 
                 const updatedItems = itemsData.map((item: Item) => ({
@@ -53,7 +48,6 @@ function CustomerReviewItems() {
                 }));
                 setItems(updatedItems);
                 setFilteredItems(updatedItems);
->>>>>>> recovery-branch
             } else {
                 throw new Error('Response body is not an array');
             }
@@ -67,52 +61,6 @@ function CustomerReviewItems() {
         fetchItems();
     }, []);
 
-<<<<<<< HEAD
-    useEffect(() => {
-        const filtered = items.filter(item => {
-            return (
-                (item.name && item.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (item.initialPrice && item.initialPrice.toString().includes(searchTerm)) ||
-                (item.startDate && item.startDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (item.endDate && item.endDate.toLowerCase().includes(searchTerm.toLowerCase()))
-            );
-        });
-        setFilteredItems(filtered);
-    }, [searchTerm, items]);
-
-    const handleItemClick = (itemId: number) => {
-        router.push(`/viewItem/${itemId}`);
-    };
-
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value); // Update search term on change
-    };
-
-    const handleSort = (key: keyof Item) => {
-        let direction: 'ascending' | 'descending' = 'ascending';
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-            direction = 'descending';
-        }
-        setSortConfig({ key, direction });
-
-        const sortedItems = [...filteredItems].sort((a, b) => {
-            if (a[key] < b[key]) {
-                return direction === 'ascending' ? -1 : 1;
-            }
-            if (a[key] > b[key]) {
-                return direction === 'ascending' ? 1 : -1;
-            }
-            return 0;
-        });
-        setFilteredItems(sortedItems);
-    };
-
-    const getSortArrow = (key: keyof Item) => {
-        if (!sortConfig || sortConfig.key !== key) return '⇅';
-        return sortConfig.direction === 'ascending' ? '↑' : '↓';
-    };
-
-=======
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = event.target.value.toLowerCase();
         setSearchTerm(searchValue);
@@ -129,7 +77,6 @@ function CustomerReviewItems() {
         setFilteredItems(filtered);
     };
 
->>>>>>> recovery-branch
     return (
         <div className="seller-review-items">
             <header className="header">
@@ -156,24 +103,12 @@ function CustomerReviewItems() {
                     <tr>
                         <th>Image</th>
                         <th>Item Name</th>
-<<<<<<< HEAD
-                        <th onClick={() => handleSort('initialPrice')}>
-                            Price <span className="sort-arrows">{getSortArrow('initialPrice')}</span>
-                        </th>
-                        <th onClick={() => handleSort('startDate')}>
-                            Start Date <span className="sort-arrows">{getSortArrow('startDate')}</span>
-                        </th>
-                        <th onClick={() => handleSort('endDate')}>
-                            End Date <span className="sort-arrows">{getSortArrow('endDate')}</span>
-                        </th>
-=======
                         <th>Price <span className="sort-arrows">⇅</span></th>
                         <th>Start Date <span className="sort-arrows">⇅</span></th>
                         <th>End Date <span className="sort-arrows">⇅</span></th>
                         <th>Description</th>
->>>>>>> recovery-branch
-                    </tr>
-                </thead>
+                    </tr >
+                </thead >
                 <tbody>
                     {filteredItems.length > 0 ? (
                         filteredItems.map((item) => (
@@ -194,8 +129,8 @@ function CustomerReviewItems() {
                         </tr>
                     )}
                 </tbody>
-            </table>
-        </div>
+            </table >
+        </div >
     );
 }
 
