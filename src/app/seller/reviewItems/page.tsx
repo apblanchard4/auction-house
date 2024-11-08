@@ -109,28 +109,30 @@ function SellerReviewItems() {
         alert('An error occurred while unpublishing the item');
       }
     }
-    
+
     //Pubish
     if (action === 'Publish') {
       const item = filteredItems.find((item) => item.id === itemId);
-      if(item?.status !== 'Inactive') {
+      if (item?.status !== 'Inactive') {
         alert('Item is already published');
         return;
       }
+      const body = JSON.stringify({
+        sellerUsername: username,
+        itemId: itemId,
+      });
+      console.log('body', body);
 
       try {
         const response = await fetch(
-          `https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod/seller/publishItem`,
+          `https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod/sellerpublishItem-prod`,
           {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${accessToken}`,
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              sellerUsername: username,
-              itemID: itemId,
-            }),
+            body: body,
           }
         );
         const result = await response.json();

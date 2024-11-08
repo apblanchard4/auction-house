@@ -11,7 +11,7 @@ exports.handler = async (event) => {
 
   // Extract seller information and item details from the event
   const sellerUsername = event.sellerUsername;
-  const itemId = event.itemId; 
+  const itemId = event.itemId;
 
   console.log('sellerUsername:', sellerUsername);
   console.log('itemId:', itemId);
