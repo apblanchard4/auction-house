@@ -72,6 +72,7 @@ function SellerReviewItems() {
       return;
     }
 
+    //unpublish
     if (action === 'Unpublish') {
       const item = filteredItems.find((item) => item.id === itemId);
       if (item?.status !== 'Active') {
@@ -110,7 +111,7 @@ function SellerReviewItems() {
       }
     }
     
-    //Pubish
+    //publish
     if (action === 'Publish') {
       const item = filteredItems.find((item) => item.id === itemId);
       if(item?.status !== 'Inactive') {

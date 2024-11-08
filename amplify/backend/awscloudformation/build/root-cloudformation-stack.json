@@ -636,7 +636,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellereditItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellereditItem-41546f2b663662775854-build.zip",
+          "s3Key": "amplify-builds/sellereditItem-644e5638746e49396273-build.zip",
           "env": "prod"
         }
       }
@@ -647,7 +647,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerpublishItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerpublishItem-4457516e6843546c3874-build.zip",
+          "s3Key": "amplify-builds/sellerpublishItem-495772756e4d4b6b6568-build.zip",
           "env": "prod"
         }
       }
@@ -658,7 +658,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/customerReviewItems-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/customerReviewItems-4e41687957396e736837-build.zip",
+          "s3Key": "amplify-builds/customerReviewItems-4432726c6b2f4b635531-build.zip",
           "env": "prod"
         }
       }
@@ -669,7 +669,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/addItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/addItem-4d345168317269314542-build.zip",
+          "s3Key": "amplify-builds/addItem-77746756756258537736-build.zip",
           "env": "prod"
         }
       }
@@ -681,6 +681,39 @@
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
           "s3Key": "amplify-builds/sellerremoveInactiveItem-4969514c454b4b666e6d-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "storageauctionHouseImages": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "auctionhousec0fa4b6d5a2641a187df78aa6945b28f",
+          "selectedGuestPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "s3PrivatePolicy": "Private_policy_add4650d",
+          "s3ProtectedPolicy": "Protected_policy_add4650d",
+          "s3PublicPolicy": "Public_policy_add4650d",
+          "s3ReadPolicy": "read_policy_add4650d",
+          "s3UploadsPolicy": "Uploads_policy_add4650d",
+          "authPolicyName": "s3_amplify_add4650d",
+          "unauthPolicyName": "s3_amplify_add4650d",
+          "AuthenticatedAllowList": "ALLOW",
+          "GuestAllowList": "ALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+          "s3PermissionsGuestPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsGuestUploads": "s3:PutObject",
           "env": "prod"
         }
       }

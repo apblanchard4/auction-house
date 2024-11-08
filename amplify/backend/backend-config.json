@@ -416,5 +416,12 @@
         }
       ]
     }
+  },
+  "storage": {
+    "auctionHouseImages": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    }
   }
 }
