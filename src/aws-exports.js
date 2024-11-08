@@ -48,6 +48,16 @@ const awsmobile = {
             "name": "customerReviewItems",
             "endpoint": "https://6haebl2d68.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
+        },
+        {
+            "name": "addItem",
+            "endpoint": "https://1tlepvbqtd.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "sellerremoveInactiveItem",
+            "endpoint": "https://dezgzbir75.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
         }
     ],
     "aws_cognito_identity_pool_id": "us-east-1:56fb1efe-48b3-4e9f-a5de-b2c801ec0705",
@@ -70,7 +80,9 @@ const awsmobile = {
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
-    ]
+    ],
+    "aws_user_files_s3_bucket": "auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod",
+    "aws_user_files_s3_bucket_region": "us-east-1"
 };
 
 

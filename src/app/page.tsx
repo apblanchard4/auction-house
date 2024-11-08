@@ -173,7 +173,7 @@ const App = () => {
       <div className="max-w-md mx-auto mt-6 text-center">
         <Button
           onClick={() => router.push('/customer/reviewItems')}
-          className="w-full py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition-all duration-300"
+          className="w-full py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-3`00 transition-all duration-300"
         >
           Continue as a Customer
         </Button>

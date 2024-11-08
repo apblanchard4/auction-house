@@ -2,9 +2,7 @@ const AWS = require('aws-sdk');
 const mysql = require('mysql2/promise');
 AWS.config.update({ region: 'us-east-1' });
 
-/**
- * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- */
+const s3 = new AWS.S3();
 
 exports.handler = async () => {
   const connectConfig = {
@@ -13,7 +11,6 @@ exports.handler = async () => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
   };
-  console.log('connectConfig:', connectConfig);
 
   let connection;
   try {
@@ -27,24 +24,40 @@ exports.handler = async () => {
     const categorizedItems = [];
     const currentDate = new Date();
 
-    items.forEach(item => {
-      const { id, name, initialPrice, startDate, length } = item;
-      console.log(startDate, length);
+    for (const item of items) {
+      const { id, name, initialPrice, startDate, length, image, description } = item;
       const startDateObj = new Date(startDate);
       const endDateObj = new Date(startDate);
       endDateObj.setDate(endDateObj.getDate() + length);
 
       // Only add items that are currently active
       if (currentDate >= startDateObj && currentDate <= endDateObj) {
+        let signedImageUrl = image; // Default to the stored URL if public
+
+        // Generate a signed URL if the image is in S3 and private
+        if (image && image.startsWith('s3://')) {
+          const s3Path = image.replace('s3://', ''); // Remove the 's3://' prefix
+          const [bucketName, ...keyParts] = s3Path.split('/'); // Split the path into bucket and key
+          const key = keyParts.join('/'); // Reassemble the key from the path parts
+
+          signedImageUrl = s3.getSignedUrl('getObject', {
+            Bucket: bucketName,
+            Key: key,
+            Expires: 3600, // URL expiration time in seconds (1 hour)
+          });
+        }
+
         categorizedItems.push({
           id,
           name,
           initialPrice,
           startDate: startDateObj.toISOString().split('T')[0],
-          endDate: endDateObj.toISOString().split('T')[0]
+          endDate: endDateObj.toISOString().split('T')[0],
+          image: signedImageUrl,
+          description,
         });
       }
-    });
+    }
 
     return {
       statusCode: 200,
