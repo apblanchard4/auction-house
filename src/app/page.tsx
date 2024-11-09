@@ -82,7 +82,8 @@ const App = () => {
       setPassword('');
       setEmail('');
 
-      if (userType === 'Seller') { router.push('/seller/reviewItems'); }
+      if (userType === 'Seller' && !isSignUp) { router.push('/seller/reviewItems'); }
+      if (isSignUp) { setIsSignUp(false); }
 
     } catch (error) {
       console.error('Error:', error);
