@@ -66,19 +66,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
   1. When you load the website, select "Log In" and choose "Buyer".
   2. Enter a valid username and password (Use amanda1 and amanda1 for username and password).
   3. Wait for a successful page response indicating a valid log in
-  4. Ensure successful login and redirection to the seller view items.
 
 ### 5. Seller - Review Items
 - **Description**: Sellers can review the items they have
 - **To Test**:
-  1. Log in as a seller.
+  1. Log in as a seller (Use amanda1 and amanda1 for username and password).
   2. You will be directed to the seller review items page on login
   3. There will be some test items available to see
 
 ### 6. Seller - Publish Items
 - **Description**: Sellers can publish items for sale.
 - **To Test**:
-  1. Log in as a seller.
+  1. Log in as a seller (Use amanda1 and amanda1 for username and password).
   2. You will be directed to the seller review items page and will see some test items
   3. From the "seller action" dropdown select "publish item" and then click "Perform Action"
   4. If the item was inactive its status should change to active
@@ -86,7 +85,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ### 7. Seller - Unpublish Item
 - **Description**: Sellers can unpublish items they have listed.
 - **To Test**:
-  1. Log in as a seller.
+  1. Log in as a seller (Use amanda1 and amanda1 for username and password).
   2. You will be directed to the seller review items page and will see some test items
   3. From the "seller action" dropdown select "unpublish item" and then click "Perform Action"
   4. If the item was active its status should change to inactive
