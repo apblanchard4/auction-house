@@ -40,7 +40,9 @@ function CustomerReviewItems() {
 
             const itemsData = responseData;
             if (itemsData.length) {
+                console.log("Item:", itemsData[0].image);
                 const updatedItems = itemsData.map((item: Item) => ({
+
                     ...item,
                     image: item.image.replace('s3://', 'https://auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod.s3.amazonaws.com/')
                 }));
