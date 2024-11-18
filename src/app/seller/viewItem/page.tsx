@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./sellerViewItem.css";
 
@@ -37,73 +37,82 @@ interface Bid {
 
 function SellerViewItem() {
     const router = useRouter();
-    const { id } = useParams();
+    const [itemId, setItemId] = useState<string | null>(null);
     const [item, setItem] = useState<Item | null>(null);
     const [username, setUsername] = useState<string | null>(null);
 
+    // Get itemId from search params (only in client-side)
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const itemIdFromUrl = params.get("itemId");
+        setItemId(itemIdFromUrl);
+    }, []);
+
     // Fetch item data
     useEffect(() => {
-        async function fetchData(user: string, itemId: string) {
-            const accessToken = localStorage.getItem("accessToken");
-            if (!accessToken) {
+        if (itemId) {
+            async function fetchData(user: string, itemId: string) {
+                const accessToken = localStorage.getItem("accessToken");
+                if (!accessToken) {
+                    alert("You must log in first.");
+                    router.push("/");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(
+                        "https://6o8yalu42b.execute-api.us-east-1.amazonaws.com/prod/seller/viewItem",
+                        {
+                            method: "POST",
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ sellerUsername: user, itemId }),
+                        }
+                    );
+
+                    const responseData = await response.json();
+                    if (response.ok) {
+                        const itemData = JSON.parse(responseData.body)[0];
+                        if (itemData) {
+                            // Replace S3 URL with public URL
+                            itemData.image = itemData.image.replace(
+                                "s3://",
+                                "https://auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod.s3.amazonaws.com/"
+                            );
+                            setItem(itemData);
+                        } else {
+                            throw new Error("Item not found");
+                        }
+                    } else {
+                        throw new Error(responseData.message || "Failed to fetch item data");
+                    }
+                } catch (error) {
+                    if (error instanceof Error) {
+                        alert(error.message || "An error occurred while fetching the item.");
+                    } else {
+                        alert("An error occurred while fetching the item.");
+                    }
+                }
+            }
+
+            const idToken = localStorage.getItem("idToken");
+            if (idToken) {
+                const decodedUsername = getUsernameFromToken(idToken);
+                if (decodedUsername) {
+                    setUsername(decodedUsername);
+                    fetchData(decodedUsername, itemId);
+                } else {
+                    alert("Invalid token.");
+                    router.push("/");
+                }
+            } else {
                 alert("You must log in first.");
                 router.push("/");
-                return;
-            }
-
-            try {
-                const response = await fetch(
-                    "https://6o8yalu42b.execute-api.us-east-1.amazonaws.com/prod/seller/viewItem",
-                    {
-                        method: "POST",
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ sellerUsername: user, itemId }),
-                    }
-                );
-
-                const responseData = await response.json();
-                if (response.ok) {
-                    const itemData = JSON.parse(responseData.body)[0];
-                    if (itemData) {
-                        // Replace S3 URL with public URL
-                        itemData.image = itemData.image.replace(
-                            "s3://",
-                            "https://auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod.s3.amazonaws.com/"
-                        );
-                        setItem(itemData);
-                    } else {
-                        throw new Error("Item not found");
-                    }
-                } else {
-                    throw new Error(responseData.message || "Failed to fetch item data");
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    alert(error.message || "An error occurred while fetching the item.");
-                } else {
-                    alert("An error occurred while fetching the item.");
-                }
             }
         }
-
-        const idToken = localStorage.getItem("idToken");
-        if (idToken) {
-            const decodedUsername = getUsernameFromToken(idToken);
-            if (decodedUsername && id) {
-                setUsername(decodedUsername);
-                fetchData(decodedUsername, Array.isArray(id) ? id[0] : id);
-            } else {
-                alert("Invalid token or missing item ID.");
-                router.push("/");
-            }
-        } else {
-            alert("You must log in first.");
-            router.push("/");
-        }
-    }, [id, router]);
+    }, [itemId, router]);
 
     if (!item) {
         return <div className="flex justify-center items-center h-screen">Loading...</div>;
@@ -119,15 +128,17 @@ function SellerViewItem() {
         }
         if (!item) {
             alert("Item data not found.");
-            return
+            return;
         }
+
+        // Perform the specified action based on the button clicked
         switch (action) {
             case "edit":
-                router.push(`/seller/editItem/${item.id}`);
+                router.push(`/seller/editItem/${itemId}`);
                 break;
 
             case "publish":
-                if (item.status !== "Inactive") {
+                if (item.status !== "inactive") {
                     alert("Item is already published.");
                     return;
                 }
@@ -141,7 +152,7 @@ function SellerViewItem() {
                                 Authorization: `Bearer ${accessToken}`,
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify({ sellerUsername: username, itemId: item.id }),
+                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
                         }
                     );
                     if (response.ok) {
@@ -154,40 +165,6 @@ function SellerViewItem() {
                     alert("An error occurred while publishing the item.");
                 }
                 break;
-
-            case "unpublish":
-                if (item?.status !== 'active') {
-                    alert('Item is already unpublished');
-                    return;
-                }
-
-                try {
-                    const response = await fetch(
-                        `https://hzob7hmuph.execute-api.us-east-1.amazonaws.com/prod/seller/unpublishItem`,
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': `Bearer ${accessToken}`,
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                sellerUsername: username,
-                                itemID: id,
-                            }),
-                        }
-                    );
-                    const result = await response.json();
-
-                    if (response.status === 200) {
-                        alert('Item unpublished successfully');
-                    }
-                    else {
-                        alert(result.message || 'Failed to unpublish item');
-                    }
-                }
-                catch {
-                    alert('An error occurred while unpublishing the item');
-                }
 
             default:
                 alert("Invalid action.");
@@ -209,8 +186,6 @@ function SellerViewItem() {
                 <button onClick={() => router.push("/seller/viewAccount")}>Account</button>
                 <button onClick={() => router.push("/seller/reviewItems")}>My Items</button>
                 <button onClick={() => router.push("/seller/addItem")}>Add Item</button>
-
-
             </div>
 
             {/* Main Content */}
@@ -242,28 +217,26 @@ function SellerViewItem() {
                             Archive
                         </button>
                     </div>
-
                 </div>
 
                 {/* Right Section */}
                 <div className="lg:w-1/2">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">{item.name}</h2>
-                    <p className="mb-2">
-                        <strong>Price:</strong> ${item.initialPrice}
-                    </p>
-                    <p className="mb-2">
-                        <strong>Start Date:</strong> {item.startDate}
-                    </p>
-                    <p className="mb-2">
-                        <strong>End Date:</strong> {item.endDate}
-                    </p>
-                    <p className="mb-4">
-                        <strong>Status:</strong> {item.status}
-                    </p>
-                    <p className="mb-4">
-                        <strong>Description:</strong> {item.description}
-                    </p>
-                    <h3 className="text-xl font-semibold text-gray-700 mb-4">Bids</h3>
+                    <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
+                    <p className="text-gray-700 mb-4">{item.description}</p>
+                    <div>
+                        <span className="font-semibold">Price:</span> {item.initialPrice}
+                    </div>
+                    <div>
+                        <span className="font-semibold">Start Date:</span> {item.startDate}
+                    </div>
+                    <div>
+                        <span className="font-semibold">End Date:</span> {item.endDate}
+                    </div>
+                    <div>
+                        <span className="font-semibold">Status:</span> {item.status}
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-3">Bids</h3>
                     <div className="space-y-4">
                         {item.bids.map((bid) => (
                             <div key={bid.id} className="bg-white rounded-lg shadow-md p-4">
@@ -275,13 +248,19 @@ function SellerViewItem() {
                                 </p>
                                 <p>
                                     <strong>Date:</strong> {bid.dateMade}
+
+                                </p>
+                                <p>
+                                    <strong>Price:</strong> {Number(bid.amount) + Number(item.initialPrice)}
+
                                 </p>
                             </div>
                         ))}
                     </div>
+
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

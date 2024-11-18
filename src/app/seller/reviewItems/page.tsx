@@ -259,7 +259,7 @@ function SellerReviewItems() {
             filteredItems.map((item) => (
               <tr key={item.id}>
                 <td>
-                  <button className="item-name" onClick={() => router.push(`/seller/viewItem/${item.id}`)}>
+                  <button className="item-name" onClick={() => router.push(`/seller/viewItem?itemId=${item.id}`)}>
                     {item.itemName}
                   </button>
                 </td>
