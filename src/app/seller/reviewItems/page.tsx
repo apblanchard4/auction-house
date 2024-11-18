@@ -227,9 +227,9 @@ function SellerReviewItems() {
       </header>
 
       <div className="navigation">
-        <button onClick={() => router.push('/account')}>Account</button>
-        <button className="active" onClick={() => router.push('/editItem')}>My Items</button>
-        <button onClick={() => router.push('/addItem')}>Add Item</button>
+        <button onClick={() => router.push('/seller/viewAccount')}>Account</button>
+        <button className="active" onClick={() => router.push('/seller/reviewItems')}>My Items</button>
+        <button onClick={() => router.push('/seller/addItem')}>Add Item</button>
       </div>
 
       <div className="search-bar">
@@ -259,7 +259,7 @@ function SellerReviewItems() {
             filteredItems.map((item) => (
               <tr key={item.id}>
                 <td>
-                  <button className="item-name" onClick={() => router.push(`/editItem/${item.id}`)}>
+                  <button className="item-name" onClick={() => router.push(`/seller/viewItem/${item.id}`)}>
                     {item.itemName}
                   </button>
                 </td>
@@ -277,7 +277,6 @@ function SellerReviewItems() {
                     <option value="Unpublish">Unpublish Item</option>
                     <option value="Edit">Edit Item</option>
                     <option value="Fulfill">Fulfill Item</option>
-                    <option value="Request">Request Item</option>
                     <option value="Unfreeze">Unfreeze</option>
                     <option value="Archive">Archive Item</option>
                   </select>
