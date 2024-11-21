@@ -109,28 +109,30 @@ function SellerReviewItems() {
         alert('An error occurred while unpublishing the item');
       }
     }
-    
+
     //Pubish
     if (action === 'Publish') {
       const item = filteredItems.find((item) => item.id === itemId);
-      if(item?.status !== 'Inactive') {
+      if (item?.status !== 'Inactive') {
         alert('Item is already published');
         return;
       }
+      const body = JSON.stringify({
+        sellerUsername: username,
+        itemId: itemId,
+      });
+      console.log('body', body);
 
       try {
         const response = await fetch(
-          `https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod/seller/publishItem`,
+          `https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod/sellerpublishItem-prod`,
           {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${accessToken}`,
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              sellerUsername: username,
-              itemID: itemId,
-            }),
+            body: body,
           }
         );
         const result = await response.json();
@@ -225,9 +227,9 @@ function SellerReviewItems() {
       </header>
 
       <div className="navigation">
-        <button onClick={() => router.push('/account')}>Account</button>
-        <button className="active" onClick={() => router.push('/editItem')}>My Items</button>
-        <button onClick={() => router.push('/addItem')}>Add Item</button>
+        <button onClick={() => router.push('/seller/viewAccount')}>Account</button>
+        <button className="active" onClick={() => router.push('/seller/reviewItems')}>My Items</button>
+        <button onClick={() => router.push('/seller/addItem')}>Add Item</button>
       </div>
 
       <div className="search-bar">
@@ -257,7 +259,7 @@ function SellerReviewItems() {
             filteredItems.map((item) => (
               <tr key={item.id}>
                 <td>
-                  <button className="item-name" onClick={() => router.push(`/editItem/${item.id}`)}>
+                  <button className="item-name" onClick={() => router.push(`/seller/viewItem?itemId=${item.id}`)}>
                     {item.itemName}
                   </button>
                 </td>
@@ -275,7 +277,6 @@ function SellerReviewItems() {
                     <option value="Unpublish">Unpublish Item</option>
                     <option value="Edit">Edit Item</option>
                     <option value="Fulfill">Fulfill Item</option>
-                    <option value="Request">Request Item</option>
                     <option value="Unfreeze">Unfreeze</option>
                     <option value="Archive">Archive Item</option>
                   </select>
