@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './sellerReviewItems.css';
+import './adminReviewItems.css';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface Item {
@@ -22,7 +22,7 @@ function getUsernameFromToken(idToken: string) {
   return null;
 }
 
-function SellerReviewItems() {
+function AdminReviewItems() {
   const router = useRouter();
   const [items, setItems] = useState<Item[]>([]);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
@@ -258,18 +258,16 @@ function SellerReviewItems() {
   }, [router]);
 
   return (
-    <div className="seller-review-items">
+    <div className="admin-review-items">
       <header className="header">
         <h1>Assembly Auction</h1>
         <div className="user-info">
-          <span>{username}</span> | <span>Seller</span> | <span>$X.XX</span>
+          <span>{username}</span> | <span>Admin</span>
         </div>
       </header>
 
       <div className="navigation">
-        <button onClick={() => router.push('/seller/viewAccount')}>Account</button>
-        <button className="active" onClick={() => router.push('/seller/reviewItems')}>My Items</button>
-        <button onClick={() => router.push('/seller/addItem')}>Add Item</button>
+        <button onClick={() => router.push('/admin/viewAccount')}>Account</button>
       </div>
 
       <div className="search-bar">
@@ -290,7 +288,7 @@ function SellerReviewItems() {
             <th onClick={() => handleSort('startDate')}>Start Date <span className="sort-arrows">⇅</span></th>
             <th onClick={() => handleSort('endDate')}>End Date <span className="sort-arrows">⇅</span></th>
             <th>Status</th>
-            <th>Seller Actions</th>
+            <th>Admin Actions</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -299,7 +297,7 @@ function SellerReviewItems() {
             filteredItems.map((item) => (
               <tr key={item.id}>
                 <td>
-                  <button className="item-name" onClick={() => router.push(`/seller/viewItem?itemId=${item.id}`)}>
+                  <button className="item-name" onClick={() => router.push(`/admin/viewItem?itemId=${item.id}`)}>
                     {item.itemName}
                   </button>
                 </td>
@@ -343,4 +341,4 @@ function SellerReviewItems() {
   );
 }
 
-export default SellerReviewItems;
+export default AdminReviewItems;

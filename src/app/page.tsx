@@ -41,16 +41,27 @@ const App = () => {
       const buyerSignUpEndpoint = 'https://zenehpt22h.execute-api.us-east-1.amazonaws.com/prod/openBuyerAccount';
       const sellerLogInEndpoint = 'https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod/loginSellerAccount';
       const buyerLogInEndpoint = 'https://5e1oyazlof.execute-api.us-east-1.amazonaws.com/prod/loginBuyerAccount';
+      const adminLogInEndpoint = 'https://5e1oyazlof.execute-api.us-east-1.amazonaws.com/prod/loginAdminAccount';
 
       let endpoint = '';
       let body;
 
       if (isSignUp) {
-        endpoint = userType === 'Seller' ? sellerSignUpEndpoint : buyerSignUpEndpoint;
-        body = JSON.stringify({ username, password, email });
+        if (username === 'admin') {
+          setErrorMessage("Invalid username");
+          throw new Error("Invalid username");
+        } else {
+          endpoint = userType === 'Seller' ? sellerSignUpEndpoint : buyerSignUpEndpoint;
+          body = JSON.stringify({ username, password, email });
+        }
       } else {
-        endpoint = userType === 'Seller' ? sellerLogInEndpoint : buyerLogInEndpoint;
-        body = JSON.stringify({ username, password });
+        if (username === 'admin') {
+          endpoint = adminLogInEndpoint;
+          body = JSON.stringify({ username, password });
+        } else {
+          endpoint = userType === 'Seller' ? sellerLogInEndpoint : buyerLogInEndpoint;
+          body = JSON.stringify({ username, password });
+        }
       }
 
       const response = await fetch(endpoint, {
@@ -82,7 +93,8 @@ const App = () => {
       setPassword('');
       setEmail('');
 
-      if (userType === 'Seller' && !isSignUp) { router.push('/seller/reviewItems'); }
+      if (endpoint === adminLogInEndpoint && !isSignUp) { router.push('/admin/reviewItems'); }
+      else if (userType === 'Seller' && !isSignUp) { router.push('/seller/reviewItems'); }
       if (isSignUp) { setIsSignUp(false); }
 
     } catch (error) {
