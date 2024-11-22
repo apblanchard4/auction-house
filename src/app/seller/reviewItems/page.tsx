@@ -150,6 +150,9 @@ function SellerReviewItems() {
         alert('An error occurred while publishing the item');
       }
     }
+    if (action === 'Edit') {
+      router.push(`/seller/editItem?itemId=${itemId}`);
+     }
     // Add other actions here
   };
 
