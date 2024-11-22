@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import "./sellerViewItem.css";
+import "./sellerEditItem.css";
 
 // Helper function to extract username from token
 function getUsernameFromToken(idToken: string) {
@@ -35,7 +35,7 @@ interface Bid {
     itemId: string;
 }
 
-function SellerViewItem() {
+function SellerEditItem() {
     const router = useRouter();
     const [itemId, setItemId] = useState<string | null>(null);
     const [item, setItem] = useState<Item | null>(null);
@@ -134,7 +134,7 @@ function SellerViewItem() {
         // Perform the specified action based on the button clicked
         switch (action) {
             case "edit":
-                router.push(`/seller/editItem?itemId=${item.id}`);
+                router.push(`/seller/editItem/${itemId}`);
                 break;
 
             case "publish":
@@ -221,7 +221,14 @@ function SellerViewItem() {
 
                 {/* Right Section */}
                 <div className="lg:w-1/2">
-                    <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
+                    {/* <h2 className="text-xl font-semibold mb-2">{item.name}</h2> */}
+                    <input
+                        id="itemName" 
+                        type="text" 
+                        value={item.name} 
+                        // onChange={(e) => setItemName(e.target.value)} 
+                        className="text-xl font-semibold mb-2"
+                    />
                     <p className="text-gray-700 mb-4">{item.description}</p>
                     <div>
                         <span className="font-semibold">Price:</span> {item.initialPrice}
@@ -264,4 +271,4 @@ function SellerViewItem() {
     );
 }
 
-export default SellerViewItem;
+export default SellerEditItem;
