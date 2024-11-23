@@ -57,15 +57,13 @@ function BuyerReviewItems() {
 
 
     useEffect(() => {
-        const fetchItems = async (user: string) => {
+        const fetchItems = async () => {
             const accessToken = localStorage.getItem('accessToken');
             if (!accessToken) {
                 alert('You must log in first.');
                 router.push('/');
                 return;
             }
-
-            const body = JSON.stringify({ buyerUsername: user });
 
             try {
                 const response = await fetch(
@@ -108,7 +106,7 @@ function BuyerReviewItems() {
             const decodedUsername = getUsernameFromToken(idToken);
             if (decodedUsername) {
                 setUsername(decodedUsername);
-                fetchItems(decodedUsername);
+                fetchItems();
             } else {
                 alert('Failed to decode token or username not found.');
                 router.push('/');
