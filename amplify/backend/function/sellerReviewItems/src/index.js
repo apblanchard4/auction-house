@@ -65,15 +65,15 @@ console.log('connectConfig:', connectConfig);
         let status;
 
         if(!published){
-            status = 'inactive';
-        } else if (published && currentDate < endDateObj && bidCount === 0 && !archived && !fulfilled) {
-            status = 'active';
+            status = 'Inactive';
+        } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
+            status = 'Active';
         } else if (published && currentDate >= endDateObj && bidCount === 0 && !archived && !fulfilled) {
-            status = 'failed';
+            status = 'Failed';
         } else if (published && currentDate >= endDateObj && bidCount > 0 && !archived && !fulfilled) {
-            status = 'completed';
+            status = 'Completed';
         } else if (archived || fulfilled) {
-            status = 'archived';
+            status = 'Archived';
         } 
 
         categorizedItems.push({
