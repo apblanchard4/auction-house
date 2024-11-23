@@ -42,6 +42,62 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "buyerAddFunds": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "buyerAddFunds"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "buyerCloseAccount": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "buyerCloseAccount"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "buyerViewItem": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "buyerViewItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "buyerViewItems": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "buyerViewItems"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "customerReviewItems": {
       "dependsOn": [
         {
@@ -51,6 +107,20 @@
           ],
           "category": "function",
           "resourceName": "customerReviewItems"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "loginAdminAccount": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "loginAdminAccount"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -112,6 +182,34 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "sellerCloseAccount": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerCloseAccount"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "sellerRequestUnfreezeItem": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerRequestUnfreezeItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "sellerReviewItems": {
       "dependsOn": [
         {
@@ -135,6 +233,20 @@
           ],
           "category": "function",
           "resourceName": "sellerUnpublishItem"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "sellerViewItem": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sellerViewItem"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -187,7 +299,32 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "buyerAddFunds": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "buyerCloseAccount": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "buyerViewItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "buyerViewItems": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "customerReviewItems": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "loginAdminAccount": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -212,12 +349,27 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "sellerCloseAccount": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sellerRequestUnfreezeItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "sellerReviewItems": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
     "sellerUnpublishItem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sellerViewItem": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -256,6 +408,70 @@
         }
       ]
     },
+    "AMPLIFY_function_buyerAddFunds_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerAddFunds"
+        }
+      ]
+    },
+    "AMPLIFY_function_buyerAddFunds_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerAddFunds"
+        }
+      ]
+    },
+    "AMPLIFY_function_buyerCloseAccount_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerCloseAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_buyerCloseAccount_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerCloseAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_buyerViewItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerViewItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_buyerViewItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerViewItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_buyerViewItems_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerViewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_buyerViewItems_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "buyerViewItems"
+        }
+      ]
+    },
     "AMPLIFY_function_customerReviewItems_deploymentBucketName": {
       "usedBy": [
         {
@@ -269,6 +485,22 @@
         {
           "category": "function",
           "resourceName": "customerReviewItems"
+        }
+      ]
+    },
+    "AMPLIFY_function_loginAdminAccount_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "loginAdminAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_loginAdminAccount_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "loginAdminAccount"
         }
       ]
     },
@@ -336,6 +568,38 @@
         }
       ]
     },
+    "AMPLIFY_function_sellerCloseAccount_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerCloseAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerCloseAccount_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerCloseAccount"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerRequestUnfreezeItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerRequestUnfreezeItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerRequestUnfreezeItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerRequestUnfreezeItem"
+        }
+      ]
+    },
     "AMPLIFY_function_sellerReviewItems_deploymentBucketName": {
       "usedBy": [
         {
@@ -365,6 +629,22 @@
         {
           "category": "function",
           "resourceName": "sellerUnpublishItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerViewItem_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerViewItem"
+        }
+      ]
+    },
+    "AMPLIFY_function_sellerViewItem_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sellerViewItem"
         }
       ]
     },
