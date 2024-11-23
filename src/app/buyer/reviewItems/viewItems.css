@@ -1,4 +1,4 @@
-
+/* SellerReviewItems.css */
 
 .seller-review-items {
     font-family: Arial, sans-serif;
@@ -87,3 +87,7 @@
     font-size: 14px;
   }
   
+  img {
+    width: 100px;
+    height: 100px;
+  }

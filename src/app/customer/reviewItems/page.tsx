@@ -38,8 +38,9 @@ function CustomerReviewItems() {
                 throw new Error(message);
             }
 
-            const itemsData = responseData;
+            const itemsData = responseData.body;
             if (itemsData.length) {
+
                 console.log("Item:", itemsData[0].image);
                 const updatedItems = itemsData.map((item: Item) => ({
 
