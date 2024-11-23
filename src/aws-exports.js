@@ -5,13 +5,23 @@ const awsmobile = {
     "aws_project_region": "us-east-1",
     "aws_cloud_logic_custom": [
         {
-            "name": "loginSellerAccountFunction",
-            "endpoint": "https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod",
+            "name": "SellerEditItemFunction",
+            "endpoint": "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
         },
         {
-            "name": "openSellerAccount",
-            "endpoint": "https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod",
+            "name": "SellerPublishItemFunction",
+            "endpoint": "https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "addItem",
+            "endpoint": "https://1tlepvbqtd.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "customerReviewItems",
+            "endpoint": "https://6haebl2d68.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
         },
         {
@@ -20,8 +30,18 @@ const awsmobile = {
             "region": "us-east-1"
         },
         {
+            "name": "loginSellerAccountFunction",
+            "endpoint": "https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
             "name": "openBuyerAccount",
             "endpoint": "https://zenehpt22h.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "openSellerAccount",
+            "endpoint": "https://ftzq7wjyef.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
         },
         {
@@ -35,33 +55,8 @@ const awsmobile = {
             "region": "us-east-1"
         },
         {
-            "name": "SellerEditItemFunction",
-            "endpoint": "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod",
-            "region": "us-east-1"
-        },
-        {
-            "name": "SellerPublishItemFunction",
-            "endpoint": "https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod",
-            "region": "us-east-1"
-        },
-        {
-            "name": "customerReviewItems",
-            "endpoint": "https://6haebl2d68.execute-api.us-east-1.amazonaws.com/prod",
-            "region": "us-east-1"
-        },
-        {
-            "name": "addItem",
-            "endpoint": "https://1tlepvbqtd.execute-api.us-east-1.amazonaws.com/prod",
-            "region": "us-east-1"
-        },
-        {
             "name": "sellerremoveInactiveItem",
             "endpoint": "https://dezgzbir75.execute-api.us-east-1.amazonaws.com/prod",
-            "region": "us-east-1"
-        },
-        {
-            "name": "sellerViewItem",
-            "endpoint": "https://6o8yalu42b.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
         }
     ],
