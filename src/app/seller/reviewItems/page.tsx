@@ -218,11 +218,11 @@ function SellerReviewItems() {
   }, [router]);
 
   return (
-    <div className="seller-review-items">
-      <header className="header">
-        <h1>Assembly Auction</h1>
-        <div className="user-info">
-          <span>{username}</span> | <span>Seller</span> | <span>$X.XX</span>
+    <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
+      <header className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Assembly Auction</h1>
+        <div className="text-gray-700">
+          <span className="font-semibold">{username}</span> | <span>Seller</span>
         </div>
       </header>
 

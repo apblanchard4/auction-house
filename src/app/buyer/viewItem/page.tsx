@@ -3,9 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import "./sellerViewItem.css";
+import "./viewItem.css";
 
-// Helper function to extract username from token
 function getUsernameFromToken(idToken: string) {
     if (idToken) {
         const decoded = jwtDecode<JwtPayload & { "cognito:username": string }>(idToken);
@@ -35,7 +34,7 @@ interface Bid {
     itemId: string;
 }
 
-function SellerViewItem() {
+function BuyerViewItem() {
     const router = useRouter();
     const [itemId, setItemId] = useState<string | null>(null);
     const [item, setItem] = useState<Item | null>(null);
@@ -60,14 +59,14 @@ function SellerViewItem() {
 
                 try {
                     const response = await fetch(
-                        "https://6o8yalu42b.execute-api.us-east-1.amazonaws.com/prod/seller/viewItem",
+                        "https://ey7y9g41al.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItem",
                         {
                             method: "POST",
                             headers: {
                                 Authorization: `Bearer ${accessToken}`,
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify({ sellerUsername: user, itemId }),
+                            body: JSON.stringify({ itemId }),
                         }
                     );
 
@@ -116,58 +115,7 @@ function SellerViewItem() {
         return <div className="flex justify-center items-center h-screen">Loading...</div>;
     }
 
-    // Handle actions
-    async function handleAction(action: string) {
-        const accessToken = localStorage.getItem("accessToken");
-        if (!accessToken) {
-            alert("You must log in first.");
-            router.push("/");
-            return;
-        }
-        if (!item) {
-            alert("Item data not found.");
-            return;
-        }
 
-        // Perform the specified action based on the button clicked
-        switch (action) {
-            case "edit":
-                router.push(`/seller/editItem/${itemId}`);
-                break;
-
-            case "publish":
-                if (item.status !== "inactive") {
-                    alert("Item is already published.");
-                    return;
-                }
-
-                try {
-                    const response = await fetch(
-                        `https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod/sellerpublishItem-prod`,
-                        {
-                            method: "POST",
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`,
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
-                        }
-                    );
-                    if (response.ok) {
-                        alert("Item published successfully.");
-                    } else {
-                        const result = await response.json();
-                        alert(result.message || "Failed to publish item.");
-                    }
-                } catch {
-                    alert("An error occurred while publishing the item.");
-                }
-                break;
-
-            default:
-                alert("Invalid action.");
-        }
-    }
 
     return (
         <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -181,9 +129,9 @@ function SellerViewItem() {
 
             {/* Navigation */}
             <div className="navigation">
-                <button onClick={() => router.push("/seller/viewAccount")}>Account</button>
-                <button onClick={() => router.push("/seller/reviewItems")}>My Items</button>
-                <button onClick={() => router.push("/seller/addItem")}>Add Item</button>
+                <button onClick={() => router.push("/buyer/viewAccount")}>Account</button>
+                <button onClick={() => router.push("/buyer/reviewItems")}>My Items</button>
+                <button onClick={() => router.push("/buyer/addItem")}>Add Item</button>
             </div>
 
             {/* Main Content */}
@@ -195,26 +143,7 @@ function SellerViewItem() {
                         alt={item.name}
                         className="w-full max-w-md rounded-lg shadow-md mb-6 justify-self-center"
                     />
-                    <div className="grid grid-cols-3 gap-2 w-full">
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("edit")}>
-                            Edit
-                        </button>
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("publish")}>
-                            Publish
-                        </button>
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("unpublish")}>
-                            Unpublish
-                        </button>
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("fufill")}>
-                            Fulfill
-                        </button>
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg  hover:bg-gray-800 transition" onClick={() => handleAction("unfreeze")}>
-                            Unfreeze
-                        </button>
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg  hover:bg-gray-800 transition" onClick={() => handleAction("archive")}>
-                            Archive
-                        </button>
-                    </div>
+
                 </div>
 
                 {/* Right Section */}
@@ -254,6 +183,11 @@ function SellerViewItem() {
                                 </p>
                             </div>
                         ))}
+                        <div style={{ textAlign: 'center' }}>
+                            <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => router.push(`/buyer/placeBid?itemId=${item.id}`)}>
+                                Place Bid
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -262,4 +196,4 @@ function SellerViewItem() {
     );
 }
 
-export default SellerViewItem;
+export default BuyerViewItem;

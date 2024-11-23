@@ -21,6 +21,7 @@ exports.handler = async () => {
       `SELECT * FROM Item WHERE Item.published = 1 AND Item.archived = 0 AND Item.fulfilled = 0`
     );
 
+
     const categorizedItems = [];
     const currentDate = new Date();
 
@@ -58,6 +59,7 @@ exports.handler = async () => {
         });
       }
     }
+    console.log('Categorized items:', categorizedItems);
 
     return {
       statusCode: 200,
@@ -65,7 +67,7 @@ exports.handler = async () => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*"
       },
-      body: JSON.stringify(categorizedItems),
+      body: categorizedItems,
     };
 
   } catch (error) {

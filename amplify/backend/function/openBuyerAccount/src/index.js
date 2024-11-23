@@ -12,6 +12,7 @@ const MYSQL_CONFIG = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 };
+
 const pool = mysql.createPool(MYSQL_CONFIG);
 
 exports.handler = async (event) => {
