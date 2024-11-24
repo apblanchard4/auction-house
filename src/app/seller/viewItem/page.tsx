@@ -132,8 +132,12 @@ function SellerViewItem() {
         // Perform the specified action based on the button clicked
         switch (action) {
             case "edit":
-                router.push(`/seller/editItem?itemId=${item.id}`);
-                break;
+                if (item.status === "Inactive") {
+                    router.push(`/seller/editItem?itemId=${item.id}`);
+                  } else {
+                    alert("Item is already active and cannot be edited");
+                  }
+                  break;
 
             case "publish":
                 if (item.status !== "inactive") {
