@@ -20,7 +20,6 @@ interface Item {
     initialPrice: string;
     startDate: string;
     endDate: string;
-    length: string;
     status: string;
     image: string;
     description: string;
@@ -119,22 +118,6 @@ function SellerEditItem() {
         return <div className="flex justify-center items-center h-screen">Loading...</div>;
     }
 
-    function setItemName(name: string) {
-        setItem((prevItem) => prevItem ? { ...prevItem, name } : null);
-    }
-
-    function setItemDescription(description: string) {
-        setItem((prevItem) => prevItem ? { ...prevItem, description } : null);
-    }
-
-    function setItemPrice(price: string) {
-        setItem((prevItem) => prevItem ? { ...prevItem, initialPrice: price } : null);
-    }
-
-    function setItemLength(length: string) {
-        setItem((prevItem) => prevItem ? { ...prevItem, length } : null);
-    }
-
     // Handle actions
     async function handleAction(action: string) {
         const accessToken = localStorage.getItem("accessToken");
@@ -150,44 +133,43 @@ function SellerEditItem() {
 
         // Perform the specified action based on the button clicked
         switch (action) {
-            case "Save":
+            case "edit":
+                router.push(`/seller/editItem/${itemId}`);
+                break;
+
+            case "publish":
+                if (item.status !== "inactive") {
+                    alert("Item is already published.");
+                    return;
+                }
+
                 try {
                     const response = await fetch(
-                        "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod/sellereditItem-prod", 
+                        `https://t033iv5klk.execute-api.us-east-1.amazonaws.com/prod/sellerpublishItem-prod`,
                         {
                             method: "POST",
                             headers: {
                                 Authorization: `Bearer ${accessToken}`,
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify({
-                                sellerUsername: username,
-                                itemId: item.id,
-                                newName: item.name,
-                                newDescription: item.description,
-                                newPrice: item.initialPrice,
-                                // newlength: item.length,
-                            }),
+                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
                         }
                     );
-    
                     if (response.ok) {
-                        alert("Changes saved successfully.");
+                        alert("Item published successfully.");
                     } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || "Failed to save changes.");
+                        const result = await response.json();
+                        alert(result.message || "Failed to publish item.");
                     }
-                } catch (error) {
-                    if (error instanceof Error) {
-                        alert(error.message);
-                    } else {
-                        alert("An error occurred while saving changes.");
-                    }
+                } catch {
+                    alert("An error occurred while publishing the item.");
                 }
                 break;
+
+            default:
+                alert("Invalid action.");
         }
     }
-    console.log("Fetched item:", item);
 
     return (
         <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -215,48 +197,41 @@ function SellerEditItem() {
                         alt={item.name}
                         className="w-full max-w-md rounded-lg shadow-md mb-6 justify-self-center"
                     />
-                    <div className="flex justify-end w-full">
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition save-button" onClick={() => handleAction("Save")}>
-                            Save Changes
+                    <div className="grid grid-cols-3 gap-2 w-full">
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("edit")}>
+                            Edit
+                        </button>
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("publish")}>
+                            Publish
+                        </button>
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("unpublish")}>
+                            Unpublish
+                        </button>
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("fufill")}>
+                            Fulfill
+                        </button>
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg  hover:bg-gray-800 transition" onClick={() => handleAction("unfreeze")}>
+                            Unfreeze
+                        </button>
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg  hover:bg-gray-800 transition" onClick={() => handleAction("archive")}>
+                            Archive
                         </button>
                     </div>
                 </div>
 
                 {/* Right Section */}
-                <div className="flex flex-col">
+                <div className="lg:w-1/2">
+                    {/* <h2 className="text-xl font-semibold mb-2">{item.name}</h2> */}
                     <input
                         id="itemName" 
                         type="text" 
                         value={item.name} 
-                        onChange={(e) => setItemName(e.target.value)} 
+                        // onChange={(e) => setItemName(e.target.value)} 
                         className="text-xl font-semibold mb-2"
                     />
-                    <input
-                        id="itemDescription" 
-                        type="text" 
-                        value={item.description} 
-                        onChange={(e) => setItemDescription(e.target.value)} 
-                        className="text-gray-700 mb-4"
-                    />
+                    <p className="text-gray-700 mb-4">{item.description}</p>
                     <div>
-                        <span className="font-semibold">Price: </span>
-                        <input
-                        id="itemPrice" 
-                        type="text" 
-                        value={item.initialPrice} 
-                        onChange={(e) => setItemPrice(e.target.value)} 
-                        className="font-semibold"
-                    />
-                    </div>
-                    <div>
-                        <span className="font-semibold">Auction Length: </span>
-                        <input
-                        id="length" 
-                        type="text" 
-                        value={String(item.length)} 
-                        onChange={(e) => setItemLength(e.target.value)} 
-                        className="font-semibold"
-                    />
+                        <span className="font-semibold">Price:</span> {item.initialPrice}
                     </div>
                     <div>
                         <span className="font-semibold">Start Date:</span> {item.startDate}
@@ -268,7 +243,7 @@ function SellerEditItem() {
                         <span className="font-semibold">Status:</span> {item.status}
                     </div>
 
-                    {/* <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-3">Bids</h3>
+                    <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-3">Bids</h3>
                     <div className="space-y-4">
                         {item.bids.map((bid) => (
                             <div key={bid.id} className="bg-white rounded-lg shadow-md p-4">
@@ -288,7 +263,7 @@ function SellerEditItem() {
                                 </p>
                             </div>
                         ))}
-                    </div> */}
+                    </div>
 
                 </div>
             </div>

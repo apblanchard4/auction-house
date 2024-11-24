@@ -1,6 +1,6 @@
 /* SellerEditItems.css */
 
-.seller-edit-items {
+.seller-review-items {
     font-family: Arial, sans-serif;
     padding: 20px;
   }
@@ -87,8 +87,3 @@
     font-size: 14px;
   }
   
-  .save-button {
-    position: absolute; /* Use absolute or relative positioning if needed */
-    right: 110px; /* Moves the button 120px away from the right edge */
-    top: 150px; /* Adjust vertical positioning */
-  }
