@@ -17,7 +17,7 @@ function getUsernameFromToken(idToken: string) {
 const SellerAccountPage: React.FC = () => {
   const router = useRouter();
   const [username, setUsername] = useState<string | null>(null);
-  const [balance, setBalance] = useState<string>("$X.XX"); // Placeholder balance
+  const [balance] = useState<string>("$X.XX"); // Placeholder balance
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,7 +29,9 @@ const SellerAccountPage: React.FC = () => {
         return;
       }
 
-     //TODO: Implement the fetchAccountBalance API endpoint 
+      console.log(user); //TODO: Get rid of after fetch balance implementation
+
+     //TODO: Implement the fetchAccountBalance logic
      /*
       try {
 
@@ -123,7 +125,7 @@ const SellerAccountPage: React.FC = () => {
       </div>
 
       <main>
-        <h1>Seller - Manage Profile</h1>
+        <h1>Manage Profile</h1>
         <div className="content">
           <div className="balance-section">
             <h2>Current Account Balance</h2>
