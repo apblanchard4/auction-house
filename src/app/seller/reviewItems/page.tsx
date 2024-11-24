@@ -151,8 +151,18 @@ function SellerReviewItems() {
       }
     }
     if (action === 'Edit') {
-      router.push(`/seller/editItem?itemId=${itemId}`);
-     }
+      const item = filteredItems.find((item) => item.id === itemId);
+      if (item) {
+        if (item.status === 'Inactive') {
+          router.push(`/seller/editItem?itemId=${itemId}`);
+        } else {
+          alert('Item is already active and cannot be edited');
+        }
+      } else {
+        alert('Item not found');
+      }
+    }
+    
     // Add other actions here
   };
 
