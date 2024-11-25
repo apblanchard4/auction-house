@@ -261,7 +261,7 @@ function SellerEditItem() {
                         <input
                         id="length" 
                         type="text" 
-                        value={String(item.length)} 
+                        value={item.length} 
                         onChange={(e) => setItemLength(e.target.value)} 
                         className="font-semibold"
                     />
