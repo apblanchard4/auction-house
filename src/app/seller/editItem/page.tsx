@@ -157,6 +157,7 @@ function SellerEditItem() {
                     newName: item.name,
                     newDescription: item.description,
                     newPrice: item.initialPrice,
+                    newlength: item.length,
                   });
                 try {
                     const response = await fetch(
@@ -173,7 +174,7 @@ function SellerEditItem() {
                                 newName: item.name,
                                 newDescription: item.description,
                                 newPrice: item.initialPrice,
-                                // newlength: item.length,
+                                newlength: item.length,
                             }),
                         }
                     );
