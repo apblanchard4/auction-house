@@ -22,6 +22,7 @@ interface Item {
     status: string;
     image: string;
     description: string;
+    currentPrice: number;
     bids: Bid[];
 }
 
@@ -44,6 +45,7 @@ function BuyerViewItem() {
         const params = new URLSearchParams(window.location.search);
         const itemIdFromUrl = params.get("itemId");
         setItemId(itemIdFromUrl);
+
     }, []);
 
     // Fetch item data
@@ -71,6 +73,7 @@ function BuyerViewItem() {
                     );
 
                     const responseData = await response.json();
+                    console.log(responseData);
                     if (response.ok) {
                         const itemData = JSON.parse(responseData.body)[0];
                         if (itemData) {
@@ -115,7 +118,16 @@ function BuyerViewItem() {
         return <div className="flex justify-center items-center h-screen">Loading...</div>;
     }
 
-
+    function placeBid(id: string, currentPrice: number, bids: Bid[]): void {
+        if (bids.length > 0) {
+            if (bids[bids.length - 1].buyerUsername.toLowerCase() === username) {
+                alert("You are the highest bidder for this item.");
+                return;
+            }
+            console.log(currentPrice)
+        }
+        router.push(`/buyer/placeBid?itemId=${id}&currentCost=${currentPrice}`)
+    }
 
     return (
         <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -151,7 +163,7 @@ function BuyerViewItem() {
                     <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
                     <p className="text-gray-700 mb-4">{item.description}</p>
                     <div>
-                        <span className="font-semibold">Price:</span> {item.initialPrice}
+                        <span className="font-semibold">Price:</span> {item.currentPrice}
                     </div>
                     <div>
                         <span className="font-semibold">Start Date:</span> {item.startDate}
@@ -178,13 +190,16 @@ function BuyerViewItem() {
 
                                 </p>
                                 <p>
-                                    <strong>Price:</strong> {Number(bid.amount) + Number(item.initialPrice)}
+                                    <strong>Price:</strong> {Number(bid.amount)}
 
                                 </p>
                             </div>
                         ))}
                         <div style={{ textAlign: 'center' }}>
-                            <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => router.push(`/buyer/placeBid?itemId=${item.id}`)}>
+                            <button
+                                className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition"
+                                onClick={() => placeBid(item.id, item.currentPrice, item.bids)}
+                            >
                                 Place Bid
                             </button>
                         </div>
