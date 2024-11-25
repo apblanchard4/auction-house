@@ -151,9 +151,16 @@ function SellerEditItem() {
         // Perform the specified action based on the button clicked
         switch (action) {
             case "Save":
+                console.log("Payload:", {
+                    sellerUsername: username,
+                    itemId: item.id,
+                    newName: item.name,
+                    newDescription: item.description,
+                    newPrice: item.initialPrice,
+                  });
                 try {
                     const response = await fetch(
-                        "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod/sellereditItem-prod", 
+                        "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod/seller/editItem", 
                         {
                             method: "POST",
                             headers: {
@@ -170,9 +177,9 @@ function SellerEditItem() {
                             }),
                         }
                     );
-    
                     if (response.ok) {
                         alert("Changes saved successfully.");
+                        router.push(`/seller/viewItem?itemId=${item.id}`);
                     } else {
                         const errorData = await response.json();
                         throw new Error(errorData.message || "Failed to save changes.");
@@ -267,29 +274,6 @@ function SellerEditItem() {
                     <div>
                         <span className="font-semibold">Status:</span> {item.status}
                     </div>
-
-                    {/* <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-3">Bids</h3>
-                    <div className="space-y-4">
-                        {item.bids.map((bid) => (
-                            <div key={bid.id} className="bg-white rounded-lg shadow-md p-4">
-                                <p>
-                                    <strong>Bidder:</strong> {bid.buyerUsername}
-                                </p>
-                                <p>
-                                    <strong>Amount:</strong> ${bid.amount}
-                                </p>
-                                <p>
-                                    <strong>Date:</strong> {bid.dateMade}
-
-                                </p>
-                                <p>
-                                    <strong>Price:</strong> {Number(bid.amount) + Number(item.initialPrice)}
-
-                                </p>
-                            </div>
-                        ))}
-                    </div> */}
-
                 </div>
             </div>
         </div >
