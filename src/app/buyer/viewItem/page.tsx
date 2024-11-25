@@ -163,7 +163,7 @@ function BuyerViewItem() {
                     <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
                     <p className="text-gray-700 mb-4">{item.description}</p>
                     <div>
-                        <span className="font-semibold">Price:</span> {item.initialPrice}
+                        <span className="font-semibold">Price:</span> {item.currentPrice}
                     </div>
                     <div>
                         <span className="font-semibold">Start Date:</span> {item.startDate}

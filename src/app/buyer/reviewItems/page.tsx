@@ -11,6 +11,7 @@ interface Item {
     initialPrice: number;
     startDate: string;
     endDate: string;
+    currentPrice: number;
     description: string;
 }
 
@@ -30,7 +31,7 @@ function BuyerReviewItems() {
     const [username, setUsername] = useState<string | null>(null);
     const [sortConfig, setSortConfig] = useState<{ key: keyof Item; direction: "asc" | "desc" } | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [dateRange, setDateRange] = useState<{ startDate: string; endDate: string }>({ startDate: "", endDate: "" });
+
     const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({ min: 0, max: 0 });
 
     // Function to sort items
@@ -59,21 +60,10 @@ function BuyerReviewItems() {
             result = result.filter((item) => item.name.toLowerCase().includes(term) || item.description.toLowerCase().includes(term));
         }
 
-        // Filter by date range
-        if (dateRange.startDate && dateRange.endDate) {
-            result = result.filter((item) => {
-                const start = new Date(item.startDate);
-                const end = new Date(item.endDate);
-                const filterStart = new Date(dateRange.startDate);
-                const filterEnd = new Date(dateRange.endDate);
-                return start >= filterStart && end <= filterEnd;
-            });
-        }
-
         // Filter by price range
         if (priceRange.min || priceRange.max) {
             result = result.filter((item) => {
-                return item.initialPrice >= priceRange.min && (priceRange.max === 0 || item.initialPrice <= priceRange.max);
+                return item.currentPrice >= priceRange.min && (priceRange.max === 0 || item.currentPrice <= priceRange.max);
             });
         }
 
@@ -85,11 +75,6 @@ function BuyerReviewItems() {
         setSearchTerm(event.target.value);
     };
 
-    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setDateRange((prev) => ({ ...prev, [name]: value }));
-    };
-
     const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setPriceRange((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
@@ -98,7 +83,7 @@ function BuyerReviewItems() {
     // Reapply filters whenever search criteria change
     useEffect(() => {
         filterItems();
-    }, [searchTerm, dateRange, priceRange]);
+    }, [searchTerm, priceRange]);
 
     // Fetch items on component mount
     useEffect(() => {
@@ -222,7 +207,7 @@ function BuyerReviewItems() {
                 <thead>
                     <tr>
                         <th>Item Name</th>
-                        <th onClick={() => handleSort("initialPrice")}>
+                        <th onClick={() => handleSort("currentPrice")}>
                             Price <span className="sort-arrows">⇅</span>
                         </th>
                         <th onClick={() => handleSort("startDate")}>
@@ -243,7 +228,7 @@ function BuyerReviewItems() {
                                         {item.name}
                                     </button>
                                 </td>
-                                <td>${item.initialPrice}</td>
+                                <td>${item.currentPrice}</td>
                                 <td>{item.startDate}</td>
                                 <td>{item.endDate}</td>
                                 <td>{item.description}</td>

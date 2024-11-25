@@ -3,6 +3,28 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
+
+interface Item {
+    id: string;
+    name: string;
+    initialPrice: string;
+    startDate: string;
+    endDate: string;
+    status: string;
+    image: string;
+    description: string;
+    currentPrice: number;
+    bids: Bid[];
+}
+interface Bid {
+    id: string;
+    buyerUsername: string;
+    amount: number;
+    dateMade: string;
+    itemName: string;
+    itemId: string;
+}
+
 function getUsernameFromToken(idToken: string) {
     if (idToken) {
         const decoded = jwtDecode(idToken);
@@ -117,7 +139,7 @@ function BuyerPlaceBid() {
             const items = JSON.parse(responseData.body);
 
 
-            const item = items.find((item: any) => item.id === itemId);
+            const item = items.find((item: Item) => item.id === String(itemId));
             if (item) {
                 const bids = item.bids || [];
                 if (bids.length > 0) {
