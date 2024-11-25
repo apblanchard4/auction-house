@@ -157,7 +157,7 @@ function SellerEditItem() {
                     newName: item.name,
                     newDescription: item.description,
                     newPrice: item.initialPrice,
-                    newlength: item.length,
+                    newLength: item.length,
                   });
                 try {
                     const response = await fetch(
@@ -174,12 +174,20 @@ function SellerEditItem() {
                                 newName: item.name,
                                 newDescription: item.description,
                                 newPrice: item.initialPrice,
-                                newlength: item.length,
+                                newLength: item.length,
                             }),
                         }
                     );
                     if (response.ok) {
                         alert("Changes saved successfully.");
+                        console.log("Post Save:", {
+                            sellerUsername: username,
+                            itemId: item.id,
+                            newName: item.name,
+                            newDescription: item.description,
+                            newPrice: item.initialPrice,
+                            newLength: item.length,
+                          });
                         router.push(`/seller/viewItem?itemId=${item.id}`);
                     } else {
                         const errorData = await response.json();

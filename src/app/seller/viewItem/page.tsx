@@ -21,6 +21,7 @@ interface Item {
     startDate: string;
     endDate: string;
     status: string;
+    length: string;
     image: string;
     description: string;
     bids: Bid[];
