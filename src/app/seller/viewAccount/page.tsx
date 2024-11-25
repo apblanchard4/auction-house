@@ -98,9 +98,9 @@ const SellerAccountPage: React.FC = () => {
       });
 
       const result = await response.json();
-      if (response.ok) {
+      if (result.statusCode === 200) {
         setMessage("Account successfully closed.");
-        router.push("/"); // Redirect after account closure
+        router.push("/"); 
       } else {
         setMessage(result.message || "Failed to close account.");
       }
