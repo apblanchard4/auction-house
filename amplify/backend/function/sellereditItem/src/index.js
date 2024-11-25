@@ -13,9 +13,8 @@ exports.handler = async (event) => {
     const itemId = event.itemId;
     const newName = event.newName ?? null;
     const newDescription = event.newDescription ?? null;
-    const newImage = event.newImage ?? null;
     const newPrice = event.newPrice ?? null;
-    const newStartDate = event.newStartDate ?? null;
+    const newLength = event.newLength ?? null;
 
     console.log('sellerUsername:', sellerUsername);
     console.log('itemId:', itemId);
@@ -50,17 +49,16 @@ exports.handler = async (event) => {
             SET 
                 name = COALESCE(?, name), 
                 description = COALESCE(?, description), 
-                image = COALESCE(?, image),
                 initialPrice = COALESCE(?, initialPrice), 
-                startDate = COALESCE(?, startDate) 
+                length = COALESCE(?, startDate) 
+                currentPrice = COALESCE(?, initialPrice) 
             WHERE id = ? AND sellerUsername = ?`;
 
         await connection.execute(updateQuery, [
             newName,
             newDescription,
-            newImage,
             newPrice,
-            newStartDate,
+            newLength,
             itemId,
             sellerUsername
         ]);

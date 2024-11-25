@@ -34,9 +34,10 @@ function CustomerReviewItems() {
                     }
                 }
             );
-
+            console.log(response);
             const responseData = await response.json();
 
+            console.log(responseData);
             if (response.status !== 200) {
                 const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
                 throw new Error(message);
