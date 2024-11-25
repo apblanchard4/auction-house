@@ -131,6 +131,8 @@ function BuyerPlaceBid() {
             });
 
             const responseData = await response.json();
+            console.log(responseData.statusCode)
+
             if (responseData.statusCode !== 200) {
                 const message = responseData.body ? JSON.parse(responseData.body).message : "Request failed";
                 throw new Error(message);
