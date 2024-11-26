@@ -137,10 +137,11 @@ function SellerViewItem() {
             case "edit":
                 if (item.status === "inactive") {
                     router.push(`/seller/editItem?itemId=${item.id}`);
-                } else {
+
+                  } else {
                     alert("Item is already active and cannot be edited");
-                }
-                break;
+                  }
+                  break;
 
             case "publish":
                 if (item.status !== "inactive") {

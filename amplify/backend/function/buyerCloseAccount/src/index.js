@@ -68,7 +68,7 @@ exports.handler = async (event) => {
       };
     }
 
-    await deleteFromCognito(username);
+   await deleteFromCognito(username);
     await setUserInactive(username);
 
     return {
@@ -128,6 +128,7 @@ const validatePassword = async (username, password) => {
 
     if (rows.length === 0) {
       return false;
+
     }
 
     const user = rows[0];
@@ -167,6 +168,7 @@ const deleteFromCognito = async (username) => {
   try {
     console.log("Deleting user from Cognito...");
     await cognito.adminDeleteUser(params).promise();
+
     console.log('Buyer deleted from Cognito:', username);
   } catch (error) {
     console.error('Error deleting user from Cognito:', error);

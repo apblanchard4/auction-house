@@ -31,33 +31,34 @@ const SellerAccountPage: React.FC = () => {
 
       console.log(user); //TODO: Get rid of after fetch balance implementation
 
-      //TODO: Implement the fetchAccountBalance logic
-      /*
-       try {
- 
-         const response = await fetch(
-           "https://your-api-endpoint/fetchAccountBalance",
-           {
-             method: "POST",
-             headers: {
-               "Authorization": `Bearer ${accessToken}`,
-               "Content-Type": "application/json",
-             },
-             body: JSON.stringify({ sellerUsername: user }),
-           }
-         );
- 
-         const result = await response.json();
- 
-         if (response.ok) {
-           setBalance(`$${result.balance.toFixed(2)}`);
-         } else {
-           setMessage(result.message || "Failed to fetch balance");
-         }
-       } catch {
-         setMessage("An error occurred while fetching balance.");
-       }
-       */
+     //TODO: Implement the fetchAccountBalance logic
+     /*
+      try {
+
+        const response = await fetch(
+          "https://your-api-endpoint/fetchAccountBalance",
+          {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ sellerUsername: user }),
+          }
+        );
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setBalance(`$${result.balance.toFixed(2)}`);
+        } else {
+          setMessage(result.message || "Failed to fetch balance");
+        }
+      } catch {
+        setMessage("An error occurred while fetching balance.");
+      }
+      */
+
     };
 
     const idToken = localStorage.getItem("idToken");
@@ -101,6 +102,7 @@ const SellerAccountPage: React.FC = () => {
       if (result.statusCode === 200) {
         setMessage("Account successfully closed.");
         router.push("/");
+
       } else {
         setMessage(result.message || "Failed to close account.");
       }
