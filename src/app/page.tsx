@@ -41,7 +41,7 @@ const App = () => {
       const buyerSignUpEndpoint = 'https://zenehpt22h.execute-api.us-east-1.amazonaws.com/prod/openBuyerAccount';
       const sellerLogInEndpoint = 'https://pzvpd6xqdh.execute-api.us-east-1.amazonaws.com/prod/loginSellerAccount';
       const buyerLogInEndpoint = 'https://5e1oyazlof.execute-api.us-east-1.amazonaws.com/prod/loginBuyerAccount';
-      const adminLogInEndpoint = 'https://5e1oyazlof.execute-api.us-east-1.amazonaws.com/prod/loginAdminAccount';
+      const adminLogInEndpoint = 'https://lgl67zl7bg.execute-api.us-east-1.amazonaws.com/prod/loginAdminAccount';
 
       let endpoint = '';
       let body;
@@ -57,11 +57,10 @@ const App = () => {
       } else {
         if (username === 'admin') {
           endpoint = adminLogInEndpoint;
-          body = JSON.stringify({ username, password });
         } else {
-          endpoint = userType === 'Seller' ? sellerLogInEndpoint : buyerLogInEndpoint;
-          body = JSON.stringify({ username, password });
+          endpoint = userType === 'Seller' ? sellerLogInEndpoint : buyerLogInEndpoint;     
         }
+        body = JSON.stringify({ username, password });
       }
 
       const response = await fetch(endpoint, {
