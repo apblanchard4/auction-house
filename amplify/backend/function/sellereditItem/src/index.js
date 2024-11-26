@@ -15,6 +15,8 @@ exports.handler = async (event) => {
     const newDescription = event.newDescription ?? null;
     const newPrice = event.newPrice ?? null;
     const newLength = event.newLength ?? null;
+    const newCPrice = event.newCPrice ?? null;
+  
 
     console.log('sellerUsername:', sellerUsername);
     console.log('itemId:', itemId);
@@ -45,13 +47,13 @@ exports.handler = async (event) => {
 
         // Update the item details in the database
         const updateQuery = `
-            UPDATE Item 
+            UPDATE Item
             SET 
                 name = COALESCE(?, name), 
                 description = COALESCE(?, description), 
                 initialPrice = COALESCE(?, initialPrice), 
-                length = COALESCE(?, startDate) 
-                currentPrice = COALESCE(?, initialPrice) 
+                length = COALESCE(?, length),
+                currentPrice = COALESCE(?, initialPrice)
             WHERE id = ? AND sellerUsername = ?`;
 
         await connection.execute(updateQuery, [
@@ -59,9 +61,11 @@ exports.handler = async (event) => {
             newDescription,
             newPrice,
             newLength,
+            newCPrice,
             itemId,
             sellerUsername
         ]);
+
 
         return {
             statusCode: 200,
