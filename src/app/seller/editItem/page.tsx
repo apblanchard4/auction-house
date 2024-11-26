@@ -62,7 +62,7 @@ function SellerEditItem() {
 
                 try {
                     const response = await fetch(
-                        "https://6o8yalu42b.execute-api.us-east-1.amazonaws.com/prod/seller/viewItem",
+                        " https://lpr8qgd76a.execute-api.us-east-1.amazonaws.com/prod/seller/viewItem",
                         {
                             method: "POST",
                             headers: {
