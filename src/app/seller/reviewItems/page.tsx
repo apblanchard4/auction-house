@@ -162,7 +162,7 @@ function SellerReviewItems() {
         alert('Item not found');
       }
     }
-    
+
     // Add other actions here
   };
 

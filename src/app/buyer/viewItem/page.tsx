@@ -61,7 +61,7 @@ function BuyerViewItem() {
 
                 try {
                     const response = await fetch(
-                        "https://ey7y9g41al.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItem",
+                        "https://d4judgu50g.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItem",
                         {
                             method: "POST",
                             headers: {
@@ -145,7 +145,6 @@ function BuyerViewItem() {
             <div className="navigation">
                 <button onClick={() => router.push("/buyer/viewAccount")}>Account</button>
                 <button onClick={() => router.push("/buyer/reviewItems")}>My Items</button>
-                <button onClick={() => router.push("/buyer/addItem")}>Add Item</button>
                 <button onClick={() => router.push("/buyer/viewRecentlySold")}>
                     Recently Sold
                 </button>

@@ -59,9 +59,10 @@ function SellerViewItem() {
                     return;
                 }
 
+
                 try {
                     const response = await fetch(
-                        "https://6o8yalu42b.execute-api.us-east-1.amazonaws.com/prod/seller/viewItem",
+                        "https://lpr8qgd76a.execute-api.us-east-1.amazonaws.com/prod/seller/viewItem",
                         {
                             method: "POST",
                             headers: {
@@ -73,6 +74,7 @@ function SellerViewItem() {
                     );
 
                     const responseData = await response.json();
+                    console.log(responseData);
                     if (response.ok) {
                         const itemData = JSON.parse(responseData.body)[0];
                         if (itemData) {
@@ -135,10 +137,10 @@ function SellerViewItem() {
             case "edit":
                 if (item.status === "inactive") {
                     router.push(`/seller/editItem?itemId=${item.id}`);
-                  } else {
+                } else {
                     alert("Item is already active and cannot be edited");
-                  }
-                  break;
+                }
+                break;
 
             case "publish":
                 if (item.status !== "inactive") {

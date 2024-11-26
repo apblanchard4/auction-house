@@ -61,16 +61,15 @@ const BuyerAccountPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        "https://ubi8lbuq3e.execute-api.us-east-1.amazonaws.com/prod/buyer/getFunds",
+        "https://c649hbuiu7.execute-api.us-east-1.amazonaws.com/prod/buyer/getFunds",
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            body: JSON.stringify({ username: user }),
-          }),
+
+          body: JSON.stringify({ username: user }),
         }
       );
 
@@ -193,15 +192,14 @@ const BuyerAccountPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch("https://dkmbcx22k0.execute-api.us-east-1.amazonaws.com/prod/buyer/addFunds", {
+      const response = await fetch("https://3o946p6awf.execute-api.us-east-1.amazonaws.com/prod/buyer/addFunds", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          body: JSON.stringify({ username: username, amount: Number(fundsToAdd) })
-        }),
+
+        body: JSON.stringify({ username: username, amount: Number(fundsToAdd) }),
       });
 
       const result = await response.json();
@@ -235,7 +233,7 @@ const BuyerAccountPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch("https://vrfs65il1l.execute-api.us-east-1.amazonaws.com/prod/buyer/closeAccount", {
+      const response = await fetch("https://df4xgq609l.execute-api.us-east-1.amazonaws.com/prod/buyer/closeAccount", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${accessToken}`,

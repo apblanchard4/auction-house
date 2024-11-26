@@ -26,7 +26,7 @@ exports.handler = async () => {
     const currentDate = new Date();
 
     for (const item of items) {
-      const { id, name, initialPrice, startDate, length, image, description, currentPrice } = item;
+      const { id, name, initialPrice, startDate, length, image, description } = item;
       const startDateObj = new Date(startDate);
       const endDateObj = new Date(startDate);
       endDateObj.setDate(endDateObj.getDate() + length);
@@ -56,7 +56,6 @@ exports.handler = async () => {
           endDate: endDateObj.toISOString().split('T')[0],
           image: signedImageUrl,
           description,
-          currentPrice,
         });
       }
     }

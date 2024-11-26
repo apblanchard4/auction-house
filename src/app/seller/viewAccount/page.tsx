@@ -31,33 +31,33 @@ const SellerAccountPage: React.FC = () => {
 
       console.log(user); //TODO: Get rid of after fetch balance implementation
 
-     //TODO: Implement the fetchAccountBalance logic
-     /*
-      try {
-
-        const response = await fetch(
-          "https://your-api-endpoint/fetchAccountBalance",
-          {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ sellerUsername: user }),
-          }
-        );
-
-        const result = await response.json();
-
-        if (response.ok) {
-          setBalance(`$${result.balance.toFixed(2)}`);
-        } else {
-          setMessage(result.message || "Failed to fetch balance");
-        }
-      } catch {
-        setMessage("An error occurred while fetching balance.");
-      }
-      */
+      //TODO: Implement the fetchAccountBalance logic
+      /*
+       try {
+ 
+         const response = await fetch(
+           "https://your-api-endpoint/fetchAccountBalance",
+           {
+             method: "POST",
+             headers: {
+               "Authorization": `Bearer ${accessToken}`,
+               "Content-Type": "application/json",
+             },
+             body: JSON.stringify({ sellerUsername: user }),
+           }
+         );
+ 
+         const result = await response.json();
+ 
+         if (response.ok) {
+           setBalance(`$${result.balance.toFixed(2)}`);
+         } else {
+           setMessage(result.message || "Failed to fetch balance");
+         }
+       } catch {
+         setMessage("An error occurred while fetching balance.");
+       }
+       */
     };
 
     const idToken = localStorage.getItem("idToken");
@@ -88,7 +88,7 @@ const SellerAccountPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch("https://g0j0hkp2ll.execute-api.us-east-1.amazonaws.com/prod/seller/closeAccount", {
+      const response = await fetch("https://i7n2snzpg5.execute-api.us-east-1.amazonaws.com/prod/seller/closeAccount", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${accessToken}`,
@@ -100,7 +100,7 @@ const SellerAccountPage: React.FC = () => {
       const result = await response.json();
       if (result.statusCode === 200) {
         setMessage("Account successfully closed.");
-        router.push("/"); 
+        router.push("/");
       } else {
         setMessage(result.message || "Failed to close account.");
       }

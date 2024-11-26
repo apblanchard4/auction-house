@@ -61,7 +61,7 @@ function BuyerPlaceBid() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             const response = await fetch(
-                `https://it5tog3cy8.execute-api.us-east-1.amazonaws.com/prod/buyer/placeBid`,
+                `https://0x670tndh9.execute-api.us-east-1.amazonaws.com/prod/buyer/placeBid`,
                 {
                     method: 'POST',
                     headers: {
@@ -126,7 +126,7 @@ function BuyerPlaceBid() {
                 return;
             }
 
-            const response = await fetch(`https://2vnz0axf3c.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItems`, {
+            const response = await fetch(`https://tq89ogqnr2.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItems`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
