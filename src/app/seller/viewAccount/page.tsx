@@ -58,6 +58,7 @@ const SellerAccountPage: React.FC = () => {
         setMessage("An error occurred while fetching balance.");
       }
       */
+
     };
 
     const idToken = localStorage.getItem("idToken");
@@ -88,7 +89,7 @@ const SellerAccountPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch("https://g0j0hkp2ll.execute-api.us-east-1.amazonaws.com/prod/seller/closeAccount", {
+      const response = await fetch("https://i7n2snzpg5.execute-api.us-east-1.amazonaws.com/prod/seller/closeAccount", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${accessToken}`,
@@ -100,7 +101,8 @@ const SellerAccountPage: React.FC = () => {
       const result = await response.json();
       if (result.statusCode === 200) {
         setMessage("Account successfully closed.");
-        router.push("/"); 
+        router.push("/");
+
       } else {
         setMessage(result.message || "Failed to close account.");
       }

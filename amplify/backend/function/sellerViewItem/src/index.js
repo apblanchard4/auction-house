@@ -8,16 +8,18 @@ const s3 = new AWS.S3();
  */
 
 exports.handler = async (event) => {
+  const sellerUsername = event.sellerUsername;
   const itemId = event.itemId;
 
-  if (!itemId) {
+  if (!sellerUsername || !itemId) {
     return {
       statusCode: 400,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*"
       },
-      body: JSON.stringify({ message: 'Missing item id' }),
+      body: JSON.stringify({ message: 'Missing seller username or item id' }),
+
     };
   }
 
@@ -38,8 +40,9 @@ exports.handler = async (event) => {
         FROM 
             Item
         WHERE 
+            sellerUsername = ? AND
             id = ?`,
-      [itemId]
+      [sellerUsername, itemId]
     );
 
     const [bids] = await connection.execute(

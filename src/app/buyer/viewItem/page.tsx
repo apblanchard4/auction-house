@@ -61,7 +61,7 @@ function BuyerViewItem() {
 
                 try {
                     const response = await fetch(
-                        "https://ey7y9g41al.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItem",
+                        "https://d4judgu50g.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItem",
                         {
                             method: "POST",
                             headers: {
@@ -119,6 +119,8 @@ function BuyerViewItem() {
     }
 
     function placeBid(id: string, currentPrice: number, bids: Bid[]): void {
+        //get current date and check if the auction has ended
+
         if (bids.length > 0) {
             if (bids[bids.length - 1].buyerUsername.toLowerCase() === username) {
                 alert("You are the highest bidder for this item.");
@@ -143,7 +145,9 @@ function BuyerViewItem() {
             <div className="navigation">
                 <button onClick={() => router.push("/buyer/viewAccount")}>Account</button>
                 <button onClick={() => router.push("/buyer/reviewItems")}>My Items</button>
-                <button onClick={() => router.push("/buyer/addItem")}>Add Item</button>
+                <button onClick={() => router.push("/buyer/viewRecentlySold")}>
+                    Recently Sold
+                </button>
             </div>
 
             {/* Main Content */}
@@ -195,9 +199,10 @@ function BuyerViewItem() {
                                 </p>
                             </div>
                         ))}
+
                         <div style={{ textAlign: 'center' }}>
                             <button
-                                className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition"
+                                className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" disabled={item.endDate < new Date().toISOString()}
                                 onClick={() => placeBid(item.id, item.currentPrice, item.bids)}
                             >
                                 Place Bid

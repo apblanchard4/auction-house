@@ -44,8 +44,12 @@ function BuyerPlaceBid() {
     const placeBid = async () => {
         // Validate bid amount
         if (bidAmount <= currentCost) {
-            alert("Bid must be greater than the current cost.");
-            return;
+            if (lastBidAmount == 0) {
+                alert("Bid must be greater than the initial price.");
+            }
+            else {
+                alert("Bid must be at least $1 higher than the current cost.");
+            }
         }
 
         if (lastBidAmount && bidAmount <= lastBidAmount) {
@@ -57,7 +61,7 @@ function BuyerPlaceBid() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             const response = await fetch(
-                `https://it5tog3cy8.execute-api.us-east-1.amazonaws.com/prod/buyer/placeBid`,
+                `https://0x670tndh9.execute-api.us-east-1.amazonaws.com/prod/buyer/placeBid`,
                 {
                     method: 'POST',
                     headers: {
@@ -122,7 +126,7 @@ function BuyerPlaceBid() {
                 return;
             }
 
-            const response = await fetch(`https://2vnz0axf3c.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItems`, {
+            const response = await fetch(`https://tq89ogqnr2.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItems`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -149,7 +153,7 @@ function BuyerPlaceBid() {
                     setLastBidAmount(lastBid.amount);
                     setBidAmount(lastBid.amount + 1);  // Set the bid amount to last bid's amount + 1
                 } else {
-                    setLastBidAmount(null);  // No bids, so set the last bid amount to null
+                    setLastBidAmount(0);  // No bids, so set the last bid amount to null
                     setBidAmount(item.initialPrice);  // Use initial price as the starting point for bidding
                 }
             }
@@ -169,7 +173,9 @@ function BuyerPlaceBid() {
 
             <div className="navigation">
                 <button onClick={() => router.push('/buyer/viewAccount')}>Account</button>
-                <button className="active" onClick={() => router.push('/buyer/reviewItems')}>My Items</button>
+                <button className="active" onClick={() => router.push('/buyer/reviewItems')}>My Items</button>  <button onClick={() => router.push("/buyer/viewRecentlySold")}>
+                    Recently Sold
+                </button>
             </div>
 
             <div className="bg-gray-100 p-6 rounded-md shadow-md">

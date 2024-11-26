@@ -127,7 +127,8 @@ const validatePassword = async (username, password) => {
     await connection.end();
 
     if (rows.length === 0) {
-     return false; 
+      return false;
+
     }
 
     const user = rows[0];
@@ -166,7 +167,8 @@ const deleteFromCognito = async (username) => {
 
   try {
     console.log("Deleting user from Cognito...");
-   await cognito.adminDeleteUser(params).promise();
+    await cognito.adminDeleteUser(params).promise();
+
     console.log('Buyer deleted from Cognito:', username);
   } catch (error) {
     console.error('Error deleting user from Cognito:', error);
@@ -178,7 +180,7 @@ const setUserInactive = async (username) => {
   try {
     console.log("Setting user to inactive...");
     const query = 'UPDATE Buyer SET inactive = 1 WHERE username = ?';
-   await pool.execute(query, [username]);
+    await pool.execute(query, [username]);
     console.log('User set to inactive in MySQL:', username);
   } catch (error) {
     console.error('Error setting user to inactive:', error);

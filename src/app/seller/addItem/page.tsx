@@ -28,7 +28,7 @@ interface Item {
 
 function AddItem() {
     const router = useRouter();
-    
+
     const [item, setItem] = useState<Item>({
         id: "",
         name: "",
@@ -51,22 +51,22 @@ function AddItem() {
             alert("You must log in first.");
             router.push("/");
             return;
-            
+
         }
         const idToken = localStorage.getItem("idToken");
-            if (idToken) {
-                const decodedUsername = getUsernameFromToken(idToken);
-                if (decodedUsername) {
-                    setUsername(decodedUsername);
-                } else {
-                    alert("Invalid token.");
-                    router.push("/");
-                }
+        if (idToken) {
+            const decodedUsername = getUsernameFromToken(idToken);
+            if (decodedUsername) {
+                setUsername(decodedUsername);
             } else {
-                alert("You must log in first.");
+                alert("Invalid token.");
                 router.push("/");
             }
-        }, [router]);
+        } else {
+            alert("You must log in first.");
+            router.push("/");
+        }
+    }, [router]);
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
@@ -80,49 +80,49 @@ function AddItem() {
     async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (!file) return;
-      
+
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) {
-          alert("You must log in first.");
-          return;
+            alert("You must log in first.");
+            return;
         }
-      
+
         try {
-          // Request a pre-signed URL from the backend
-          const response = await fetch(
-            "https://auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod.s3.amazonaws.com/seller/getPresignedURL",
-            {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ fileName: file.name }),
+            // Request a pre-signed URL from the backend
+            const response = await fetch(
+                "https://auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod.s3.amazonaws.com/seller/getPresignedURL",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ fileName: file.name }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to get presigned URL.");
             }
-          );
-      
-          if (!response.ok) {
-            throw new Error("Failed to get presigned URL.");
-          }
-      
-          const { presignedUrl, fileUrl } = await response.json();
-      
-          // Upload the file to S3
-          await fetch(presignedUrl, {
-            method: "PUT",
-            body: file,
-            headers: { "Content-Type": file.type },
-          });
-      
-          alert("Image uploaded successfully.");
-          // Save the file URL for later use (e.g., as part of the item data)
-          setImageUrl(fileUrl); // Save the public S3 URL for this image
+
+            const { presignedUrl, fileUrl } = await response.json();
+
+            // Upload the file to S3
+            await fetch(presignedUrl, {
+                method: "PUT",
+                body: file,
+                headers: { "Content-Type": file.type },
+            });
+
+            alert("Image uploaded successfully.");
+            // Save the file URL for later use (e.g., as part of the item data)
+            setImageUrl(fileUrl); // Save the public S3 URL for this image
         } catch (error) {
-          console.error("Error uploading image:", error);
-          alert("Image upload failed.");
+            console.error("Error uploading image:", error);
+            alert("Image upload failed.");
         }
-      }
-      
+    }
+
     // Handle add item action
     async function handleAction() {
         const accessToken = localStorage.getItem("accessToken");
@@ -131,7 +131,7 @@ function AddItem() {
             router.push("/");
             return;
         }
-        
+
         if (!item.name || !item.initialPrice || !item.length || !item.description || !imageUrl) {
             alert("Please fill in all required fields.");
             return;
@@ -139,7 +139,7 @@ function AddItem() {
 
         try {
             const response = await fetch(
-                "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod/selleraddItem-prod", // Change API endpoint for adding
+                "https://1tlepvbqtd.execute-api.us-east-1.amazonaws.com/prod/seller/addItem",
                 {
                     method: "POST",
                     headers: {
@@ -260,12 +260,12 @@ function AddItem() {
                         />
                     </div>
                     <span className="font-semibold image-label">Input Image URL: </span>
-                        <input
-                             type="file"
-                             accept="image/*"
-                             onChange={handleImageUpload}
-                             className="image-field"
-                        />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="image-field"
+                    />
                     <div>
                     </div>
                 </div>
