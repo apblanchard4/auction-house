@@ -16,7 +16,7 @@ exports.handler = async (event) => {
     const newPrice = event.newPrice ?? null;
     const newLength = event.newLength ?? null;
     const newCPrice = event.newCPrice ?? null;
-
+  
 
     console.log('sellerUsername:', sellerUsername);
     console.log('itemId:', itemId);

@@ -100,7 +100,7 @@ const checkActiveBids = async (username) => {
   console.log("checking active bids")
 
   try{
-    const query = 'SELECT COUNT(*) AS activeBids FROM Bid JOIN Item ON Bid.itemName = Item.name WHERE Bid.buyerUsername = ? AND Item.frozen = 0 AND Item.fulfilled = 0';
+    const query = 'SELECT COUNT(*) AS activeBids FROM Bid JOIN Item ON Bid.itemId = Item.Id WHERE Bid.buyerUsername = ? AND Item.frozen = 0 AND Item.fulfilled = 0';
     const [rows] = await pool.execute(query, [username]);
     return rows[0].activeBids > 0;
   } catch(error){
