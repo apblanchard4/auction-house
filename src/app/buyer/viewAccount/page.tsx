@@ -14,13 +14,13 @@ function getUsernameFromToken(idToken: string) {
 }
 
 interface Bid {
-    itemName: string;
-    amount: number;
+  itemName: string;
+  amount: number;
 }
 
 interface Purchase {
-    itemName: string;
-    amount: number;
+  itemName: string;
+  amount: number;
 }
 
 const BuyerAccountPage: React.FC = () => {
@@ -69,17 +69,18 @@ const BuyerAccountPage: React.FC = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            body: JSON.stringify({ username: user }), 
-          }),        }
+            body: JSON.stringify({ username: user }),
+          }),
+        }
       );
 
       const result = await response.json();
       if (response.ok) {
         const parsedBody = JSON.parse(result.body);
-  
+
         const parsedFunds = parseFloat(parsedBody.funds);
         if (!isNaN(parsedFunds)) {
-          setBalance(`$${parsedFunds.toFixed(2)}`); 
+          setBalance(`$${parsedFunds.toFixed(2)}`);
         } else {
           setMessage("Invalid funds value received from the server.");
         }
@@ -192,25 +193,25 @@ const BuyerAccountPage: React.FC = () => {
     }
 
     try {
-        const response = await fetch("https://dkmbcx22k0.execute-api.us-east-1.amazonaws.com/prod/buyer/addFunds", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              body: JSON.stringify({ username: username, amount: Number(fundsToAdd) }) 
-            }),
-          });
+      const response = await fetch("https://dkmbcx22k0.execute-api.us-east-1.amazonaws.com/prod/buyer/addFunds", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          body: JSON.stringify({ username: username, amount: Number(fundsToAdd) })
+        }),
+      });
 
       const result = await response.json();
       if (response.ok) {
         const parsedBody = JSON.parse(result.body);
-        
+
         const newFunds = parseFloat(parsedBody.newFunds);
         if (!isNaN(newFunds)) {
-          setBalance(`$${newFunds.toFixed(2)}`); 
-          setFundsToAdd(""); 
+          setBalance(`$${newFunds.toFixed(2)}`);
+          setFundsToAdd("");
         } else {
           setMessage("Invalid funds value received from the server.");
         }
@@ -246,7 +247,7 @@ const BuyerAccountPage: React.FC = () => {
       const result = await response.json();
       if (result.statusCode === 200) {
         setMessage("Account successfully closed.");
-        router.push("/"); 
+        router.push("/");
       } else {
         setMessage(result.message || "Failed to close account.");
       }
@@ -268,7 +269,9 @@ const BuyerAccountPage: React.FC = () => {
         <button className="active" onClick={() => router.push("/buyer/viewAccount")}>
           Account
         </button>
-        <button onClick={() => router.push("/buyer/reviewItems")}>My Items</button>
+        <button onClick={() => router.push("/buyer/reviewItems")}>My Items</button>  <button onClick={() => router.push("/buyer/viewRecentlySold")}>
+          Recently Sold
+        </button>
       </div>
 
       <main>

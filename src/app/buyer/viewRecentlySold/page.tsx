@@ -24,7 +24,7 @@ function getUsernameFromToken(idToken: string) {
     return null;
 }
 
-function BuyerReviewItems() {
+function BuyerViewRecentlySoldItems() {
     const router = useRouter();
     const [items, setItems] = useState<Item[]>([]);
     const [filteredItems, setFilteredItems] = useState<Item[]>([]);
@@ -96,7 +96,7 @@ function BuyerReviewItems() {
             }
 
             try {
-                const response = await fetch(`https://2vnz0axf3c.execute-api.us-east-1.amazonaws.com/prod/buyer/viewItems`, {
+                const response = await fetch(`https://eyrwim1px2.execute-api.us-east-1.amazonaws.com/prod/buyer/viewRecentlySold`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -154,10 +154,9 @@ function BuyerReviewItems() {
 
             <div className="navigation">
                 <button onClick={() => router.push("/buyer/viewAccount")}>Account</button>
-                <button className="active" onClick={() => router.push("/buyer/reviewItems")}>
+                <button onClick={() => router.push("/buyer/reviewItems")}>
                     My Items
-                </button>
-                <button onClick={() => router.push("/buyer/viewRecentlySold")}>
+                </button>  <button className="active" onClick={() => router.push("/buyer/viewRecentlySold")}>
                     Recently Sold
                 </button>
             </div>
@@ -248,4 +247,4 @@ function BuyerReviewItems() {
     );
 }
 
-export default BuyerReviewItems;
+export default BuyerViewRecentlySoldItems;
