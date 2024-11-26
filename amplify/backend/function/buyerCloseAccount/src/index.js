@@ -40,9 +40,24 @@ exports.handler = async (event) => {
       };
     }
 
-    const hasActiveBids = await checkActiveBids(username);
+    const passwordValid = await validatePassword(username, password);
+    isPasswordValid = JSON.stringify(passwordValid)
+    console.log("Validate pw" + isPasswordValid)
 
-    if(hasActiveBids){
+
+    if (isPasswordValid === "false") {
+      return {
+        statusCode: 401,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+        },
+        body: JSON.stringify({ message: 'Invalid password' }),
+      };
+    }
+
+    const hasActiveBids = await checkActiveBids(username);
+    if (hasActiveBids) {
       return {
         statusCode: 400,
         headers: {
@@ -52,30 +67,29 @@ exports.handler = async (event) => {
         body: JSON.stringify({ message: 'Buyer has active bids' }),
       };
     }
-  
 
-  await deleteFromCognito(username);
-  await setUserInactive(username);
+   await deleteFromCognito(username);
+    await setUserInactive(username);
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*",
-    },
-    body: JSON.stringify({ message: 'Buyer account closed' }),
-  };
-} catch (error) {
-  console.error('Error closing buyer account:', error);
-  return {
-    statusCode: 500,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*",
-    },
-    body: JSON.stringify({ message: 'Internal server error' }),
-  }; 
-}
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      body: JSON.stringify({ message: 'Buyer account closed' }),
+    };
+  } catch (error) {
+    console.error('Error closing buyer account:', error);
+    return {
+      statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      body: JSON.stringify({ message: 'Internal server error' }),
+    };
+  }
 };
 
 const checkUserExists = async (username) => {
@@ -85,25 +99,60 @@ const checkUserExists = async (username) => {
   };
 
   try {
-    console.log("checking if user exists")
+    console.log("Checking if user exists in Cognito...");
     await cognito.adminGetUser(params).promise();
-    return true; 
+    return true;
   } catch (error) {
     if (error.code === 'UserNotFoundException') {
-      return false; 
+      return false;
     }
     throw error;
   }
 };
 
-const checkActiveBids = async (username) => {
-  console.log("checking active bids")
+const validatePassword = async (username, password) => {
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    });
 
-  try{
-    const query = 'SELECT COUNT(*) AS activeBids FROM Bid JOIN Item ON Bid.itemId = Item.Id WHERE Bid.buyerUsername = ? AND Item.frozen = 0 AND Item.fulfilled = 0';
+    const [rows] = await connection.execute(
+      'SELECT password FROM Buyer WHERE username = ?',
+      [username]
+    );
+
+    await connection.end();
+
+    if (rows.length === 0) {
+     return false; 
+    }
+
+    const user = rows[0];
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    console.log("PW Match" + passwordMatch)
+    return passwordMatch
+
+  } catch (error) {
+    console.error('Error validating password:', error);
+    throw error;
+  }
+};
+
+const checkActiveBids = async (username) => {
+  try {
+    const query = `
+      SELECT COUNT(*) AS activeBids 
+      FROM Bid 
+      JOIN Item ON Bid.itemId = Item.Id 
+      WHERE Bid.buyerUsername = ? AND Item.frozen = 0 AND Item.fulfilled = 0
+    `;
     const [rows] = await pool.execute(query, [username]);
     return rows[0].activeBids > 0;
-  } catch(error){
+  } catch (error) {
     console.error('Error checking active bids:', error);
     throw error;
   }
@@ -116,22 +165,23 @@ const deleteFromCognito = async (username) => {
   };
 
   try {
-    await cognito.adminDeleteUser(params).promise();
+    console.log("Deleting user from Cognito...");
+   await cognito.adminDeleteUser(params).promise();
     console.log('Buyer deleted from Cognito:', username);
   } catch (error) {
-    console.error('Error deleting user from cognito:', error);
+    console.error('Error deleting user from Cognito:', error);
     throw error;
   }
 };
 
 const setUserInactive = async (username) => {
   try {
+    console.log("Setting user to inactive...");
     const query = 'UPDATE Buyer SET inactive = 1 WHERE username = ?';
-    await pool.execute(query, [username]);
+   await pool.execute(query, [username]);
     console.log('User set to inactive in MySQL:', username);
-  } catch(error){
+  } catch (error) {
     console.error('Error setting user to inactive:', error);
     throw error;
   }
 };
-
