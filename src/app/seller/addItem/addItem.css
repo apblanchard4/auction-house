@@ -89,7 +89,7 @@
   
   .add-button {
     position: absolute; /* Use absolute or relative positioning if needed */
-    right: 110px; /* Moves the button 120px away from the right edge */
+    right: 12%; /* Moves the button 120px away from the right edge */
     top: 150px; /* Adjust vertical positioning */
   }
 
@@ -101,12 +101,12 @@
 
   .image-label {
     position: absolute; /* Use absolute or relative positioning if needed */
-    right: 1100px; /* Moves the button 120px away from the right edge */
+    right: 80%; /* Moves the button 120px away from the right edge */
     top: 200px; /* Adjust vertical positioning */
   }
   
   .image-field {
     position: absolute; /* Use absolute or relative positioning if needed */
-    right: 790px; /* Moves the button 120px away from the right edge */
+    right: 55%; /* Moves the button 120px away from the right edge */
     top: 197px; /* Adjust vertical positioning */
   }
