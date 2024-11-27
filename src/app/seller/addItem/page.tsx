@@ -1,7 +1,7 @@
 "use client";
 import AWS from 'aws-sdk';
 
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
@@ -97,19 +97,17 @@ function AddItem() {
         }
 
         const fileName = `${username}-${Date.now()}-${file.name}`; // Unique file name
-        const bucketName = "auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod"; // Replace with your bucket name
-        const region = "us-east-1"; // Replace with your AWS region (e.g., us-east-1)
+        const bucketName = "auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod";
         const params = {
             Bucket: bucketName,
             Key: `uploads/images/${fileName}`,
             Body: file,
-            ContentType: file.type, // Ensure correct file type
+            ContentType: file.type,
         };
 
         try {
-            // Upload the file to S3
             const uploadResult = await s3.upload(params).promise();
-
+            console.log(uploadResult)
             // Construct the S3 URI
             const s3Uri = `s3://${bucketName}/uploads/images/${fileName}`;
 
