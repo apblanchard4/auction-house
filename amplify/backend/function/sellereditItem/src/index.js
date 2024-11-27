@@ -45,6 +45,26 @@ exports.handler = async (event) => {
         connection = await mysql.createConnection(connectConfig);
         console.log('Connection to database successful');
 
+         // Check if the new name already exists for another item
+         if (newName) {
+            const checkNameQuery = `
+                SELECT COUNT(*) AS count 
+                FROM Item 
+                WHERE name = ? AND id != ?`;
+            const [rows] = await connection.execute(checkNameQuery, [newName, itemId]);
+
+            if (rows[0].count > 0) {
+                return {
+                    statusCode: 400,
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Headers": "*"
+                    },
+                    body: JSON.stringify({ message: 'An item with this name already exists' }),
+                };
+            }
+        }
+
         // Update the item details in the database
         const updateQuery = `
             UPDATE Item

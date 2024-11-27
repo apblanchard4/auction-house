@@ -8,10 +8,10 @@ const s3 = new AWS.S3();
  */
 exports.handler = async (event) => {
   try {
-    const { name, description, initialPrice, length, image, imageFilename, sellerUsername } = JSON.parse(event.body);
+    const { sellerUsername, newName, newDescription, initialPrice, newLength, newImage } = event;
 
     // Validate input
-    if (!name || !description || !initialPrice || !length || !image || !imageFilename || !sellerUsername) {
+    if (!newName || !newDescription || !initialPrice || !newLength || !newImage || !sellerUsername) {
       return {
         statusCode: 400,
         headers: {
@@ -22,21 +22,31 @@ exports.handler = async (event) => {
       };
     }
 
-    // Upload image to S3
-    const bucketName = process.env.S3_BUCKET_NAME;
-    const imageKey = `images/${Date.now()}_${imageFilename}`;
-    const imageBuffer = Buffer.from(image, 'base64');
+    // Validate initial price
+    if (parseFloat(initialPrice) < 1) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Initial price must be at least $1' }),
+      };
+    }
 
-    await s3.upload({
-      Bucket: bucketName,
-      Key: imageKey,
-      Body: imageBuffer,
-      ContentType: 'image/jpeg', // Adjust based on expected file type
-    }).promise();
+    // Validate auction length
+    if (parseInt(newLength) < 1) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Auction length must be at least 1 day' }),
+      };
+    }
 
-    const s3ImageUrl = `s3://${bucketName}/${imageKey}`;
-
-    // Save item to the database
+    // Database connection configuration
     const connectConfig = {
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -46,13 +56,44 @@ exports.handler = async (event) => {
 
     const connection = await mysql.createConnection(connectConfig);
 
+    // Check for duplicate item name
+    const [existingItem] = await connection.execute(
+      `SELECT id FROM Item WHERE name = ? AND sellerUsername = ?`,
+      [newName, sellerUsername]
+    );
+
+    if (existingItem.length > 0) {
+      await connection.end();
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'An item with this name already exists for the seller' }),
+      };
+    }
+
+    // Query to insert a new item into the database
     const query = `
-      INSERT INTO Item (name, description, initialPrice, currentPrice, length, image, sellerUsername) 
-      VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      INSERT INTO Item (name, description, initialPrice, currentPrice, length, image, sellerUsername, published, archived, frozen, fulfilled) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    const values = [
+      newName,
+      newDescription,
+      initialPrice,
+      initialPrice, // Assuming the initial price is the current price
+      newLength,
+      newImage,
+      sellerUsername,
+      false, // Default value for published
+      false, // Default value for archived
+      false, // Default value for frozen
+      false  // Default value for fulfilled
+    ];
 
-    const values = [name, description, initialPrice, initialPrice, length, s3ImageUrl, sellerUsername];
     await connection.execute(query, values);
-
     await connection.end();
 
     return {
