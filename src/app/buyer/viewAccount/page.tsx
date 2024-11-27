@@ -92,7 +92,6 @@ const BuyerAccountPage: React.FC = () => {
     }
   };
 
-  // Fetch active bids (placeholder for next iteration)
   const fetchActiveBids = async (user: string) => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
@@ -102,40 +101,44 @@ const BuyerAccountPage: React.FC = () => {
     }
     console.log(user);
     try {
-      // Placeholder logic until next iteration
-      const mockBids = [
-        { itemName: "Mock Item A", amount: 45.99 },
-        { itemName: "Mock Item B", amount: 75.5 },
-      ];
-      setActiveBids(mockBids);
-
-      // Uncomment and replace with lambda in next iteration
-      /*
       const response = await fetch(
-        "https://your-lambda-endpoint/buyer/getActiveBids",
+        "https://uynxrlmukd.execute-api.us-east-1.amazonaws.com/prod/buyer/viewActiveBids",
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: user }),
+          body: JSON.stringify({ buyerUsername: user }),
         }
       );
 
       const result = await response.json();
       if (response.ok) {
-        setActiveBids(result.activeBids || []);
+        let bids = parseBids(result.body);
+        setActiveBids(bids || []);
       } else {
         setMessage(result.message || "Failed to fetch active bids.");
       }
-      */
+      
     } catch {
       setMessage("An error occurred while fetching active bids.");
     }
   };
 
-  // Fetch purchases (full implementation in next iteration)
+  const parseBids = (body: any) => {
+    console.log(body);
+    try {
+      return body.map((item: { name: string; amount: string }) => ({
+        itemName: item.name,
+        amount: parseFloat(item.amount),
+      }));
+    } catch (error) {
+      console.error("Error parsing purchases:", error);
+      return [];
+    }
+  };
+
   const fetchPurchases = async (user: string) => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
@@ -144,39 +147,45 @@ const BuyerAccountPage: React.FC = () => {
       return;
     }
     console.log(user);
-    try {
-      // Placeholder logic until next iteration
-      const mockPurchases = [
-        { itemName: "Mock Item C", amount: 120.0 },
-        { itemName: "Mock Item D", amount: 250.0 },
-      ];
-      setPurchases(mockPurchases);
-
-      // Uncomment and replace with lambda in next iteration
-      /*
+    try {      
       const response = await fetch(
-        "https://your-lambda-endpoint/buyer/getPurchases",
+        "https://zn9hxjy5a7.execute-api.us-east-1.amazonaws.com/prod/buyer/reviewPurchases",
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: user }),
+          body: JSON.stringify({ buyerUsername: user }),
         }
       );
 
       const result = await response.json();
       if (response.ok) {
-        setPurchases(result.purchases || []);
+        let purchases = parsePurchases(result.body);
+        setPurchases(purchases || []);
       } else {
         setMessage(result.message || "Failed to fetch purchases.");
       }
-      */
+      
     } catch {
       setMessage("An error occurred while fetching purchases.");
     }
   };
+
+  const parsePurchases = (body: any) => {
+    console.log(body);
+    try {
+      return body.map((item: { name: string; amount: string }) => ({
+        itemName: item.name,
+        amount: parseFloat(item.amount),
+      }));
+    } catch (error) {
+      console.error("Error parsing purchases:", error);
+      return [];
+    }
+  };
+
 
   const handleAddFunds = async () => {
     if (!fundsToAdd || isNaN(Number(fundsToAdd))) {
