@@ -171,7 +171,8 @@ function SellerViewItem() {
                     alert("An error occurred while publishing the item.");
                 }
                 break;
-
+            
+            //Neds Fixing at some point
             case "unpublish":
                 if (item.status !== "active") {
                     alert("Item is already unpublished.");
