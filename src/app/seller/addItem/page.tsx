@@ -1,7 +1,7 @@
 "use client";
 import AWS from 'aws-sdk';
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
@@ -38,7 +38,7 @@ interface Item {
 
 function AddItem() {
     const router = useRouter();
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
+
 
     const [item, setItem] = useState<Item>({
         id: "",
@@ -183,10 +183,6 @@ function AddItem() {
                     image: "",
                     description: "",
                 });
-                setImageUrl(null); // Reset the image URL
-                if (fileInputRef.current) {
-                    fileInputRef.current.value = ""; // Clear the file input
-                }
                 router.push("/seller/reviewItems");
             } else {
                 const errorData = await response.json();
