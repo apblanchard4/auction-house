@@ -112,6 +112,7 @@ const BuyerAccountPage: React.FC = () => {
           body: JSON.stringify({ buyerUsername: user }),
         }
       );
+      
 
       const result = await response.json();
       if (response.ok) {
