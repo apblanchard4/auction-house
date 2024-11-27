@@ -41,7 +41,7 @@ function SellerEditItem() {
     const [itemId, setItemId] = useState<string | null>(null);
     const [item, setItem] = useState<Item | null>(null);
     const [username, setUsername] = useState<string | null>(null);
-    const [priceError, setPriceError] = useState<string | null>(null);
+    //const [priceError, setPriceError] = useState<string | null>(null);
 
     // Get itemId from search params (only in client-side)
     useEffect(() => {
@@ -78,7 +78,6 @@ function SellerEditItem() {
                     if (response.ok) {
                         const itemData = JSON.parse(responseData.body)[0];
                         if (itemData) {
-                            // Replace S3 URL with public URL
                             itemData.image = itemData.image.replace(
                                 "s3://",
                                 "https://auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod.s3.amazonaws.com/"
