@@ -273,7 +273,7 @@ function AddItem() {
                             placeholder="Auction Length (days)"
                         />
                     </div>
-                    <span className="font-semibold image-label">Input Image URL: </span>
+                    <span className="font-semibold image-label">Input Image File: </span>
                     <input
                         type="file"
                         accept="image/*"
