@@ -96,7 +96,7 @@ function BuyerViewRecentlySoldItems() {
             }
 
             try {
-                const response = await fetch(`https://eyrwim1px2.execute-api.us-east-1.amazonaws.com/prod/buyer/viewRecentlySold`, {
+                const response = await fetch(`https://ezygj3fb3j.execute-api.us-east-1.amazonaws.com/prod/buyer/viewRecentlySold`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${accessToken}`,

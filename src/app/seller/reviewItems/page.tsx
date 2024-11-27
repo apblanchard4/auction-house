@@ -150,6 +150,7 @@ function SellerReviewItems() {
         alert('An error occurred while publishing the item');
       }
     }
+
     if (action === 'Edit') {
       const item = filteredItems.find((item) => item.id === itemId);
       if (item) {
@@ -162,8 +163,39 @@ function SellerReviewItems() {
         alert('Item not found');
       }
     }
+
+    if (action === 'Remove') {
+      const item = filteredItems.find((item) => item.id === itemId);
+      if (item?.status !== 'Inactive') {
+        alert('Item is not inactive and cannot be removed');
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://dezgzbir75.execute-api.us-east-1.amazonaws.com/prod/seller/removeInactiveItem`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
+          }
+        );
+        if (response.ok) {
+          alert("Item removed successfully.");
+          router.push("/seller/reviewItems");
+        } else {
+          const result = await response.json();
+          alert(result.message || "Failed to remove item.");
+        }
+      } catch (error) {
+        alert("An error occurred while removing the item." + error);
+      }
+    }
     // Add other actions here
-  };
+  }
 
   useEffect(() => {
     const fetchItems = async (user: string) => {
@@ -254,6 +286,7 @@ function SellerReviewItems() {
         <button>🔍</button>
       </div>
 
+
       <table className="item-table">
         <thead>
           <tr>
@@ -291,6 +324,7 @@ function SellerReviewItems() {
                     <option value="Fulfill">Fulfill Item</option>
                     <option value="Unfreeze">Unfreeze</option>
                     <option value="Archive">Archive Item</option>
+                    <option value="Remove">Remove Item</option>
                   </select>
                 </td>
                 <td>

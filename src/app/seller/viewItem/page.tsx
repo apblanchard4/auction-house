@@ -134,10 +134,10 @@ function SellerViewItem() {
                 if (item.status === "inactive") {
                     router.push(`/seller/editItem?itemId=${item.id}`);
 
-                  } else {
+                } else {
                     alert("Item is already active and cannot be edited");
-                  }
-                  break;
+                }
+                break;
 
             case "publish":
                 if (item.status !== "inactive") {
@@ -165,6 +165,35 @@ function SellerViewItem() {
                     }
                 } catch {
                     alert("An error occurred while publishing the item.");
+                }
+                break;
+            case "remove":
+                if (item.status !== "inactive") {
+                    alert("Item is not innactive and cannot be removed.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(
+                        `https://dezgzbir75.execute-api.us-east-1.amazonaws.com/prod/seller/removeInactiveItem`,
+                        {
+                            method: "POST",
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
+                        }
+                    );
+                    if (response.ok) {
+                        alert("Item removed successfully.");
+                        router.push("/seller/reviewItems");
+                    } else {
+                        const result = await response.json();
+                        alert(result.message || "Failed to remove item.");
+                    }
+                } catch {
+                    alert("An error occurred while removing the item.");
                 }
                 break;
 
@@ -199,7 +228,7 @@ function SellerViewItem() {
                         alt={item.name}
                         className="w-full max-w-md rounded-lg shadow-md mb-6 justify-self-center"
                     />
-                    <div className="grid grid-cols-3 gap-2 w-full">
+                    <div className="grid grid-cols-4 gap-2 w-full">
                         <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("edit")}>
                             Edit
                         </button>
@@ -217,6 +246,9 @@ function SellerViewItem() {
                         </button>
                         <button className="py-2 px-4 bg-gray-700 text-white rounded-lg  hover:bg-gray-800 transition" onClick={() => handleAction("archive")}>
                             Archive
+                        </button>
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg  hover:bg-gray-800 transition" onClick={() => handleAction("remove")}>
+                            Remove
                         </button>
                     </div>
                 </div>
