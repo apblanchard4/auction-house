@@ -185,7 +185,7 @@ function SellerReviewItems() {
         );
         if (response.ok) {
           alert("Item removed successfully.");
-          router.push("/seller/reviewItems");
+          window.location.reload();
         } else {
           const result = await response.json();
           alert(result.message || "Failed to remove item.");
