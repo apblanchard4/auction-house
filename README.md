@@ -37,7 +37,7 @@
 - **To Test**:
   1. Login as seller with username and password amanda1
   2. Navigate to Add Item
-  3. Input all fields
+  3. Input all fields (Image can be as a jpg or png)
   4. Select add item
 
 ### 5. Seller - Edit Item
