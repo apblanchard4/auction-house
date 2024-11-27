@@ -1,9 +1,19 @@
 "use client";
+import AWS from 'aws-sdk';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
+
+// Set IAM credentials directly (use environment variables for security in production)
+AWS.config.update({
+    accessKeyId: 'AKIAVA5YLASV53SUDUHJ',  // Replace with your AWS Access Key ID
+    secretAccessKey: 'YphhxMOShK4Gntaa99TsN2n/kX0CTlhInrws3JJV',  // Replace with your AWS Secret Access Key
+    region: 'us-east-1',  // The region of your S3 bucket
+});
+
+const s3 = new AWS.S3();
 
 // Helper function to extract username from token
 function getUsernameFromToken(idToken: string) {
@@ -28,6 +38,7 @@ interface Item {
 
 function AddItem() {
     const router = useRouter();
+
 
     const [item, setItem] = useState<Item>({
         id: "",
@@ -76,52 +87,41 @@ function AddItem() {
         }));
     }
 
+    // Handle image upload
+    async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files ? e.target.files[0] : null;
 
-    async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
-        const file = event.target.files?.[0];
-        if (!file) return;
-
-        const accessToken = localStorage.getItem("accessToken");
-        if (!accessToken) {
-            alert("You must log in first.");
+        if (!file) {
+            alert("No file selected.");
             return;
         }
 
+        const fileName = `${username}-${Date.now()}-${file.name}`; // Unique file name
+        const bucketName = "auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod"; // Replace with your bucket name
+        const region = "us-east-1"; // Replace with your AWS region (e.g., us-east-1)
+        const params = {
+            Bucket: bucketName,
+            Key: `uploads/images/${fileName}`,
+            Body: file,
+            ContentType: file.type, // Ensure correct file type
+        };
+
         try {
-            // Request a pre-signed URL from the backend
-            const response = await fetch(
-                "https://auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod.s3.amazonaws.com/seller/getPresignedURL",
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ fileName: file.name }),
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Failed to get presigned URL.");
-            }
-
-            const { presignedUrl, fileUrl } = await response.json();
-
             // Upload the file to S3
-            await fetch(presignedUrl, {
-                method: "PUT",
-                body: file,
-                headers: { "Content-Type": file.type },
-            });
+            const uploadResult = await s3.upload(params).promise();
 
-            alert("Image uploaded successfully.");
-            // Save the file URL for later use (e.g., as part of the item data)
-            setImageUrl(fileUrl); // Save the public S3 URL for this image
+            // Construct the S3 URI
+            const s3Uri = `s3://${bucketName}/uploads/images/${fileName}`;
+
+            // Set the image URL to the S3 URI
+            setImageUrl(s3Uri);
+            alert("Image uploaded successfully!");
         } catch (error) {
-            console.error("Error uploading image:", error);
-            alert("Image upload failed.");
+            console.error("Error uploading image to S3:", error);
+            alert("Failed to upload image.");
         }
     }
+
 
     // Handle add item action
     async function handleAction() {
@@ -137,6 +137,19 @@ function AddItem() {
             return;
         }
 
+        const initialPrice = parseFloat(item.initialPrice);
+        if (isNaN(initialPrice) || initialPrice < 1) {
+            alert("Initial price must be a valid number greater than or equal to $1.");
+            return;
+        }
+
+        // Validate length
+        const auctionLength = parseInt(item.length);
+        if (isNaN(auctionLength) || auctionLength < 1) {
+            alert("Auction length must be a valid number and at least 1 day.");
+            return;
+        }
+
         try {
             const response = await fetch(
                 "https://1tlepvbqtd.execute-api.us-east-1.amazonaws.com/prod/seller/addItem",
@@ -148,11 +161,11 @@ function AddItem() {
                     },
                     body: JSON.stringify({
                         sellerUsername: username,
-                        itemName: item.name,
-                        itemDescription: item.description,
-                        itemPrice: item.initialPrice,
-                        itemLength: item.length,
-                        itemImage: imageUrl, // Use the uploaded image URL
+                        newName: item.name,
+                        newDescription: item.description,
+                        initialPrice: item.initialPrice,
+                        newLength: item.length,
+                        newImage: imageUrl, // Use the uploaded image URL
                     }),
                 }
             );
@@ -170,6 +183,7 @@ function AddItem() {
                     image: "",
                     description: "",
                 });
+                router.push("/seller/reviewItems");
             } else {
                 const errorData = await response.json();
                 throw new Error(errorData.message || "Failed to add item.");
@@ -197,7 +211,7 @@ function AddItem() {
             <div className="navigation">
                 <button onClick={() => router.push("/seller/viewAccount")}>Account</button>
                 <button onClick={() => router.push("/seller/reviewItems")}>My Items</button>
-                <button onClick={() => router.push("/seller/addItem")}>Add Item</button>
+                <button className="active" onClick={() => router.push("/seller/addItem")}>Add Item</button>
             </div>
 
             {/* Main Content */}
