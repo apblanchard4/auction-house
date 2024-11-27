@@ -23,6 +23,16 @@ interface Purchase {
   amount: number;
 }
 
+interface BidResponse {
+    name: string;
+    amount: string;
+  }
+
+interface PurchaseResponse {
+    name: string;
+    amount: string;
+  }
+
 const BuyerAccountPage: React.FC = () => {
   const router = useRouter();
   const [username, setUsername] = useState<string | null>(null);
@@ -112,11 +122,11 @@ const BuyerAccountPage: React.FC = () => {
           body: JSON.stringify({ buyerUsername: user }),
         }
       );
-      
+
 
       const result = await response.json();
       if (response.ok) {
-        let bids = parseBids(result.body);
+        const bids = parseBids(result.body);
         setActiveBids(bids || []);
       } else {
         setMessage(result.message || "Failed to fetch active bids.");
@@ -127,7 +137,7 @@ const BuyerAccountPage: React.FC = () => {
     }
   };
 
-  const parseBids = (body: any) => {
+  const parseBids = (body: BidResponse[]): Bid[] => {
     console.log(body);
     try {
       return body.map((item: { name: string; amount: string }) => ({
@@ -163,7 +173,7 @@ const BuyerAccountPage: React.FC = () => {
 
       const result = await response.json();
       if (response.ok) {
-        let purchases = parsePurchases(result.body);
+        const purchases = parsePurchases(result.body);
         setPurchases(purchases || []);
       } else {
         setMessage(result.message || "Failed to fetch purchases.");
@@ -174,7 +184,7 @@ const BuyerAccountPage: React.FC = () => {
     }
   };
 
-  const parsePurchases = (body: any) => {
+  const parsePurchases = (body: PurchaseResponse[]): Purchase[] => {
     console.log(body);
     try {
       return body.map((item: { name: string; amount: string }) => ({
