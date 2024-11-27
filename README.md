@@ -1,76 +1,53 @@
-## Use Cases for Iteration 1
+## Use Cases for Iteration 2
 
-### 1. Seller - Create Account
-- **Description**: Allows sellers to create a new account.
+### 1. Seller - Close Account
+- **Description**: 
 - **To Test**:
-  1. When you load the website, select "Sign Up" and choose "Seller".
-  2. Enter a valid username and password (ensure the username does not already exist) Enter an email, not used other than in cognito (required field in cognito).
-  3. Wait for a successful page response indicating the account has been created.
+  1. 
 
-### 2. Seller - Login Account
-- **Description**: Allows sellers to log in to their account.
+### 2. Buyer - Add Funds
+- **Description**:
 - **To Test**:
-  1. When you load the website, select "Log In" and choose "Seller".
-  2. Enter a valid username and password (Use amanda1 and amanda1 for username and password).
-  3. Wait for a successful page response indicating a valid log in
-  4. Ensure successful login and redirection to the seller view items.
+  1. 
 
-### 3. Buyer - Create Account
-- **Description**: Allows buyers to create a new account.
+### 3. Buyer - Close Account
+- **Description**: 
 - **To Test**:
-  1. When you load the website, select "Sign Up" and choose "Buyer".
-  2. Enter a valid username and password (ensure the username does not already exist). Enter an email, not used other than in cognito (required field in cognito).
-  3. Wait for a successful page response indicating the account has been created.
+  1. 
 
-### 4. Buyer - Login Account
-- **Description**: Allows buyers to log in to their account.
+### 4. Seller - Add Item
+- **Description**: 
 - **To Test**:
-  1. When you load the website, select "Log In" and choose "Buyer".
-  2. Enter a valid username and password (Use testBuyer and testBuyer for username and password). 
-  3. Wait for a successful page response indicating a valid log in
+  1. 
 
-### 5. Seller - Review Items
-- **Description**: Sellers can review the items they have
+### 5. Seller - Edit Item
+- **Description**: 
 - **To Test**:
-  1. Log in as a seller (Use amanda1 and amanda1 for username and password).
-  2. You will be directed to the seller review items page on login
-  3. There will be some test items available to see
+  1. 
 
-### 6. Seller - Publish Items
-- **Description**: Sellers can publish items for sale.
+### 6. Seller - Remove Inactive Item
+- **Description**: 
 - **To Test**:
-  1. Log in as a seller (Use amanda1 and amanda1 for username and password).
-  2. You will be directed to the seller review items page and will see some test items
-  3. From the "seller action" dropdown select "publish item" and then click "Perform Action"
-  4. If the item was inactive its status should change to active
+  1. 
 
-### 7. Seller - Unpublish Item
-- **Description**: Sellers can unpublish items they have listed.
+### 7. Buyer - View Item
+- **Description**: 
 - **To Test**:
-  1. Log in as a seller (Use amanda1 and amanda1 for username and password).
-  2. You will be directed to the seller review items page and will see some test items
-  3. From the "seller action" dropdown select "unpublish item" and then click "Perform Action"
-  4. If the item was active its status should change to inactive
+  1. 
 
-### 8. Customer - View Item
-- **Description**: Customers can view active items
+### 8. Buyer - Place Bid
+- **Description**: 
 - **To Test**:
-  1. When you load the website, select "Continue as a Customer"
-  2. You will be directed to the customer view items page and will see the active test items
+  1. 
 
-### 9. Customer - Search Item
-- **Description**: Customers can search for items.
+### 9. Buyer - Review Active Bids
+- **Description**: 
 - **To Test**:
-  1. When you load the website, select "Continue as a Customer"
-  2. On the view items screen you can search any of the test items by name and the others will be filtered out
-  3. Verify that the correct items are returned based on the search query.
+  1. 
 
-### 10. Customer - Sort Item
-- **Description**: Customers can sort items based on different criteria.
+### 10. Buyer - Review Purchases
+- **Description**: 
 - **To Test**:
-  1. When you load the website, select "Continue as a Customer"
-  2. On the view items screen you can sort any of the test items by price, start date, or end date
-  by selecting the up and down arrows next to the catagory and it switch from low to high and high
-  to low
+  1. 
 
 
