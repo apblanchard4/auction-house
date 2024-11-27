@@ -90,6 +90,7 @@ function SellerViewItem() {
                         throw new Error(responseData.message || "Failed to fetch item data");
                     }
                 } catch (error) {
+                    console.log(error);
                     if (error instanceof Error) {
                         alert(error.message || "An error occurred while fetching the item.");
                     } else {
