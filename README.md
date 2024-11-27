@@ -10,7 +10,7 @@
   4. To test seller being unable to close with active items, repeat above with username and login amanda1
 
 ### 2. Buyer - Add Funds
-- **Description**:
+- **Description**: Adds set amount of funds to a buyers account
 - **To Test**:
   1. Login as buyer with username and password buyerClosingTest
   2. Navigate to account page
