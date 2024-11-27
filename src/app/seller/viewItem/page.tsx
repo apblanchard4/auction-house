@@ -167,6 +167,36 @@ function SellerViewItem() {
                     alert("An error occurred while publishing the item.");
                 }
                 break;
+
+            case "unpublish":
+                if (item.status !== "active") {
+                    alert("Item is already unpublished.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(
+                        `https://hzob7hmuph.execute-api.us-east-1.amazonaws.com/prod/seller/unpublishItem`,
+                        {
+                            method: "POST",
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
+                        }
+                    );
+                    if (response.ok) {
+                        alert("Item unpublished successfully.");
+                    } else {
+                        const result = await response.json();
+                        alert(result.message || "Failed to unpublish item.");
+                    }
+                } catch {
+                    alert("An error occurred while unpublishing the item.");
+                }
+                break;
+
             case "remove":
                 if (item.status !== "inactive") {
                     alert("Item is not innactive and cannot be removed.");

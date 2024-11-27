@@ -41,6 +41,7 @@ function SellerEditItem() {
     const [itemId, setItemId] = useState<string | null>(null);
     const [item, setItem] = useState<Item | null>(null);
     const [username, setUsername] = useState<string | null>(null);
+    const [priceError, setPriceError] = useState<string | null>(null);
 
     // Get itemId from search params (only in client-side)
     useEffect(() => {
@@ -158,10 +159,24 @@ function SellerEditItem() {
                     newDescription: item.description,
                     newPrice: item.initialPrice,
                     newLength: item.length,
-                  });
+                });
+
+                // Validation for price and length
+                const price = parseFloat(item?.initialPrice || "0");
+                const auctionLength = parseInt(item?.length || "0", 10);
+
+                if (isNaN(price) || price < 1) {
+                    alert("The initial price must be a number greater than or equal to $1.");
+                    return;
+                }
+
+                if (isNaN(auctionLength) || auctionLength < 1) {
+                    alert("The auction length must be a number and at least 1.");
+                    return;
+                }
                 try {
                     const response = await fetch(
-                        "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod/seller/editItem", 
+                        "https://qbylae5by7.execute-api.us-east-1.amazonaws.com/prod/seller/editItem",
                         {
                             method: "POST",
                             headers: {
@@ -187,7 +202,7 @@ function SellerEditItem() {
                             newDescription: item.description,
                             newPrice: item.initialPrice,
                             newLength: item.length,
-                          });
+                        });
                         router.push(`/seller/viewItem?itemId=${item.id}`);
                     } else {
                         const errorData = await response.json();
@@ -241,38 +256,38 @@ function SellerEditItem() {
                 {/* Right Section */}
                 <div className="flex flex-col">
                     <input
-                        id="itemName" 
-                        type="text" 
-                        value={item.name} 
-                        onChange={(e) => setItemName(e.target.value)} 
+                        id="itemName"
+                        type="text"
+                        value={item.name}
+                        onChange={(e) => setItemName(e.target.value)}
                         className="text-xl font-semibold mb-2"
                     />
                     <input
-                        id="itemDescription" 
-                        type="text" 
-                        value={item.description} 
-                        onChange={(e) => setItemDescription(e.target.value)} 
+                        id="itemDescription"
+                        type="text"
+                        value={item.description}
+                        onChange={(e) => setItemDescription(e.target.value)}
                         className="text-gray-700 mb-4"
                     />
                     <div>
                         <span className="font-semibold">Price: </span>
                         <input
-                        id="itemPrice" 
-                        type="text" 
-                        value={item.initialPrice} 
-                        onChange={(e) => setItemPrice(e.target.value)} 
-                        className="font-semibold"
-                    />
+                            id="itemPrice"
+                            type="text"
+                            value={item.initialPrice}
+                            onChange={(e) => setItemPrice(e.target.value)}
+                            className="font-semibold"
+                        />
                     </div>
                     <div>
                         <span className="font-semibold">Auction Length: </span>
                         <input
-                        id="length" 
-                        type="text" 
-                        value={item.length} 
-                        onChange={(e) => setItemLength(e.target.value)} 
-                        className="font-semibold"
-                    />
+                            id="length"
+                            type="text"
+                            value={item.length}
+                            onChange={(e) => setItemLength(e.target.value)}
+                            className="font-semibold"
+                        />
                     </div>
                     <div>
                         <span className="font-semibold">Start Date:</span> {item.startDate}
