@@ -2,28 +2,51 @@
 
 ### 1. Seller - Close Account
 - **Description**:
+- **Description**: Close a seller account upon password input
 - **To Test**:
-  1. 
+  1. Login as seller with username and password sellerClosingTest
+  2. Navigate to account page
+  3. Select close account
+  4. To test seller being unable to close with active items, repeat above with username and login amanda1
 
 ### 2. Buyer - Add Funds
 - **Description**: 
 - **To Test**: Login as a buyer (username: testBuyer1 password: testBuyer1), select the Account tab, enter in funds amount and click the add button.
   1. 
+- **Description**:
+- **To Test**:
+  1. Login as buyer with username and password buyerClosingTest
+  2. Navigate to account page
+  3. Enter funds in text box 
+  4. Click submit
 
 ### 3. Buyer - Close Account
 - **Description**: 
 - **To Test**: Login as a buyer (username: testBuyer1 password: testBuyer1), select the Account tab, use the close account button and enter in password to confirm. 
   1. 
+- **Description**: Close a buyer account upon buyer input 
+- **To Test**:
+  1. Login as buyer with username and password buyerClosingTest
+  2. Navigate to account page
+  3. Select close account
+  4. To test buy being unable to close with active bids, repeat above with username and login testBuyer1
+
 
 ### 4. Seller - Add Item
-- **Description**: 
+- **Description**: Adding seller item based on user input
 - **To Test**:
-  1. 
+  1. Login as seller with username and password amanda1
+  2. Navigate to Add Item
+  3. Input all fields
+  4. Select add item
 
 ### 5. Seller - Edit Item
-- **Description**: 
+- **Description**: Editing a seller item based on user input
 - **To Test**:
-  1. 
+  1. Login as seller with username and password amanda1
+  2. Select edit item next to an inactive item (if no inactive items, set to inactive by unpublishing)
+  3. Input any changes you would like
+  4. Save changes
 
 ### 6. Seller - Remove Inactive Item
 - **Description**: Removes an inactive item (deletes)
