@@ -45,6 +45,7 @@ const App = () => {
       let endpoint = '';
       let body;
 
+      //ADMIN LOGIN
       if (!isSignUp && username === 'admin' && password === 'admin') {
         localStorage.setItem('idToken', 'admin');
         localStorage.setItem('accessToken', 'admin');
@@ -52,47 +53,52 @@ const App = () => {
         router.push('/admin/adminDashboard');
       }
 
-      if (isSignUp) {
-        endpoint = userType === 'Seller' ? sellerSignUpEndpoint : buyerSignUpEndpoint;
-        body = JSON.stringify({ username, password, email });
-      } else {
-        endpoint = userType === 'Seller' ? sellerLogInEndpoint : buyerLogInEndpoint;
-        body = JSON.stringify({ username, password });
+      //OTHER LOGINS
+      else {
+
+
+
+        if (isSignUp) {
+          endpoint = userType === 'Seller' ? sellerSignUpEndpoint : buyerSignUpEndpoint;
+          body = JSON.stringify({ username, password, email });
+        } else {
+          endpoint = userType === 'Seller' ? sellerLogInEndpoint : buyerLogInEndpoint;
+          body = JSON.stringify({ username, password });
+        }
+
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: body,
+        });
+
+        const responseData = await response.json();
+
+        if (responseData.statusCode !== 200) {
+          const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
+          setErrorMessage(message);
+          throw new Error(message);
+        }
+
+        const idToken = JSON.parse(responseData.body).idToken;
+        const accessToken = JSON.parse(responseData.body).accessToken;
+        localStorage.setItem('idToken', idToken);
+        localStorage.setItem('accessToken', accessToken);
+
+        console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
+        alert(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
+
+        // Clear form fields
+        setUsername('');
+        setPassword('');
+        setEmail('');
+
+        if (userType === 'Seller' && !isSignUp) { router.push('/seller/reviewItems'); }
+        if (userType === 'Buyer' && !isSignUp) { router.push('/buyer/reviewItems'); }
+        if (isSignUp) { setIsSignUp(false); }
       }
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: body,
-      });
-
-      const responseData = await response.json();
-
-      if (responseData.statusCode !== 200) {
-        const message = responseData.body ? JSON.parse(responseData.body).message : 'Request failed';
-        setErrorMessage(message);
-        throw new Error(message);
-      }
-
-      const idToken = JSON.parse(responseData.body).idToken;
-      const accessToken = JSON.parse(responseData.body).accessToken;
-      localStorage.setItem('idToken', idToken);
-      localStorage.setItem('accessToken', accessToken);
-
-      console.log(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
-      alert(`${isSignUp ? 'User created' : 'Logged in'} successfully`);
-
-      // Clear form fields
-      setUsername('');
-      setPassword('');
-      setEmail('');
-
-      if (userType === 'Seller' && !isSignUp) { router.push('/seller/reviewItems'); }
-      if (userType === 'Buyer' && !isSignUp) { router.push('/buyer/reviewItems'); }
-      if (isSignUp) { setIsSignUp(false); }
-
     } catch (error) {
       console.error('Error:', error);
       if (error instanceof Error) {
