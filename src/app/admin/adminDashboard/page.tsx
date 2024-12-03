@@ -1,5 +1,19 @@
 "use client";
 
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import './admin.css';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+
+interface Item {
+    id: number;
+    itemName: string;
+    price: number;
+    startDate: string;
+    endDate: string;
+    status: string;
+  }
+
 
 function AdminDashboard() {
 

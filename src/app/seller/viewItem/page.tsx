@@ -159,6 +159,7 @@ function SellerViewItem() {
                     );
                     if (response.ok) {
                         alert("Item published successfully.");
+                        window.location.reload();
                     } else {
                         const result = await response.json();
                         alert(result.message || "Failed to publish item.");
@@ -168,7 +169,7 @@ function SellerViewItem() {
                 }
                 break;
             
-            //Neds Fixing at some point
+            //Needs Fixing at some point
             case "unpublish":
                 if (item.status !== "active") {
                     alert("Item is already unpublished.");
@@ -184,11 +185,12 @@ function SellerViewItem() {
                                 Authorization: `Bearer ${accessToken}`,
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
+                            body: JSON.stringify({ sellerUsername: username, itemID: itemId }),
                         }
                     );
                     if (response.ok) {
                         alert("Item unpublished successfully.");
+                        window.location.reload();
                     } else {
                         const result = await response.json();
                         alert(result.message || "Failed to unpublish item.");
