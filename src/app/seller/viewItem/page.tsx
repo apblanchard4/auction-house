@@ -169,7 +169,7 @@ function SellerViewItem() {
                 }
                 break;
             
-            //Needs Fixing at some point
+            
             case "unpublish":
                 if (item.status !== "active") {
                     alert("Item is already unpublished.");

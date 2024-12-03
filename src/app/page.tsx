@@ -50,7 +50,7 @@ const App = () => {
         localStorage.setItem('idToken', 'admin');
         localStorage.setItem('accessToken', 'admin');
         console.log('Admin logged in successfully');
-        router.push('/admin/adminDashboard');
+        router.push('/admin/dashboard');
       }
 
       //OTHER LOGINS
