@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './auctionReport.css';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface Bid {
     bidId: string;

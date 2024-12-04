@@ -1,24 +1,28 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useRouter } from 'next/navigation';
 import './forensicsReport.css';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
 
-interface Item {
-    id: number;
-    itemName: string;
-    price: number;
-    startDate: string;
-    endDate: string;
-    status: string;
-}
+
+// interface Item {
+//     id: number;
+//     itemName: string;
+//     price: number;
+//     startDate: string;
+//     endDate: string;
+//     status: string;
+// }
 
 
 
 
 function ForensicsReport() {
     const router = useRouter();
+
+    useEffect(() => {
+
+    }, []);
 
 
     return (

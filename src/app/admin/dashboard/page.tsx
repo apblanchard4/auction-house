@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './adminDashboard.css';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface Item {
     id: number;
@@ -17,7 +16,7 @@ interface Item {
 
 function AdminDashboard() {
     const router = useRouter();
-    const [items, setItems] = useState<Item[]>([]);
+    const [items] = useState<Item[]>([]);
     const [filteredItems, setFilteredItems] = useState<Item[]>([]);
     const [selectedActions, setSelectedActions] = useState<{ [key: number]: string }>({});
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null);
@@ -56,7 +55,7 @@ function AdminDashboard() {
     };
 
     const handleActionButtonClick = async (itemId: number) => {
-        const action = selectedActions[itemId];
+        // const action = selectedActions[itemId];
         const accessToken = localStorage.getItem('accessToken');
         if (!accessToken) {
             alert('You must log in first');
@@ -66,6 +65,10 @@ function AdminDashboard() {
 
         // Add other actions here
     }
+
+    useEffect(() => {
+
+    }, []);
 
 
     //Lambda function to get all items
