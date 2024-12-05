@@ -54,7 +54,7 @@ function AdminDashboard() {
         }));
     };
 
-    const handleActionButtonClick = async (itemId: number) => {
+    const handleActionButtonClick = async () => {
         // const action = selectedActions[itemId];
         const accessToken = localStorage.getItem('accessToken');
         if (!accessToken) {
@@ -145,7 +145,7 @@ function AdminDashboard() {
                                 <td>
                                     <button
                                         className="bg-gray-400 text-white py-2 px-4 rounded-lg"
-                                        onClick={() => handleActionButtonClick(item.id)}
+                                        onClick={() => handleActionButtonClick()}
                                         disabled={!selectedActions[item.id]}
                                     >
                                         Perform Action
