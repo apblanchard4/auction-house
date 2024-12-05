@@ -1,0 +1,128 @@
+/* admin.css */
+
+.adminDashboard {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+}
+
+.user-info {
+  font-size: 14px;
+}
+
+.navigation {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.navigation button {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.navigation .active {
+  background-color: #ddd;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 8px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.search-bar button {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+table {
+  width: 100%; /* Makes the table span the full width of the container */
+  border-collapse: collapse; /* Removes space between table cells */
+  margin-top: 1rem; /* Adds spacing above the table */
+}
+
+th, td {
+  text-align: left; /* Aligns text to the left for consistency */
+  padding: 10px; /* Adds padding for better readability */
+  border: 1px solid #ddd; /* Adds light borders for a clean look */
+}
+
+th {
+  background-color: #f4f4f4; /* Light gray background for the header */
+  font-weight: bold; /* Ensures header text is bold */
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternates row colors for better readability */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Adds a hover effect for rows */
+}
+
+.container {
+  width: 100%; /* Allows the container to span the full screen */
+  margin: 0 auto; /* Centers the content horizontally */
+  padding: 0 15px; /* Adds padding on smaller screens */
+  box-sizing: border-box; /* Ensures padding doesn't affect total width */
+}
+
+@media (max-width: 768px) {
+  th, td {
+      padding: 8px; /* Reduces padding for smaller screens */
+      font-size: 14px; /* Adjusts font size for readability */
+  }
+}
+
+.sort-arrows {
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.item-name {
+  color: blue;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+select {
+  padding: 6px;
+  font-size: 14px;
+}
+
+.download-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+}

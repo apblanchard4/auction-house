@@ -6,11 +6,10 @@ import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
 
-// Set IAM credentials directly (use environment variables for security in production)
 AWS.config.update({
-    accessKeyId: 'AKIAVA5YLASV53SUDUHJ',  // Replace with your AWS Access Key ID
-    secretAccessKey: 'YphhxMOShK4Gntaa99TsN2n/kX0CTlhInrws3JJV',  // Replace with your AWS Secret Access Key
-    region: 'us-east-1',  // The region of your S3 bucket
+    accessKeyId: process.env.REACT_APP_MY_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_MY_AWS_SECRET_ACCESS_KEY,
+    region: process.env.REACT_APP_MY_AWS_REGION,
 });
 
 const s3 = new AWS.S3();
@@ -56,6 +55,7 @@ function AddItem() {
     const [imageUrl, setImageUrl] = useState<string | null>(null); // Add this state
 
     // Fetch username from token when component mounts
+    console.log("Environment Variables: " ,process.env.REACT_APP_MY_AWS_ACCESS_KEY_ID);
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) {
