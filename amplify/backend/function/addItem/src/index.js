@@ -1,17 +1,20 @@
 const AWS = require('aws-sdk');
 const mysql = require('mysql2/promise');
-AWS.config.update({ region: 'us-east-1' });
 const s3 = new AWS.S3();
+
+AWS.config.update({ region: 'us-east-1' });
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
+
 exports.handler = async (event) => {
+  const bucketName = 'auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod';
   try {
-    const { sellerUsername, newName, newDescription, initialPrice, newLength, newImage } = event;
+    const { sellerUsername, newName, newDescription, initialPrice, newLength, newImageFile } = event;
 
     // Validate input
-    if (!newName || !newDescription || !initialPrice || !newLength || !newImage || !sellerUsername) {
+    if (!newName || !newDescription || !initialPrice || !newLength || !newImageFile || !sellerUsername) {
       return {
         statusCode: 400,
         headers: {
@@ -45,6 +48,32 @@ exports.handler = async (event) => {
         body: JSON.stringify({ message: 'Auction length must be at least 1 day' }),
       };
     }
+    
+    const timestamp = Date.now(); // Generate a single timestamp
+    const fileName = `${sellerUsername}-${timestamp}-${newName}.jpg`;
+
+    try {
+      const base64Image = event.newImageFile
+      const buffer = Buffer.from(base64Image, 'base64');
+      const params = {
+        Bucket: bucketName,
+        Key: `images/${fileName}`, // Specify the desired file name and path
+        Body: buffer,
+        ContentEncoding: 'base64',
+        ContentType: 'image/jpeg' // Adjust the content type as needed
+      };
+
+      const data = await s3.upload(params).promise();
+      console.log('S3 Upload Success:', data);
+    } catch (err) {
+      console.error(err);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ message: 'Error uploading image', error: err })
+      };
+    }
+
+    const newImageUrl = `s3://${bucketName}/images/${fileName}`;
 
     // Database connection configuration
     const connectConfig = {
@@ -76,16 +105,16 @@ exports.handler = async (event) => {
 
     // Query to insert a new item into the database
     const query = `
-      INSERT INTO Item (name, description, initialPrice, currentPrice, length, image, sellerUsername, published, archived, frozen, fulfilled) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    INSERT INTO Item (name, description, initialPrice, currentPrice, length, image, sellerUsername, published, archived, frozen, fulfilled) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
     const values = [
       newName,
       newDescription,
       initialPrice,
       initialPrice, // Assuming the initial price is the current price
       newLength,
-      newImage,
+      newImageUrl, // Use the uploaded image URL
       sellerUsername,
       false, // Default value for published
       false, // Default value for archived
@@ -102,7 +131,7 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*"
       },
-      body: JSON.stringify({ message: 'Item successfully added' }),
+      body: JSON.stringify({ message: 'Item successfully added', imageUrl: newImageUrl }),
     };
   } catch (error) {
     console.error('Error: ', error);
@@ -116,3 +145,4 @@ exports.handler = async (event) => {
     };
   }
 };
+

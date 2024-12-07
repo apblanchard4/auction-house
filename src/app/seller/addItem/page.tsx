@@ -52,10 +52,10 @@ function AddItem() {
     });
 
     const [username, setUsername] = useState<string | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null); // Add this state
+    const [imageFile, setImageFile] = useState<File | null>(null); // Add this state
 
-    // Fetch username from token when component mounts
-    console.log("Environment Variables: " ,process.env.REACT_APP_MY_AWS_ACCESS_KEY_ID);
+
+
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) {
@@ -87,39 +87,10 @@ function AddItem() {
         }));
     }
 
-    // Handle image upload
-    async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files ? e.target.files[0] : null;
-
-        if (!file) {
-            alert("No file selected.");
-            return;
-        }
-
-        const fileName = `${username}-${Date.now()}-${file.name}`; // Unique file name
-        const bucketName = "auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod";
-        const params = {
-            Bucket: bucketName,
-            Key: `uploads/images/${fileName}`,
-            Body: file,
-            ContentType: file.type,
-        };
-
-        try {
-            const uploadResult = await s3.upload(params).promise();
-            console.log(uploadResult)
-            // Construct the S3 URI
-            const s3Uri = `s3://${bucketName}/uploads/images/${fileName}`;
-
-            // Set the image URL to the S3 URI
-            setImageUrl(s3Uri);
-            alert("Image uploaded successfully!");
-        } catch (error) {
-            console.error("Error uploading image to S3:", error);
-            alert("Failed to upload image.");
-        }
+        setImageFile(file);
     }
-
 
     // Handle add item action
     async function handleAction() {
@@ -130,7 +101,7 @@ function AddItem() {
             return;
         }
 
-        if (!item.name || !item.initialPrice || !item.length || !item.description || !imageUrl) {
+        if (!item.name || !item.initialPrice || !item.length || !item.description || !imageFile) {
             alert("Please fill in all required fields.");
             return;
         }
@@ -163,29 +134,56 @@ function AddItem() {
                         newDescription: item.description,
                         initialPrice: item.initialPrice,
                         newLength: item.length,
-                        newImage: imageUrl, // Use the uploaded image URL
+                        imageFileName: imageFile.name,
+                        imageFileType: imageFile.type,
                     }),
                 }
             );
 
-            if (response.ok) {
-                alert("Item added successfully!");
-                setItem({  // Reset form after successful submission
-                    id: "",
-                    name: "",
-                    initialPrice: "",
-                    startDate: "",
-                    endDate: "",
-                    length: "",
-                    status: "inactive",
-                    image: "",
-                    description: "",
-                });
-                router.push("/seller/reviewItems");
-            } else {
+            if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to add item.");
+                throw new Error(errorData.message || "Failed to generate signed URL.");
             }
+
+            // Parse the response body
+            const responseData = await response.json(); // Parse the response as JSON
+            console.log("Full response JSON:", responseData);
+            
+            const { uploadUrl, message } = responseData;
+            console.log("Parsed uploadUrl:", uploadUrl);
+            
+            if (!uploadUrl) {
+                throw new Error("Upload URL is missing from the server response.");
+            }
+
+            console.log("File being uploaded:", imageFile);
+
+            const uploadResponse = await fetch(uploadUrl, {
+                method: "PUT",
+                body: imageFile,
+                headers: { "Content-Type": imageFile.type || "application/octet-stream" },
+            });
+
+            if (!uploadResponse.ok) {
+                const errorText = await uploadResponse.text();
+                console.error("Upload failed response:", errorText);
+                throw new Error("Image upload failed. Check console logs for details.");
+            }
+
+            alert(message);
+            setItem({  // Reset form after successful submission
+                id: "",
+                name: "",
+                initialPrice: "",
+                startDate: "",
+                endDate: "",
+                length: "",
+                status: "inactive",
+                image: "",
+                description: "",
+            });
+            setImageFile(null);
+            router.push("/seller/reviewItems");
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message);
@@ -275,7 +273,7 @@ function AddItem() {
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={handleImageUpload}
+                        onChange={handleFileChange}
                         className="image-field"
                     />
                     <div>
