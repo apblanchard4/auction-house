@@ -1,18 +1,10 @@
 "use client";
-import AWS from 'aws-sdk';
+
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
-
-AWS.config.update({
-    accessKeyId: process.env.REACT_APP_MY_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_MY_AWS_SECRET_ACCESS_KEY,
-    region: process.env.REACT_APP_MY_AWS_REGION,
-});
-
-const s3 = new AWS.S3();
 
 // Helper function to extract username from token
 function getUsernameFromToken(idToken: string) {
@@ -92,6 +84,21 @@ function AddItem() {
         setImageFile(file);
     }
 
+    // Convert image file to Base64
+    function convertImageToBase64(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const base64String = reader.result as string;
+                // Remove the "data:image/jpeg;base64," or similar prefix
+                const base64Content = base64String.split(",")[1];
+                resolve(base64Content);
+            };
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(file);
+        });
+    }
+
     // Handle add item action
     async function handleAction() {
         const accessToken = localStorage.getItem("accessToken");
@@ -120,6 +127,9 @@ function AddItem() {
         }
 
         try {
+
+            const base64Image = await convertImageToBase64(imageFile);
+
             const response = await fetch(
                 "https://1tlepvbqtd.execute-api.us-east-1.amazonaws.com/prod/seller/addItem",
                 {
@@ -134,43 +144,17 @@ function AddItem() {
                         newDescription: item.description,
                         initialPrice: item.initialPrice,
                         newLength: item.length,
-                        imageFileName: imageFile.name,
-                        imageFileType: imageFile.type,
+                        newImageFile: base64Image,
                     }),
                 }
             );
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to generate signed URL.");
-            }
+            const responseData = await response.json();
 
-            // Parse the response body
-            const responseData = await response.json(); // Parse the response as JSON
-            console.log("Full response JSON:", responseData);
-            
-            const { uploadUrl, message } = responseData;
-            console.log("Parsed uploadUrl:", uploadUrl);
-            
-            if (!uploadUrl) {
-                throw new Error("Upload URL is missing from the server response.");
-            }
+            // Check if `message` exists in the response
+            const alertMessage = responseData.message || 'Item added successfully.';
+            alert(alertMessage);
 
-            console.log("File being uploaded:", imageFile);
-
-            const uploadResponse = await fetch(uploadUrl, {
-                method: "PUT",
-                body: imageFile,
-                headers: { "Content-Type": imageFile.type || "application/octet-stream" },
-            });
-
-            if (!uploadResponse.ok) {
-                const errorText = await uploadResponse.text();
-                console.error("Upload failed response:", errorText);
-                throw new Error("Image upload failed. Check console logs for details.");
-            }
-
-            alert(message);
             setItem({  // Reset form after successful submission
                 id: "",
                 name: "",
