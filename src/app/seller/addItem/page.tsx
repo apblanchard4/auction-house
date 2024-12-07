@@ -1,18 +1,10 @@
 "use client";
-import AWS from 'aws-sdk';
+
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
-
-AWS.config.update({
-    accessKeyId: process.env.REACT_APP_MY_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_MY_AWS_SECRET_ACCESS_KEY,
-    region: process.env.REACT_APP_MY_AWS_REGION,
-});
-
-const s3 = new AWS.S3();
 
 // Helper function to extract username from token
 function getUsernameFromToken(idToken: string) {
@@ -52,10 +44,10 @@ function AddItem() {
     });
 
     const [username, setUsername] = useState<string | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null); // Add this state
+    const [imageFile, setImageFile] = useState<File | null>(null); // Add this state
 
-    // Fetch username from token when component mounts
-    console.log("Environment Variables: " ,process.env.REACT_APP_MY_AWS_ACCESS_KEY_ID);
+
+
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) {
@@ -87,39 +79,25 @@ function AddItem() {
         }));
     }
 
-    // Handle image upload
-    async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files ? e.target.files[0] : null;
-
-        if (!file) {
-            alert("No file selected.");
-            return;
-        }
-
-        const fileName = `${username}-${Date.now()}-${file.name}`; // Unique file name
-        const bucketName = "auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod";
-        const params = {
-            Bucket: bucketName,
-            Key: `uploads/images/${fileName}`,
-            Body: file,
-            ContentType: file.type,
-        };
-
-        try {
-            const uploadResult = await s3.upload(params).promise();
-            console.log(uploadResult)
-            // Construct the S3 URI
-            const s3Uri = `s3://${bucketName}/uploads/images/${fileName}`;
-
-            // Set the image URL to the S3 URI
-            setImageUrl(s3Uri);
-            alert("Image uploaded successfully!");
-        } catch (error) {
-            console.error("Error uploading image to S3:", error);
-            alert("Failed to upload image.");
-        }
+        setImageFile(file);
     }
 
+    // Convert image file to Base64
+    function convertImageToBase64(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const base64String = reader.result as string;
+                // Remove the "data:image/jpeg;base64," or similar prefix
+                const base64Content = base64String.split(",")[1];
+                resolve(base64Content);
+            };
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(file);
+        });
+    }
 
     // Handle add item action
     async function handleAction() {
@@ -130,7 +108,7 @@ function AddItem() {
             return;
         }
 
-        if (!item.name || !item.initialPrice || !item.length || !item.description || !imageUrl) {
+        if (!item.name || !item.initialPrice || !item.length || !item.description || !imageFile) {
             alert("Please fill in all required fields.");
             return;
         }
@@ -149,6 +127,9 @@ function AddItem() {
         }
 
         try {
+
+            const base64Image = await convertImageToBase64(imageFile);
+
             const response = await fetch(
                 "https://1tlepvbqtd.execute-api.us-east-1.amazonaws.com/prod/seller/addItem",
                 {
@@ -163,29 +144,30 @@ function AddItem() {
                         newDescription: item.description,
                         initialPrice: item.initialPrice,
                         newLength: item.length,
-                        newImage: imageUrl, // Use the uploaded image URL
+                        newImageFile: base64Image,
                     }),
                 }
             );
 
-            if (response.ok) {
-                alert("Item added successfully!");
-                setItem({  // Reset form after successful submission
-                    id: "",
-                    name: "",
-                    initialPrice: "",
-                    startDate: "",
-                    endDate: "",
-                    length: "",
-                    status: "inactive",
-                    image: "",
-                    description: "",
-                });
-                router.push("/seller/reviewItems");
-            } else {
-                const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to add item.");
-            }
+            const responseData = await response.json();
+
+            // Check if `message` exists in the response
+            const alertMessage = responseData.message || 'Item added successfully.';
+            alert(alertMessage);
+
+            setItem({  // Reset form after successful submission
+                id: "",
+                name: "",
+                initialPrice: "",
+                startDate: "",
+                endDate: "",
+                length: "",
+                status: "inactive",
+                image: "",
+                description: "",
+            });
+            setImageFile(null);
+            router.push("/seller/reviewItems");
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message);
@@ -275,7 +257,7 @@ function AddItem() {
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={handleImageUpload}
+                        onChange={handleFileChange}
                         className="image-field"
                     />
                     <div>
