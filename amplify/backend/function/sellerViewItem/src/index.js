@@ -19,7 +19,6 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Headers": "*"
       },
       body: JSON.stringify({ message: 'Missing seller username or item id' }),
-
     };
   }
 
@@ -60,7 +59,7 @@ exports.handler = async (event) => {
 
     items.forEach(item => {
       console.log('item:', item);
-      const { id, name, initialPrice, currentPrice, published, archived, fulfilled, startDate, length, description, image } = item;
+      const { id, name, initialPrice, published, archived, fulfilled, startDate, length, description, image } = item;
       const startDateObj = new Date(startDate);
       const endDateObj = new Date(startDate);
       endDateObj.setDate(endDateObj.getDate() + length);
@@ -97,11 +96,9 @@ exports.handler = async (event) => {
           id,
           name,
           initialPrice,
-          currentPrice,
           startDate: startDateObj.toISOString().split('T')[0],
           endDate: endDateObj.toISOString().split('T')[0],
           status,
-          length,
           image: signedImageUrl,
           description,
           bids

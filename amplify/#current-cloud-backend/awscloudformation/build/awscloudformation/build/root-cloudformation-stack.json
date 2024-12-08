@@ -276,6 +276,126 @@
               "apisellerremoveInactiveItem",
               "Outputs.ApiId"
             ]
+          },
+          "loginAdminAccount": {
+            "Fn::GetAtt": [
+              "apiloginAdminAccount",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerAddFunds": {
+            "Fn::GetAtt": [
+              "apibuyerAddFunds",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerGetFunds": {
+            "Fn::GetAtt": [
+              "apibuyerGetFunds",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerPlaceBid": {
+            "Fn::GetAtt": [
+              "apibuyerPlaceBid",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerViewItem": {
+            "Fn::GetAtt": [
+              "apibuyerViewItem",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerViewItems": {
+            "Fn::GetAtt": [
+              "apibuyerViewItems",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerCloseAccount": {
+            "Fn::GetAtt": [
+              "apisellerCloseAccount",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerViewItem": {
+            "Fn::GetAtt": [
+              "apisellerViewItem",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerRequestUnfreezeItem": {
+            "Fn::GetAtt": [
+              "apisellerRequestUnfreezeItem",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerArchiveItem": {
+            "Fn::GetAtt": [
+              "apisellerArchiveItem",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerFulfillItem": {
+            "Fn::GetAtt": [
+              "apisellerFulfillItem",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerViewRecentlySold": {
+            "Fn::GetAtt": [
+              "apibuyerViewRecentlySold",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerViewActiveBids": {
+            "Fn::GetAtt": [
+              "apibuyerViewActiveBids",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerReviewPurchases": {
+            "Fn::GetAtt": [
+              "apibuyerReviewPurchases",
+              "Outputs.ApiId"
+            ]
+          },
+          "adminFreezeItem": {
+            "Fn::GetAtt": [
+              "apiadminFreezeItem",
+              "Outputs.ApiId"
+            ]
+          },
+          "adminGenerateAuctionReport": {
+            "Fn::GetAtt": [
+              "apiadminGenerateAuctionReport",
+              "Outputs.ApiId"
+            ]
+          },
+          "adminGenerateForensicsReport": {
+            "Fn::GetAtt": [
+              "apiadminGenerateForensicsReport",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerCloseAccount": {
+            "Fn::GetAtt": [
+              "apibuyerCloseAccount",
+              "Outputs.ApiId"
+            ]
+          },
+          "sellerBuyerNow": {
+            "Fn::GetAtt": [
+              "apisellerBuyerNow",
+              "Outputs.ApiId"
+            ]
+          },
+          "buyerBuyNow": {
+            "Fn::GetAtt": [
+              "apibuyerBuyNow",
+              "Outputs.ApiId"
+            ]
           }
         }
       }
@@ -511,6 +631,426 @@
         }
       }
     },
+    "apiloginAdminAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/loginAdminAccount-cloudformation-template.json",
+        "Parameters": {
+          "functionloginAdminAccountName": {
+            "Fn::GetAtt": [
+              "functionloginAdminAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionloginAdminAccountArn": {
+            "Fn::GetAtt": [
+              "functionloginAdminAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerAddFunds": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerAddFunds-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerAddFundsName": {
+            "Fn::GetAtt": [
+              "functionbuyerAddFunds",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerAddFundsArn": {
+            "Fn::GetAtt": [
+              "functionbuyerAddFunds",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerGetFunds": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerGetFunds-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerGetFundsName": {
+            "Fn::GetAtt": [
+              "functionbuyerGetFunds",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerGetFundsArn": {
+            "Fn::GetAtt": [
+              "functionbuyerGetFunds",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerPlaceBid": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerPlaceBid-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerPlaceBidName": {
+            "Fn::GetAtt": [
+              "functionbuyerPlaceBid",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerPlaceBidArn": {
+            "Fn::GetAtt": [
+              "functionbuyerPlaceBid",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerViewItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerViewItem-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerViewItemName": {
+            "Fn::GetAtt": [
+              "functionbuyerViewItem",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerViewItemArn": {
+            "Fn::GetAtt": [
+              "functionbuyerViewItem",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerViewItems": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerViewItems-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerViewItemsName": {
+            "Fn::GetAtt": [
+              "functionbuyerViewItems",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerViewItemsArn": {
+            "Fn::GetAtt": [
+              "functionbuyerViewItems",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerCloseAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerCloseAccount-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerCloseAccountName": {
+            "Fn::GetAtt": [
+              "functionsellerCloseAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerCloseAccountArn": {
+            "Fn::GetAtt": [
+              "functionsellerCloseAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerViewItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerViewItem-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerViewItemName": {
+            "Fn::GetAtt": [
+              "functionsellerViewItem",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerViewItemArn": {
+            "Fn::GetAtt": [
+              "functionsellerViewItem",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerRequestUnfreezeItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerRequestUnfreezeItem-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerRequestUnfreezeItemName": {
+            "Fn::GetAtt": [
+              "functionsellerRequestUnfreezeItem",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerRequestUnfreezeItemArn": {
+            "Fn::GetAtt": [
+              "functionsellerRequestUnfreezeItem",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerArchiveItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerArchiveItem-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerArchiveItemName": {
+            "Fn::GetAtt": [
+              "functionsellerArchiveItem",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerArchiveItemArn": {
+            "Fn::GetAtt": [
+              "functionsellerArchiveItem",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerFulfillItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerFulfillItem-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerFulfillItemName": {
+            "Fn::GetAtt": [
+              "functionsellerFulfillItem",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerFulfillItemArn": {
+            "Fn::GetAtt": [
+              "functionsellerFulfillItem",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerViewRecentlySold": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerViewRecentlySold-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerViewRecentlySoldName": {
+            "Fn::GetAtt": [
+              "functionbuyerViewRecentlySold",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerViewRecentlySoldArn": {
+            "Fn::GetAtt": [
+              "functionbuyerViewRecentlySold",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerViewActiveBids": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerViewActiveBids-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerViewActiveBidsName": {
+            "Fn::GetAtt": [
+              "functionbuyerViewActiveBids",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerViewActiveBidsArn": {
+            "Fn::GetAtt": [
+              "functionbuyerViewActiveBids",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerReviewPurchases": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerReviewPurchases-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerReviewPurchasesName": {
+            "Fn::GetAtt": [
+              "functionbuyerReviewPurchases",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerReviewPurchasesArn": {
+            "Fn::GetAtt": [
+              "functionbuyerReviewPurchases",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apiadminFreezeItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/adminFreezeItem-cloudformation-template.json",
+        "Parameters": {
+          "functionadminFreezeItemName": {
+            "Fn::GetAtt": [
+              "functionadminFreezeItem",
+              "Outputs.Name"
+            ]
+          },
+          "functionadminFreezeItemArn": {
+            "Fn::GetAtt": [
+              "functionadminFreezeItem",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apiadminGenerateAuctionReport": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/adminGenerateAuctionReport-cloudformation-template.json",
+        "Parameters": {
+          "functionadminGenerateAuctionReportName": {
+            "Fn::GetAtt": [
+              "functionadminGenerateAuctionReport",
+              "Outputs.Name"
+            ]
+          },
+          "functionadminGenerateAuctionReportArn": {
+            "Fn::GetAtt": [
+              "functionadminGenerateAuctionReport",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apiadminGenerateForensicsReport": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/adminGenerateForensicsReport-cloudformation-template.json",
+        "Parameters": {
+          "functionadminGenerateForensicsReportName": {
+            "Fn::GetAtt": [
+              "functionadminGenerateForensicsReport",
+              "Outputs.Name"
+            ]
+          },
+          "functionadminGenerateForensicsReportArn": {
+            "Fn::GetAtt": [
+              "functionadminGenerateForensicsReport",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerCloseAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerCloseAccount-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerCloseAccountName": {
+            "Fn::GetAtt": [
+              "functionbuyerCloseAccount",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerCloseAccountArn": {
+            "Fn::GetAtt": [
+              "functionbuyerCloseAccount",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apisellerBuyerNow": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/sellerBuyerNow-cloudformation-template.json",
+        "Parameters": {
+          "functionsellerBuyerNowName": {
+            "Fn::GetAtt": [
+              "functionsellerBuyerNow",
+              "Outputs.Name"
+            ]
+          },
+          "functionsellerBuyerNowArn": {
+            "Fn::GetAtt": [
+              "functionsellerBuyerNow",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apibuyerBuyNow": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/api/buyerBuyNow-cloudformation-template.json",
+        "Parameters": {
+          "functionbuyerBuyNowName": {
+            "Fn::GetAtt": [
+              "functionbuyerBuyNow",
+              "Outputs.Name"
+            ]
+          },
+          "functionbuyerBuyNowArn": {
+            "Fn::GetAtt": [
+              "functionbuyerBuyNow",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
     "authauctionhouseebecb491": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -570,7 +1110,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginSellerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/loginSellerAccount-327730624c466a446839-build.zip",
+          "s3Key": "amplify-builds/loginSellerAccount-6c77512f756549654548-build.zip",
           "env": "prod"
         }
       }
@@ -603,7 +1143,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/openBuyerAccount-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/openBuyerAccount-4b4a4d7245682f34482b-build.zip",
+          "s3Key": "amplify-builds/openBuyerAccount-755875614a5344375733-build.zip",
           "env": "prod"
         }
       }
@@ -614,7 +1154,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerReviewItems-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerReviewItems-63537967617a3073345a-build.zip",
+          "s3Key": "amplify-builds/sellerReviewItems-4c595141536d57784651-build.zip",
           "env": "prod"
         }
       }
@@ -625,7 +1165,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerUnpublishItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerUnpublishItem-71584a4e765871346c51-build.zip",
+          "s3Key": "amplify-builds/sellerUnpublishItem-706a7643723966427970-build.zip",
           "env": "prod"
         }
       }
@@ -636,7 +1176,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellereditItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellereditItem-644e5638746e49396273-build.zip",
+          "s3Key": "amplify-builds/sellereditItem-654a3238547061636848-build.zip",
           "env": "prod"
         }
       }
@@ -647,7 +1187,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerpublishItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerpublishItem-486d42313237706d7432-build.zip",
+          "s3Key": "amplify-builds/sellerpublishItem-44326172413670323544-build.zip",
           "env": "prod"
         }
       }
@@ -658,7 +1198,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/customerReviewItems-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/customerReviewItems-4432726c6b2f4b635531-build.zip",
+          "s3Key": "amplify-builds/customerReviewItems-737361624b7643363732-build.zip",
           "env": "prod"
         }
       }
@@ -669,7 +1209,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/addItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/addItem-77746756756258537736-build.zip",
+          "s3Key": "amplify-builds/addItem-5238315759485a755645-build.zip",
           "env": "prod"
         }
       }
@@ -680,7 +1220,227 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerremoveInactiveItem-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
-          "s3Key": "amplify-builds/sellerremoveInactiveItem-4969514c454b4b666e6d-build.zip",
+          "s3Key": "amplify-builds/sellerremoveInactiveItem-424f4d6c655847486435-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionloginAdminAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/loginAdminAccount-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/loginAdminAccount-573854686763334e6d58-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerAddFunds": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerAddFunds-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerAddFunds-7666416e6176582b6e39-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerCloseAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerCloseAccount-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerCloseAccount-43654248316d372b2f79-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerGetFunds": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerGetFunds-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerGetFunds-4b6439334d7632746d41-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerPlaceBid": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerPlaceBid-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerPlaceBid-4b57665239333878724f-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerViewItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerViewItem-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerViewItem-5970574853543952576f-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerViewItems": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerViewItems-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerViewItems-53492b70455578474836-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerCloseAccount": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerCloseAccount-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerCloseAccount-48424d52745957635166-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerViewItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerViewItem-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerViewItem-716f475532586b704136-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerRequestUnfreezeItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerRequestUnfreezeItem-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerRequestUnfreezeItem-5659667a484c65316868-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerArchiveItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerArchiveItem-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerArchiveItem-31392f716a73705a2f45-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerFulfillItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerFulfillItem-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerFulfillItem-79694342543969503034-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerViewRecentlySold": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerViewRecentlySold-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerViewRecentlySold-664174576134312f7831-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerViewActiveBids": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerViewActiveBids-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerViewActiveBids-5431637a755277526275-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerReviewPurchases": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerReviewPurchases-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerReviewPurchases-66523558365274717953-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionadminFreezeItem": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/adminFreezeItem-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/adminFreezeItem-314e62706b597a36764c-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionadminGenerateAuctionReport": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/adminGenerateAuctionReport-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/adminGenerateAuctionReport-30745a314b4a6e466475-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionadminGenerateForensicsReport": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/adminGenerateForensicsReport-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/adminGenerateForensicsReport-6d6c692b7233516e3248-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionsellerBuyerNow": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/sellerBuyerNow-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/sellerBuyerNow-4931724850364f6d5771-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionbuyerBuyNow": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-auctionhouse-prod-5f64c-deployment/amplify-cfn-templates/function/buyerBuyNow-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-auctionhouse-prod-5f64c-deployment",
+          "s3Key": "amplify-builds/buyerBuyNow-65444730317745565045-build.zip",
           "env": "prod"
         }
       }

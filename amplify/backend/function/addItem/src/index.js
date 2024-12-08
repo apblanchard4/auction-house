@@ -1,118 +1,86 @@
 const AWS = require('aws-sdk');
 const mysql = require('mysql2/promise');
+
 AWS.config.update({ region: 'us-east-1' });
-const s3 = new AWS.S3();
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
+
 exports.handler = async (event) => {
-  try {
-    const { sellerUsername, newName, newDescription, initialPrice, newLength, newImage } = event;
+    // Extract seller information and item details from the event
+    const sellerUsername = event.sellerUsername;
+    const itemId = event.itemId;
+    const name = event.name;
+    const description = event.description;
+    const image = event.image;
+    const price = event.price;
+    const startDate = event.startDate;
 
-    // Validate input
-    if (!newName || !newDescription || !initialPrice || !newLength || !newImage || !sellerUsername) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*"
-        },
-        body: JSON.stringify({ message: 'Missing required fields' }),
-      };
+    console.log('sellerUsername:', sellerUsername);
+    console.log('itemId:', itemId);
+
+    // Validate required parameters
+    if (!sellerUsername || !itemId) {
+        return {
+            statusCode: 400,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            body: JSON.stringify({ message: 'Missing sellerUsername or itemId' }),
+        };
     }
 
-    // Validate initial price
-    if (parseFloat(initialPrice) < 1) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*"
-        },
-        body: JSON.stringify({ message: 'Initial price must be at least $1' }),
-      };
-    }
-
-    // Validate auction length
-    if (parseInt(newLength) < 1) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*"
-        },
-        body: JSON.stringify({ message: 'Auction length must be at least 1 day' }),
-      };
-    }
-
-    // Database connection configuration
     const connectConfig = {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
     };
 
-    const connection = await mysql.createConnection(connectConfig);
+    let connection;
+    try {
+        connection = await mysql.createConnection(connectConfig);
+        console.log('Connection to database successful');
 
-    // Check for duplicate item name
-    const [existingItem] = await connection.execute(
-      `SELECT id FROM Item WHERE name = ? AND sellerUsername = ?`,
-      [newName, sellerUsername]
-    );
+        // Update the item details in the database
+        const updateQuery = `
+            INSERT INTO Item (name, description, image, initialPrice, startDate, sellerUsername)
+            VALUES (?, ?, ?, ?, ?, ?);`;
 
-    if (existingItem.length > 0) {
-      await connection.end();
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*"
-        },
-        body: JSON.stringify({ message: 'An item with this name already exists for the seller' }),
-      };
+        await connection.execute(updateQuery, [
+            name,
+            description,
+            image,
+            price,
+            startDate,
+            itemId,
+            sellerUsername
+        ]);
+
+        return {
+            statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            body: JSON.stringify({ message: 'Item updated successfully' }),
+        };
+
+    } catch (error) {
+        console.error('Error: ', error);
+        return {
+            statusCode: 500,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            body: JSON.stringify({ message: 'Failed to update item' }),
+        };
+    } finally {
+        if (connection && connection.end) {
+            await connection.end();
+        }
     }
-
-    // Query to insert a new item into the database
-    const query = `
-      INSERT INTO Item (name, description, initialPrice, currentPrice, length, image, sellerUsername, published, archived, frozen, fulfilled) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const values = [
-      newName,
-      newDescription,
-      initialPrice,
-      initialPrice, // Assuming the initial price is the current price
-      newLength,
-      newImage,
-      sellerUsername,
-      false, // Default value for published
-      false, // Default value for archived
-      false, // Default value for frozen
-      false  // Default value for fulfilled
-    ];
-
-    await connection.execute(query, values);
-    await connection.end();
-
-    return {
-      statusCode: 201,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*"
-      },
-      body: JSON.stringify({ message: 'Item successfully added' }),
-    };
-  } catch (error) {
-    console.error('Error: ', error);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*"
-      },
-      body: JSON.stringify({ message: 'Failed to add item' }),
-    };
-  }
 };

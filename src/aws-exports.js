@@ -60,8 +60,103 @@ const awsmobile = {
             "region": "us-east-1"
         },
         {
+            "name": "loginAdminAccount",
+            "endpoint": "https://h25ni7mf84.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerAddFunds",
+            "endpoint": "https://3o946p6awf.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerGetFunds",
+            "endpoint": "https://c649hbuiu7.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerPlaceBid",
+            "endpoint": "https://0x670tndh9.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerViewItem",
+            "endpoint": "https://d4judgu50g.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerViewItems",
+            "endpoint": "https://tq89ogqnr2.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "sellerCloseAccount",
+            "endpoint": "https://i7n2snzpg5.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
             "name": "sellerViewItem",
-            "endpoint": "https://6o8yalu42b.execute-api.us-east-1.amazonaws.com/prod",
+            "endpoint": "https://lpr8qgd76a.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "sellerRequestUnfreezeItem",
+            "endpoint": "https://b59dq9imok.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "sellerArchiveItem",
+            "endpoint": "https://w35nmm676d.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "sellerFulfillItem",
+            "endpoint": "https://sj88qivm8j.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerViewRecentlySold",
+            "endpoint": "https://ezygj3fb3j.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerViewActiveBids",
+            "endpoint": "https://uynxrlmukd.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerReviewPurchases",
+            "endpoint": "https://zn9hxjy5a7.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "adminFreezeItem",
+            "endpoint": "https://0v4aeo66se.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "adminGenerateAuctionReport",
+            "endpoint": "https://7ttxb2kws7.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "adminGenerateForensicsReport",
+            "endpoint": "https://fhe5bsrfch.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerCloseAccount",
+            "endpoint": "https://df4xgq609l.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "sellerBuyerNow",
+            "endpoint": "https://5jd0tanpxi.execute-api.us-east-1.amazonaws.com/prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "buyerBuyNow",
+            "endpoint": "https://jpohewry18.execute-api.us-east-1.amazonaws.com/prod",
             "region": "us-east-1"
         }
     ],

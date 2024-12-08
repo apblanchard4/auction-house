@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.13.1\",\"stackType\":\"function-Lambda\",\"metadata\":{\"whyContinueWithGen1\":\"Prefer not to answer\"}}",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.13.0\",\"stackType\":\"function-Lambda\",\"metadata\":{\"whyContinueWithGen1\":\"Prefer not to answer\"}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "auctionhouseLambdaRole82b7b3d7",
+            "auctionhouseLambdaRole48cd27e0",
             {
               "Fn::Join": [
                 "",
                 [
-                  "auctionhouseLambdaRole82b7b3d7",
+                  "auctionhouseLambdaRole48cd27e0",
                   "-",
                   {
                     "Ref": "env"

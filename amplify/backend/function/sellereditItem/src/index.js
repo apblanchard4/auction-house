@@ -13,10 +13,9 @@ exports.handler = async (event) => {
     const itemId = event.itemId;
     const newName = event.newName ?? null;
     const newDescription = event.newDescription ?? null;
+    const newImage = event.newImage ?? null;
     const newPrice = event.newPrice ?? null;
-    const newLength = event.newLength ?? null;
-    const newCPrice = event.newCPrice ?? null;
-  
+    const newStartDate = event.newStartDate ?? null;
 
     console.log('sellerUsername:', sellerUsername);
     console.log('itemId:', itemId);
@@ -45,47 +44,26 @@ exports.handler = async (event) => {
         connection = await mysql.createConnection(connectConfig);
         console.log('Connection to database successful');
 
-         // Check if the new name already exists for another item
-         if (newName) {
-            const checkNameQuery = `
-                SELECT COUNT(*) AS count 
-                FROM Item 
-                WHERE name = ? AND id != ?`;
-            const [rows] = await connection.execute(checkNameQuery, [newName, itemId]);
-
-            if (rows[0].count > 0) {
-                return {
-                    statusCode: 400,
-                    headers: {
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Headers": "*"
-                    },
-                    body: JSON.stringify({ message: 'An item with this name already exists' }),
-                };
-            }
-        }
-
         // Update the item details in the database
         const updateQuery = `
-            UPDATE Item
+            UPDATE Item 
             SET 
                 name = COALESCE(?, name), 
                 description = COALESCE(?, description), 
+                image = COALESCE(?, image),
                 initialPrice = COALESCE(?, initialPrice), 
-                length = COALESCE(?, length),
-                currentPrice = COALESCE(?, initialPrice)
+                startDate = COALESCE(?, startDate) 
             WHERE id = ? AND sellerUsername = ?`;
 
         await connection.execute(updateQuery, [
             newName,
             newDescription,
+            newImage,
             newPrice,
-            newLength,
-            newCPrice,
+            newStartDate,
             itemId,
             sellerUsername
         ]);
-
 
         return {
             statusCode: 200,
