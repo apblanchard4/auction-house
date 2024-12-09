@@ -10,7 +10,7 @@ AWS.config.update({ region: 'us-east-1' });
 exports.handler = async (event) => {
     const buyerUsername = event.username;
     const itemId = event.itemId;
-    
+
     console.log('buyerUsername:', buyerUsername);
     console.log('itemId:', itemId);
 
@@ -33,7 +33,7 @@ exports.handler = async (event) => {
     };
 
     let connection;
-    try{
+    try {
         connection = await mysql.createConnection(connectConfig);
         console.log('Connection to database successful');
 
