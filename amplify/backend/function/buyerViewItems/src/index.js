@@ -18,7 +18,7 @@ exports.handler = async () => {
     console.log('Connection to database successful');
 
     const [items] = await connection.execute(
-      `SELECT * FROM Item WHERE Item.published = 1 AND Item.archived = 0 AND Item.fulfilled = 0`
+      `SELECT * FROM Item WHERE Item.published = 1 AND Item.archived = 0 AND Item.fulfilled = 0 AND Item.frozen = 0`
     );
 
     const categorizedItems = [];
