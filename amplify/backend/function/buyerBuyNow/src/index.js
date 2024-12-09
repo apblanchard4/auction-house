@@ -130,6 +130,7 @@ exports.handler = async (event) => {
             UPDATE Item
             SET 
                 fulfilled = FALSE,
+                published = FALSE,
                 archived = TRUE
             WHERE id = ?`;
 
