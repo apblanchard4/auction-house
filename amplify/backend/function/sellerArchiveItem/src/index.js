@@ -40,7 +40,7 @@ exports.handler = async (event) => {
     const checkItemQuery = `
             SELECT COUNT(*) AS count 
             FROM Item 
-            WHERE id = ? AND sellerUsername = ? AND isActive = 0`;
+            WHERE id = ? AND sellerUsername = ? AND published = 0 AND archived = 0`;
     const [rows] = await connection.execute(checkItemQuery, [itemId, sellerUsername]);
     if (rows[0].count === 0) {
       return {
@@ -56,7 +56,7 @@ exports.handler = async (event) => {
       //archive the item
       const archiveItemQuery = `
             UPDATE Item 
-            SET isActive = 1
+            SET archived = 1
             WHERE id = ? AND sellerUsername = ?`;
       await connection.execute(archiveItemQuery, [itemId, sellerUsername]);
     }
