@@ -67,7 +67,8 @@ exports.handler = async (event) => {
 
       let status;
 
-      if (!published) {
+
+      if (!published && !archived && !fulfilled) {
         status = 'inactive';
       } else if (published && currentDate < endDateObj && !archived && !fulfilled) {
         status = 'active';
