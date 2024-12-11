@@ -231,6 +231,43 @@ function SellerReviewItems() {
         alert('An error occurred while unpublishing the item');
       }
     }
+    if (action === 'Fulfill') {
+      const item = filteredItems.find((item) => item.id === itemId);
+      if (item?.status !== 'Completed') {
+        alert('Item cannot be fufilled because it is not completed');
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://sj88qivm8j.execute-api.us-east-1.amazonaws.com/prod/seller/fulfillItem`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sellerUsername: username,
+              itemId: itemId,
+            }),
+          }
+        );
+        const result = await response.json();
+        if (response.status === 200) {
+          alert('Item fulfilled successfully');
+          setFilteredItems((prevItems) =>
+            prevItems.map((item) =>
+              item.id === itemId ? { ...item, status: 'Fulfilled' } : item
+            )
+          );
+        } else {
+          alert(result.message || 'Failed to fulfill item');
+        }
+      } catch {
+        alert('An error occurred while fulfilling the item');
+      }
+    }
   }
 
   useEffect(() => {
