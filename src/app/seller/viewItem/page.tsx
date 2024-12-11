@@ -259,7 +259,38 @@ function SellerViewItem() {
                     alert("An error occurred while archiving the item.");
                 }
                 break;
-
+            case 'fulfill':
+                if (item?.status !== 'Completed') {
+                    alert('Item cannot be fulfilled because it is not completed');
+                    return;
+                  }
+            
+                  try {
+                    const response = await fetch(
+                      `https://sj88qivm8j.execute-api.us-east-1.amazonaws.com/prod/seller/fulfillItem`,
+                      {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${accessToken}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          sellerUsername: username,
+                          itemId: itemId,
+                        }),
+                      }
+                    );
+                    const result = await response.json();
+                    if (response.status === 200) {
+                      alert('Item fulfilled successfully');
+                      window.location.reload();
+                    } else {
+                      alert(result.message || 'Failed to fulfill item');
+                    }
+                  } catch {
+                    alert('An error occurred while fulfilling the item');
+                  }
+                    break;
             default:
                 alert("Invalid action.");
         }
@@ -301,7 +332,7 @@ function SellerViewItem() {
                         <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("unpublish")}>
                             Unpublish
                         </button>
-                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("fufill")}>
+                        <button className="py-2 px-4 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition" onClick={() => handleAction("fulfill")}>
                             Fulfill
                         </button>
                         <button className="py-2 px-4 bg-gray-700 text-white rounded-lg  hover:bg-gray-800 transition" onClick={() => handleAction("unfreeze")}>
