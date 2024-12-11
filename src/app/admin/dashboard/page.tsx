@@ -51,12 +51,8 @@ function AdminDashboard() {
               }  
             
             if (itemsData.length) {
-                const updatedItems = itemsData.map((item: Item) => ({
-                    ...item,
-                    status: (item.requestUnfrozen && item.frozen) ? 'Frozen (Unfreeze Requested)' : item.status,
-                }));
-                setItems(updatedItems);
-                setFilteredItems(updatedItems);
+                setItems(itemsData);
+                setFilteredItems(itemsData);
             } else {
                 throw new Error('Response body is not an array');
             }
