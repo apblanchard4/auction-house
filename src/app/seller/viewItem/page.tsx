@@ -135,13 +135,13 @@ function SellerViewItem() {
                     router.push(`/seller/editItem?itemId=${item.id}`);
 
                 } else {
-                    alert("Item is already active and cannot be edited");
+                    alert(`Item is ${item.status} and cannot be removed`);
                 }
                 break;
 
             case "publish":
-                if (item.status !== "inactive") {
-                    alert("Item is already published.");
+                if (item.status !== "Inactive") {
+                    alert(`Item is ${item.status} and cannot be published`);
                     return;
                 }
 
@@ -168,11 +168,11 @@ function SellerViewItem() {
                     alert("An error occurred while publishing the item.");
                 }
                 break;
-            
-            
+
+
             case "unpublish":
-                if (item.status !== "active") {
-                    alert("Item is already unpublished.");
+                if (item.status !== "Active") {
+                    alert(`Item is ${item.status} and cannot be unpublished`);
                     return;
                 }
 
@@ -188,21 +188,26 @@ function SellerViewItem() {
                             body: JSON.stringify({ sellerUsername: username, itemID: itemId }),
                         }
                     );
+
+
+                    const result = await response.json();
+                    const parsedBody = JSON.parse(result.body);
+
                     if (response.ok) {
-                        alert("Item unpublished successfully.");
-                        window.location.reload();
+                        alert(parsedBody.message || "Item unpublished successfully.");
+                        console.log(parsedBody.message);
                     } else {
-                        const result = await response.json();
-                        alert(result.message || "Failed to unpublish item.");
+                        alert(parsedBody.message || "Failed to unpublish item.");
                     }
+                        window.location.reload();
                 } catch {
                     alert("An error occurred while unpublishing the item.");
                 }
                 break;
 
             case "remove":
-                if (item.status !== "inactive") {
-                    alert("Item is not innactive and cannot be removed.");
+                if (item.status !== "Inactive") {
+                    alert(`Item is ${item.status} and cannot be removed`);
                     return;
                 }
 
@@ -227,6 +232,36 @@ function SellerViewItem() {
                     }
                 } catch {
                     alert("An error occurred while removing the item.");
+                }
+                break;
+
+            case "unfreeze":
+                if (item.status !== "Frozen") {
+                    alert(`Item is ${item.status} and unfreeze request cannot be sent`);
+                    return;
+                }
+
+                try {
+                    const response = await fetch(
+                        `https://b59dq9imok.execute-api.us-east-1.amazonaws.com/prod/seller/requestUnfreezeItem`,
+                        {
+                            method: "POST",
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
+                        }
+                    );
+                    if (response.ok) {
+                        alert("Item unfreeze request sent successfully");
+                        router.push("/seller/reviewItems");
+                    } else {
+                        const result = await response.json();
+                        alert(result.message || "Failed to send unfreeze request");
+                    }
+                } catch {
+                    alert("An error occurred while sending unfreeze request");
                 }
                 break;
 

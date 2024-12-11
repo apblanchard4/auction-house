@@ -74,8 +74,8 @@ function SellerReviewItems() {
 
     if (action === 'Unpublish') {
       const item = filteredItems.find((item) => item.id === itemId);
-      if (item?.status !== 'Active') {
-        alert('Item is already unpublished');
+      if (!item || item.status !== 'Active') {
+        alert(`Item is ${item?.status || 'undefined'} and cannot be unpublished`);
         return;
       }
 
@@ -94,27 +94,30 @@ function SellerReviewItems() {
             }),
           }
         );
+
         const result = await response.json();
+        const parsedBody = JSON.parse(result.body);
+
         if (response.ok) {
-          alert('Item unpublished successfully');
-          setFilteredItems((prevItems) =>
-            prevItems.map((item) =>
-              item.id === itemId ? { ...item, status: 'Inactive' } : item
-            )
-          );
+          alert(parsedBody.message || "Item unpublished successfully.");
+          window.location.reload();
         } else {
-          alert(result.message || 'Failed to unpublish item');
+          alert(parsedBody.message || "Failed to unpublish item.");
         }
       } catch {
-        alert('An error occurred while unpublishing the item');
+        alert("An error occurred while unpublishing the item.");
       }
     }
 
     //Pubish
     if (action === 'Publish') {
       const item = filteredItems.find((item) => item.id === itemId);
-      if (item?.status !== 'Inactive') {
-        alert('Item is already published');
+      if (!item) {
+        alert('Item not found');
+        return;
+      }
+      if (item.status !== 'Inactive') {
+        alert(`Item is ${item.status} and cannot be published`);
         return;
       }
       const body = JSON.stringify({
@@ -157,7 +160,7 @@ function SellerReviewItems() {
         if (item.status === 'Inactive') {
           router.push(`/seller/editItem?itemId=${itemId}`);
         } else {
-          alert('Item is already active and cannot be edited');
+          alert(`Item is ${item.status} and cannot be edited`);
         }
       } else {
         alert('Item not found');
@@ -166,8 +169,12 @@ function SellerReviewItems() {
 
     if (action === 'Remove') {
       const item = filteredItems.find((item) => item.id === itemId);
-      if (item?.status !== 'Inactive') {
-        alert('Item is not inactive and cannot be removed');
+      if (!item) {
+        alert('Item not found');
+        return;
+      }
+      if (item.status !== 'Inactive') {
+        alert(`Item is ${item.status} and cannot be removed`);
         return;
       }
 
@@ -194,6 +201,38 @@ function SellerReviewItems() {
         alert("An error occurred while removing the item." + error);
       }
     }
+
+    if (action === 'Unfreeze') {
+      const item = filteredItems.find((item) => item.id === itemId);
+      if (item?.status !== 'Frozen') {
+        alert('Item is not frozen and and request Unfreeze is invalid');
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://b59dq9imok.execute-api.us-east-1.amazonaws.com/prod/seller/requestUnfreezeItem`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
+          }
+        );
+        if (response.ok) {
+          alert("Request to unfreeze item has been sent");
+          window.location.reload();
+        } else {
+          const result = await response.json();
+          alert(result.message || "Failed to send request to unfreeze item");
+        }
+      } catch (error) {
+        alert("An error occurred while sending request to Unfreeze item" + error);
+      }
+    }
+
     // Add other actions here
   }
 
@@ -322,7 +361,7 @@ function SellerReviewItems() {
                     <option value="Unpublish">Unpublish Item</option>
                     <option value="Edit">Edit Item</option>
                     <option value="Fulfill">Fulfill Item</option>
-                    <option value="Unfreeze">Unfreeze</option>
+                    <option value="Unfreeze">Request Unfreeze</option>
                     <option value="Archive">Archive Item</option>
                     <option value="Remove">Remove Item</option>
                   </select>
