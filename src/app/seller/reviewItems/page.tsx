@@ -231,6 +231,43 @@ function SellerReviewItems() {
         alert('An error occurred while unpublishing the item');
       }
     }
+    if (action === 'Unfreeze') {
+      const item = filteredItems.find((item) => item.id === itemId);
+      if (item?.status !== 'Frozen') {
+        alert('Item is not frozen, unfreeze cannot be requested');
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://b59dq9imok.execute-api.us-east-1.amazonaws.com/prod/seller/requestUnfreezeItem`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sellerUsername: username,
+              itemId: itemId,
+            }),
+          }
+        );
+        const result = await response.json();
+        if (response.status === 200) {
+          alert('Item unfreeze requested successfully');
+          setFilteredItems((prevItems) =>
+            prevItems.map((item) =>
+              item.id === itemId ? { ...item, status: 'Frozen (Unfreeze Requested)' } : item
+            )
+          );
+        } else {
+          alert(result.message || 'Failed to request item be unfrozen');
+        }
+      } catch {
+        alert('An error occurred while requesting the item be unfrozen');
+      }
+    }
   }
 
   useEffect(() => {
@@ -358,7 +395,7 @@ function SellerReviewItems() {
                     <option value="Unpublish">Unpublish Item</option>
                     <option value="Edit">Edit Item</option>
                     <option value="Fulfill">Fulfill Item</option>
-                    <option value="Unfreeze">Unfreeze</option>
+                    <option value="Unfreeze">Request Unfreeze</option>
                     <option value="Archive">Archive Item</option>
                     <option value="Remove">Remove Item</option>
                   </select>
