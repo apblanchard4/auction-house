@@ -37,11 +37,15 @@ exports.handler = async (event) => {
         connection = await mysql.createConnection(connectConfig);
         console.log('Connection to database successful');
 
+        // Start a transaction
+        await connection.beginTransaction();
+
+        // Fetch item details
         const fetchItemQuery = `
             SELECT 
                 sellerUsername, 
                 isBuyNow, 
-                buyNowPrice, 
+                currentPrice, 
                 fulfilled,
                 archived,
                 frozen 
@@ -50,8 +54,8 @@ exports.handler = async (event) => {
         `;
 
         const [itemRows] = await connection.execute(fetchItemQuery, [itemId]);
-
         if (itemRows.length === 0) {
+            await connection.rollback();
             return {
                 statusCode: 404,
                 headers: {
@@ -61,7 +65,22 @@ exports.handler = async (event) => {
                 body: JSON.stringify({ message: 'Item not found' }),
             };
         }
+        const item = itemRows[0];
 
+        // Validate item availability and price
+        if (!item.isBuyNow) {
+            await connection.rollback();
+            return {
+                statusCode: 400,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "*"
+                },
+                body: JSON.stringify({ message: 'Buy Now is not enabled for this item' }),
+            };
+        }
+
+        // Fetch buyer and seller funds
         const fetchFundsQuery = `
             SELECT username, funds
             FROM Buyer
@@ -71,13 +90,13 @@ exports.handler = async (event) => {
             FROM Seller
             WHERE username = ?
         `;
-        let item = itemRows[0];
         const [fundsRows] = await connection.execute(fetchFundsQuery, [
             buyerUsername,
             item.sellerUsername
         ]);
 
         if (fundsRows.length < 2) {
+            await connection.rollback();
             return {
                 statusCode: 400,
                 headers: {
@@ -88,10 +107,27 @@ exports.handler = async (event) => {
             };
         }
 
-        const buyerFunds = fundsRows.find(f => f.username === buyerUsername).funds;
-        const sellerFunds = fundsRows.find(f => f.username === item.sellerUsername).funds;
+        const buyerFundsRow = fundsRows.find(f => f.username === buyerUsername);
+        const sellerFundsRow = fundsRows.find(f => f.username === item.sellerUsername);
 
-        if (buyerFunds < item.buyNowPrice) {
+        if (!buyerFundsRow || !sellerFundsRow) {
+            await connection.rollback();
+            return {
+                statusCode: 400,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "*"
+                },
+                body: JSON.stringify({ message: 'Buyer or Seller not found' }),
+            };
+        }
+
+        const buyerFunds = buyerFundsRow.funds;
+        const sellerFunds = sellerFundsRow.funds;
+
+        // Validate buyer funds
+        if (!buyerFunds || buyerFunds < parseFloat(item.currentPrice)) {
+            await connection.rollback();
             return {
                 statusCode: 400,
                 headers: {
@@ -102,30 +138,21 @@ exports.handler = async (event) => {
             };
         }
 
-        if (!item.isBuyNow) {
-            return {
-                statusCode: 400,
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Headers": "*"
-                },
-                body: JSON.stringify({ message: 'Buy Now is not enabled' }),
-            };
-        }
-
+        // Update buyer funds
         const updateFundsQueryBuyer = `
             UPDATE Buyer 
             SET funds = funds - ? 
-            WHERE username = ?`;
+            WHERE username = ? AND funds >= ?`;
+        await connection.execute(updateFundsQueryBuyer, [item.currentPrice, buyerUsername, item.currentPrice]);
 
+        // Update seller funds
         const updateFundsQuerySeller = `
             UPDATE Seller 
             SET funds = funds + ? 
             WHERE username = ?`;
+        await connection.execute(updateFundsQuerySeller, [item.currentPrice, item.sellerUsername]);
 
-        await connection.execute(updateFundsQueryBuyer, [item.buyNowPrice, buyerUsername]);
-        await connection.execute(updateFundsQuerySeller, [item.buyNowPrice, item.sellerUsername]);
-        //TO-DO: Double check logic here
+        // Update item status
         const updateItemQuery = `
             UPDATE Item
             SET 
@@ -133,8 +160,10 @@ exports.handler = async (event) => {
                 published = FALSE,
                 archived = TRUE
             WHERE id = ?`;
-
         await connection.execute(updateItemQuery, [itemId]);
+
+        // Commit the transaction
+        await connection.commit();
 
         return {
             statusCode: 200,
@@ -145,10 +174,14 @@ exports.handler = async (event) => {
             body: JSON.stringify({
                 message: 'Buy Now successful. Item is pending fulfillment.',
                 itemId: itemId,
-                price: item.buyNowPrice,
+                price: item.currentPrice,
             }),
         };
     } catch (error) {
+        // Rollback the transaction in case of an error
+        if (connection) {
+            await connection.rollback();
+        }
         console.error('Error:', error);
         return {
             statusCode: 500,
@@ -163,5 +196,4 @@ exports.handler = async (event) => {
             await connection.end();
         }
     }
-
 };
