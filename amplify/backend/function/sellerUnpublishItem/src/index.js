@@ -10,14 +10,14 @@ exports.handler = async (event) => {
   const sellerUsername = event.sellerUsername;
   const itemID = event.itemID;
 
-  if(!sellerUsername || !itemID) {
+  if (!sellerUsername || !itemID) {
     return {
       statusCode: 400,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*"
       },
-      body: JSON.stringify({message: 'Failed to unpublish item'}),
+      body: JSON.stringify({ message: 'Failed to unpublish item' }),
     };
   }
 
@@ -26,12 +26,30 @@ exports.handler = async (event) => {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-  }
+  };
 
   let connection;
   try {
-    connection = await mysql.createConnection(connectConfig); 
+    connection = await mysql.createConnection(connectConfig);
 
+    // Check if the item has any bids
+    const [bids] = await connection.execute(
+      `SELECT COUNT(*) AS bidCount FROM Bid WHERE itemID = ?`,
+      [itemID]
+    );
+
+    if (bids[0].bidCount > 0) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Item cannot be unpublished because it has bids' }),
+      };
+    }
+
+    // Update the item's published status
     const [result] = await connection.execute(
       `UPDATE Item
       SET published = false
@@ -39,23 +57,24 @@ exports.handler = async (event) => {
       [itemID, sellerUsername]
     );
 
-    if(result.affectedRows === 0) {
+    if (result.affectedRows === 0) {
       return {
         statusCode: 404,
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify({message: 'Item not found'}),
+        body: JSON.stringify({ message: 'Item not found' }),
       };
     }
+
     return {
       statusCode: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*"
       },
-      body: JSON.stringify({message: 'Item unpublished'}),
+      body: JSON.stringify({ message: 'Item unpublished' }),
     };
   } catch (error) {
     console.error('Error unpublishing item', error);
@@ -65,11 +84,11 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*"
       },
-      body: JSON.stringify({message: 'Failed to unpublish item'}),
+      body: JSON.stringify({ message: 'Failed to unpublish item' }),
     };
   } finally {
-    if(connection) {
+    if (connection) {
       await connection.end();
     }
   }
-} 
+};

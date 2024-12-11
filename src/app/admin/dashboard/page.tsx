@@ -100,7 +100,6 @@ function AdminDashboard() {
         const action = selectedActions[itemId];
 
         if (action === 'Freeze') {
-            const item = filteredItems.find((item) => item.id === itemId);
       
             try {
               const response = await fetch(
