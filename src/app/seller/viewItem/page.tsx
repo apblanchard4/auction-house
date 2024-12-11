@@ -168,8 +168,8 @@ function SellerViewItem() {
                     alert("An error occurred while publishing the item.");
                 }
                 break;
-            
-            
+
+
             case "unpublish":
                 if (item.status !== "active") {
                     alert("Item is already unpublished.");
@@ -227,6 +227,36 @@ function SellerViewItem() {
                     }
                 } catch {
                     alert("An error occurred while removing the item.");
+                }
+                break;
+            case "archive":
+                if (item.status !== "inactive") {
+                    alert("Item is not inactive and cannot be archived.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(
+                        `https://w35nmm676d.execute-api.us-east-1.amazonaws.com/prod/seller/archiveItem`,
+                        {
+                            method: "POST",
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
+                        }
+                    );
+                    if (response.status === 200) {
+                        alert("Item archived successfully.");
+                        //refresh the page to show changes
+                        window.location.reload();
+                    } else {
+                        const result = await response.json();
+                        alert(result.message || "Failed to archive item.");
+                    }
+                } catch {
+                    alert("An error occurred while archiving the item.");
                 }
                 break;
 
