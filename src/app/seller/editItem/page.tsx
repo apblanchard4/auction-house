@@ -58,8 +58,16 @@ function SellerEditItem() {
             router.push("/");
             return;
         }
-
+        if (!item) {
+            alert("Item data not found.");
+            return;
+        }
         const itemId = item?.id;
+        console.log("Item ID:", itemId);
+        if (!itemId) {
+            alert("Item ID not found.");
+            return;
+        }
 
         try {
             const response = await fetch (
@@ -85,6 +93,8 @@ function SellerEditItem() {
         } catch (error) {
             console.error('An error occurred while toggling buy now:', error);
         }
+
+        console.log("Buy Now Toggled:")
     }
 
     // Fetch item data
