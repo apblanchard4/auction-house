@@ -1,7 +1,7 @@
 "use client";
 
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
@@ -114,14 +114,14 @@ function AddItem() {
             router.push("/");
             return;
         }
-
+        let auctionLength = 0; 
         if (isBuyNow) {
             if (!item.name || !item.initialPrice || !item.description || !imageFile) {
                 alert("Please fill in all required fields.");
                 return;
             }
 
-            const auctionLength = 0;
+            auctionLength = 0;
 
         } else {
             if (!item.name || !item.initialPrice || !item.length || !item.description || !imageFile) {
@@ -129,7 +129,7 @@ function AddItem() {
                 return;
             }
 
-            const auctionLength = parseInt(item.length);
+             auctionLength = parseInt(item.length);
             if (isNaN(auctionLength) || auctionLength < 1) {
                 alert("Auction length must be a valid number and at least 1 day.");
                 return;
