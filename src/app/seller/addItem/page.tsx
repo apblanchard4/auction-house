@@ -123,7 +123,7 @@ function AddItem() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        sellerUsername: username,
+                        username: username,
                         itemId: itemId
                     }),
                 } 
