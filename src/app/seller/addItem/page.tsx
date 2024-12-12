@@ -1,7 +1,7 @@
 "use client";
 
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import "./addItem.css";
@@ -101,6 +101,48 @@ function AddItem() {
         });
     }
 
+    const [isBuyNow, setIsBuyNow] = useState(false);
+
+    async function toggleBuyNow() {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+            alert("You must log in first.");
+            router.push("/");
+            return;
+        }
+
+        const itemId = item.id;
+
+        try {
+            const response = await fetch( 
+                "https://5jd0tanpxi.execute-api.us-east-1.amazonaws.com/prod/seller/buyNow", 
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        sellerUsername: username,
+                        itemId: itemId
+                    }),
+                } 
+            );
+
+            const data = await response.json();
+
+            if (data.statusCode === 200) {
+                setIsBuyNow(!isBuyNow);
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+             console.error("An error occurred while toggling buy now status.");
+        }
+    };
+
+
     // Handle add item action
     async function handleAction() {
         const accessToken = localStorage.getItem("accessToken");
@@ -110,11 +152,27 @@ function AddItem() {
             return;
         }
 
-        if (!item.name || !item.initialPrice || !item.length || !item.description || !imageFile) {
-            alert("Please fill in all required fields.");
-            return;
-        }
+        if (isBuyNow) {
+            if (!item.name || !item.initialPrice || !item.description || !imageFile) {
+                alert("Please fill in all required fields.");
+                return;
+            }
 
+            const auctionLength = 0;
+
+        } else {
+            if (!item.name || !item.initialPrice || !item.length || !item.description || !imageFile) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const auctionLength = parseInt(item.length);
+            if (isNaN(auctionLength) || auctionLength < 1) {
+                alert("Auction length must be a valid number and at least 1 day.");
+                return;
+            }
+        }
+        
         const initialPrice = parseFloat(item.initialPrice);
         if (isNaN(initialPrice) || initialPrice < 1) {
             alert("Initial price must be a valid number greater than or equal to $1.");
@@ -122,11 +180,7 @@ function AddItem() {
         }
 
         // Validate length
-        const auctionLength = parseInt(item.length);
-        if (isNaN(auctionLength) || auctionLength < 1) {
-            alert("Auction length must be a valid number and at least 1 day.");
-            return;
-        }
+        
 
         try {
 
@@ -266,6 +320,18 @@ function AddItem() {
                             placeholder="Auction Length (days)"
                         />
                     </div>
+
+                    <div className="flex items-center">
+                        <label className="mr-2">Buy Now:</label>
+                         <button
+                            className={`py-2 px-4 rounded-lg ${isBuyNow ? 'bg-green-500 text-white' : 'bg-gray-700 text-white'}`}
+                            onClick={toggleBuyNow}
+                        >
+                            {isBuyNow ? 'Buy Now Enabled' : 'Enable Buy Now'}
+                        </button>
+                    </div>
+
+   
                     <span className="font-semibold image-label">Input Image File: </span>
                     <input
                         type="file"
