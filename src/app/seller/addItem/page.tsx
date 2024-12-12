@@ -104,42 +104,7 @@ function AddItem() {
     const [isBuyNow, setIsBuyNow] = useState(false);
 
     async function toggleBuyNow() {
-        const accessToken = localStorage.getItem("accessToken");
-        if (!accessToken) {
-            alert("You must log in first.");
-            router.push("/");
-            return;
-        }
-
-        const itemId = item.id;
-
-        try {
-            const response = await fetch( 
-                "https://5jd0tanpxi.execute-api.us-east-1.amazonaws.com/prod/seller/buyNow", 
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        itemId: itemId
-                    }),
-                } 
-            );
-
-            const data = await response.json();
-
-            if (data.statusCode === 200) {
-                setIsBuyNow(!isBuyNow);
-                alert(data.message);
-            } else {
-                alert(data.message);
-            }
-        } catch (error) {
-             console.error("An error occurred while toggling buy now status.");
-        }
+        setIsBuyNow(!isBuyNow);
     };
 
 
@@ -172,7 +137,7 @@ function AddItem() {
                 return;
             }
         }
-        
+
         const initialPrice = parseFloat(item.initialPrice);
         if (isNaN(initialPrice) || initialPrice < 1) {
             alert("Initial price must be a valid number greater than or equal to $1.");
@@ -180,7 +145,7 @@ function AddItem() {
         }
 
         // Validate length
-        
+
 
         try {
 
@@ -201,7 +166,7 @@ function AddItem() {
                         initialPrice: item.initialPrice,
                         newLength: item.length,
                         newImageFile: base64Image,
-                        isBuyNow: item.isBuyNow,
+                        isBuyNow: isBuyNow,
                     }),
                 }
             );
@@ -227,6 +192,9 @@ function AddItem() {
                 isBuyNow: false,
             });
             setImageFile(null);
+
+
+
             router.push("/seller/reviewItems");
         } catch (error) {
             if (error instanceof Error) {
@@ -323,7 +291,7 @@ function AddItem() {
 
                     <div className="flex items-center">
                         <label className="mr-2">Buy Now:</label>
-                         <button
+                        <button
                             className={`py-2 px-4 rounded-lg ${isBuyNow ? 'bg-green-500 text-white' : 'bg-gray-700 text-white'}`}
                             onClick={toggleBuyNow}
                         >
@@ -331,7 +299,7 @@ function AddItem() {
                         </button>
                     </div>
 
-   
+
                     <span className="font-semibold image-label">Input Image File: </span>
                     <input
                         type="file"
