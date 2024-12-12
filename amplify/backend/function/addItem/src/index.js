@@ -11,7 +11,7 @@ AWS.config.update({ region: 'us-east-1' });
 exports.handler = async (event) => {
   const bucketName = 'auctionhousec0fa4b6d5a2641a187df78aa6945b28f5f64c-prod';
   try {
-    const { sellerUsername, newName, newDescription, initialPrice, newLength, newImageFile } = event;
+    const { sellerUsername, newName, newDescription, initialPrice, newLength, newImageFile, isBuyNow } = event;
 
     // Validate input
     if (!newName || !newDescription || !initialPrice || !newLength || !newImageFile || !sellerUsername) {
@@ -48,7 +48,7 @@ exports.handler = async (event) => {
         body: JSON.stringify({ message: 'Auction length must be at least 1 day' }),
       };
     }
-    
+
     const timestamp = Date.now(); // Generate a single timestamp
     const fileName = `${sellerUsername}-${timestamp}-${newName}.jpg`;
 
@@ -105,8 +105,8 @@ exports.handler = async (event) => {
 
     // Query to insert a new item into the database
     const query = `
-    INSERT INTO Item (name, description, initialPrice, currentPrice, length, image, sellerUsername, published, archived, frozen, fulfilled) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO Item (name, description, initialPrice, currentPrice, length, image, sellerUsername, published, archived, frozen, fulfilled, isBuyNow) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
     const values = [
       newName,
@@ -119,7 +119,8 @@ exports.handler = async (event) => {
       false, // Default value for published
       false, // Default value for archived
       false, // Default value for frozen
-      false  // Default value for fulfilled
+      false,  // Default value for fulfilled
+      isBuyNow
     ];
 
     await connection.execute(query, values);
