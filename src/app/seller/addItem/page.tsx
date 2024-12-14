@@ -101,6 +101,13 @@ function AddItem() {
         });
     }
 
+    const [isBuyNow, setIsBuyNow] = useState(false);
+
+    async function toggleBuyNow() {
+        setIsBuyNow(!isBuyNow);
+    };
+
+
     // Handle add item action
     async function handleAction() {
         const accessToken = localStorage.getItem("accessToken");
@@ -109,10 +116,26 @@ function AddItem() {
             router.push("/");
             return;
         }
+        let auctionLength = 0; 
+        if (isBuyNow) {
+            if (!item.name || !item.initialPrice || !item.description || !imageFile) {
+                alert("Please fill in all required fields.");
+                return;
+            }
 
-        if (!item.name || !item.initialPrice || !item.length || !item.description || !imageFile) {
-            alert("Please fill in all required fields.");
-            return;
+            auctionLength = 0;
+
+        } else {
+            if (!item.name || !item.initialPrice || !item.length || !item.description || !imageFile) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+             auctionLength = parseInt(item.length);
+            if (isNaN(auctionLength) || auctionLength < 1) {
+                alert("Auction length must be a valid number and at least 1 day.");
+                return;
+            }
         }
 
         const initialPrice = parseFloat(item.initialPrice);
@@ -122,11 +145,7 @@ function AddItem() {
         }
 
         // Validate length
-        const auctionLength = parseInt(item.length);
-        if (isNaN(auctionLength) || auctionLength < 1) {
-            alert("Auction length must be a valid number and at least 1 day.");
-            return;
-        }
+
 
         try {
 
@@ -173,6 +192,9 @@ function AddItem() {
                 isBuyNow: false,
             });
             setImageFile(null);
+
+
+
             router.push("/seller/reviewItems");
         } catch (error) {
             if (error instanceof Error) {
@@ -266,6 +288,18 @@ function AddItem() {
                             placeholder="Auction Length (days)"
                         />
                     </div>
+
+                    <div className="flex items-center">
+                        <label className="mr-2">Buy Now:</label>
+                        <button
+                            className={`py-2 px-4 rounded-lg ${isBuyNow ? 'bg-green-500 text-white' : 'bg-gray-700 text-white'}`}
+                            onClick={toggleBuyNow}
+                        >
+                            {isBuyNow ? 'Buy Now Enabled' : 'Enable Buy Now'}
+                        </button>
+                    </div>
+
+
                     <span className="font-semibold image-label">Input Image File: </span>
                     <input
                         type="file"

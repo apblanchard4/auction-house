@@ -41,6 +41,7 @@ function SellerEditItem() {
     const [itemId, setItemId] = useState<string | null>(null);
     const [item, setItem] = useState<Item | null>(null);
     const [username, setUsername] = useState<string | null>(null);
+    const [isBuyNow, setIsBuyNow] = useState(false);
     //const [priceError, setPriceError] = useState<string | null>(null);
 
     // Get itemId from search params (only in client-side)
@@ -49,6 +50,52 @@ function SellerEditItem() {
         const itemIdFromUrl = params.get("itemId");
         setItemId(itemIdFromUrl);
     }, []);
+
+    async function toggleBuyNow() {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+            alert("You must log in first.");
+            router.push("/");
+            return;
+        }
+        if (!item) {
+            alert("Item data not found.");
+            return;
+        }
+        const itemId = item?.id;
+        console.log("Item ID:", itemId);
+        if (!itemId) {
+            alert("Item ID not found.");
+            return;
+        }
+
+        try {
+            const response = await fetch (
+                "https://5jd0tanpxi.execute-api.us-east-1.amazonaws.com/prod/seller/buyNow",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username: username, itemId: itemId }),
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.statusCode === 200) {
+                setIsBuyNow(!isBuyNow);
+                alert(data.message)
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error('An error occurred while toggling buy now:', error);
+        }
+
+        console.log("Buy Now Toggled:")
+    }
 
     // Fetch item data
     useEffect(() => {
@@ -287,6 +334,16 @@ function SellerEditItem() {
                             onChange={(e) => setItemLength(e.target.value)}
                             className="font-semibold"
                         />
+                    </div>
+                    <div className="flex justify-end w-full mt-4">
+                        {item?.status !== "active" && ( // Only show if not active
+                            <button
+                                className={`py-2 px-4 rounded-lg ${isBuyNow ?  'bg-gray-700 text-white' : 'bg-green-500 text-white'}`}
+                                onClick={toggleBuyNow}
+                            >
+                                {isBuyNow ? 'Enable Buy Now' : 'Buy Now Enabled'}
+                            </button>
+                        )}
                     </div>
                     <div>
                         <span className="font-semibold">Start Date:</span> {item.startDate}
