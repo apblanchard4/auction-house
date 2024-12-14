@@ -268,7 +268,7 @@ function SellerReviewItems() {
           alert('Item archived successfully');
           setFilteredItems((prevItems) =>
             prevItems.map((item) =>
-              item.id === itemId ? { ...item, status: 'Inactive' } : item
+              item.id === itemId ? { ...item, status: 'Archived' } : item
             )
           );
         } else {
