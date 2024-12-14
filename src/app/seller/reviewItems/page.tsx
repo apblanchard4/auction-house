@@ -210,7 +210,7 @@ function SellerReviewItems() {
     if (action === 'Unfreeze') {
       const item = filteredItems.find((item) => item.id === itemId);
       if (item?.status !== 'Frozen') {
-        alert('Item is not frozen and and request Unfreeze is invalid');
+        alert(`Item is ${item?.status || 'undefined'}, and unfreeze cannot be requested`);
         return;
       }
 
