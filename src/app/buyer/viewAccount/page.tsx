@@ -199,7 +199,7 @@ const BuyerAccountPage: React.FC = () => {
 
 
   const handleAddFunds = async () => {
-    if (!fundsToAdd || isNaN(Number(fundsToAdd))) {
+    if (!fundsToAdd || isNaN(Number(fundsToAdd)) || Number(fundsToAdd) <= 0) {
       alert("Please enter a valid amount.");
       return;
     }
