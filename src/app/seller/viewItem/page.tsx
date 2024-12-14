@@ -299,7 +299,38 @@ function SellerViewItem() {
                     alert("An error occurred while archiving the item.");
                 }
                 break;
-
+            case 'unfreeze':
+                if (item?.status !== 'Frozen') {
+                    alert('Item is not frozen, unfreeze cannot be requested');
+                    return;
+                }
+            
+                try {
+                    const response = await fetch(
+                    `https://b59dq9imok.execute-api.us-east-1.amazonaws.com/prod/seller/requestUnfreezeItem`,
+                    {
+                        method: 'POST',
+                        headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                        sellerUsername: username,
+                        itemId: itemId,
+                        }),
+                    }
+                    );
+                    const result = await response.json();
+                    if (response.status === 200) {
+                    alert('Item unfreeze requested successfully');
+                    window.location.reload();
+                    } else {
+                    alert(result.message || 'Failed to request item be unfrozen');
+                    }
+                } catch {
+                    alert('An error occurred while requesting the item be unfrozen');
+                }
+                break;
             case 'fulfill':
                 if (item?.status !== 'Completed') {
                     alert('Item cannot be fulfilled because it is not completed');
