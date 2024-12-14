@@ -24,6 +24,7 @@ interface Item {
     length: string;
     image: string;
     description: string;
+    isBuyNow: number;
     bids: Bid[];
 }
 
@@ -403,6 +404,11 @@ function SellerViewItem() {
 
                     <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-3">Bids</h3>
                     <div className="space-y-4">
+                    {item.isBuyNow === 1 && (
+                        <div className="inline-block bg-green-500 p-4 rounded-lg">
+                        <p className="text-xl font-bold text-black-500">Item is set for Buy Now</p>
+                    </div>)
+                    }
                         {item.bids.map((bid) => (
                             <div key={bid.id} className="bg-white rounded-lg shadow-md p-4">
                                 <p>
