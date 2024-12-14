@@ -25,7 +25,6 @@ interface Item {
     status: string;
     image: string;
     description: string;
-    isBuyNow?: boolean;
 }
 
 function AddItem() {
@@ -42,7 +41,6 @@ function AddItem() {
         status: "inactive",
         image: "",
         description: "",
-        isBuyNow: false,
     });
 
     const [username, setUsername] = useState<string | null>(null);
@@ -171,12 +169,10 @@ function AddItem() {
                 }
             );
 
+            const responseData = await response.json();
 
             // Check if `message` exists in the response
-            const result = await response.json();
-            const parsedBody = JSON.parse(result.body);
-
-            const alertMessage = parsedBody.message || 'Item added successfully';
+            const alertMessage = responseData.message || 'Item added successfully.';
             alert(alertMessage);
 
             setItem({  // Reset form after successful submission
@@ -189,7 +185,6 @@ function AddItem() {
                 status: "inactive",
                 image: "",
                 description: "",
-                isBuyNow: false,
             });
             setImageFile(null);
 
@@ -203,13 +198,6 @@ function AddItem() {
                 alert("An error occurred while adding the item.");
             }
         }
-    }
-
-    function toggleBuyNow() {
-        setItem((prevItem) => ({
-            ...prevItem,
-            isBuyNow: !prevItem.isBuyNow,
-        }));
     }
 
     return (
@@ -307,14 +295,6 @@ function AddItem() {
                         onChange={handleFileChange}
                         className="image-field"
                     />
-                    <div className="mt-4">
-                        <button
-                            className={`py-2 px-4 rounded-lg transition ${item.isBuyNow ? "bg-green-500 text-white" : "bg-gray-300 text-gray-700"}`}
-                            onClick={toggleBuyNow}
-                        >
-                            {item.isBuyNow ? "Buy Now Enabled" : "Enable Buy Now"}
-                        </button>
-                    </div>
                     <div>
                     </div>
                 </div>
