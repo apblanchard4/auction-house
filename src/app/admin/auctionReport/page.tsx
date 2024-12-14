@@ -14,6 +14,7 @@ interface Bid {
     amount: number;
     dateMade: string;
     fulfilled: boolean;
+    isBuyNow: boolean;
     earnings: string;
 }
 
@@ -28,6 +29,7 @@ const downloadExcel = async (auctionData: Bid[]) => {
         { header: "Bid Amount", key: "bidAmount", width: 15 },
         { header: "Date Made", key: "dateMade", width: 15 },
         { header: "Fulfilled", key: "fulfilled", width: 10 },
+        { header: "Is Buy Now", key: "isBuyNow", width: 15 },
         { header: "Auction House Profit", key: "earnings", width: 20 },
     ];
 
@@ -39,6 +41,7 @@ const downloadExcel = async (auctionData: Bid[]) => {
             bidAmount: `$${Number(bid.amount || 0).toFixed(2)}`,
             dateMade: new Date(bid.dateMade).toLocaleDateString(),
             fulfilled: bid.fulfilled ? "Yes" : "No",
+            isBuyNow: bid.isBuyNow ? "Yes" : "No",
             earnings: `$${Number(bid.earnings || 0).toFixed(2)}`,
         });
     });
@@ -104,6 +107,7 @@ function AuctionReport() {
                                     <th className="py-2 px-4 border-b">Bid Amount</th>
                                     <th className="py-2 px-4 border-b">Date Made</th>
                                     <th className="py-2 px-4 border-b">Fulfilled</th>
+                                    <th className="py-2 px-4 border-b">Is Buy Now</th>
                                     <th className="py-2 px-4 border-b">Auction House Profit</th>
                                 </tr>
                             </thead>
@@ -116,6 +120,9 @@ function AuctionReport() {
                                         <td className="py-2 px-4 border-b">{new Date(bid.dateMade).toLocaleDateString()}</td>
                                         <td className="py-2 px-4 border-b">
                                             {bid.fulfilled ? "Yes" : "No"}
+                                        </td>
+                                        <td className="py-2 px-4 border-b">
+                                            {bid.isBuyNow ? "Yes" : "No"}
                                         </td>
                                         <td className="py-2 px-4 border-b">
                                             ${parseFloat(bid.earnings).toFixed(2)}
