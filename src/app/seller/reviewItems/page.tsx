@@ -265,17 +265,17 @@ function SellerReviewItems() {
         );
         const result = await response.json();
         if (response.status === 200) {
-          alert('Item unpublished successfully');
+          alert('Item archived successfully');
           setFilteredItems((prevItems) =>
             prevItems.map((item) =>
               item.id === itemId ? { ...item, status: 'Inactive' } : item
             )
           );
         } else {
-          alert(result.message || 'Failed to unpublish item');
+          alert(result.message || 'Failed to archive item');
         }
       } catch {
-        alert('An error occurred while unpublishing the item');
+        alert('An error occurred while archiving the item');
       }
     }
     if (action === 'Fulfill') {
