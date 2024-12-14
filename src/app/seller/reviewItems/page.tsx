@@ -139,16 +139,19 @@ function SellerReviewItems() {
             body: body,
           }
         );
+
         const result = await response.json();
+        const parsedBody = JSON.parse(result.body);
         if (response.ok) {
-          alert('Item published successfully');
+          alert(parsedBody.message || 'Item published successfully');
           setFilteredItems((prevItems) =>
             prevItems.map((item) =>
               item.id === itemId ? { ...item, status: 'Active' } : item
             )
           );
+          window.location.reload();
         } else {
-          alert(result.message || 'Failed to publish item');
+          alert(parsedBody.message || 'Failed to publish item');
         }
       } catch {
         alert('An error occurred while publishing the item');
@@ -197,7 +200,7 @@ function SellerReviewItems() {
         const parsedBody = JSON.parse(result.body);
 
         if (response.status === 200) {
-          alert("Item removed successfully.");
+          alert(parsedBody.message || "Item removed successfully.");
           window.location.reload();
         } else {
           alert(parsedBody.message || "Failed to remove item.");
