@@ -10,11 +10,9 @@ AWS.config.update({ region: 'us-east-1' });
 exports.handler = async (event) => {
     const sellerUsername = event.username;
     const itemId = event.itemId;
-    const buyNowPrice = event.buyNowPrice ?? null;
     
     console.log('sellerUsername:', sellerUsername);
     console.log('itemId:', itemId);
-    console.log('buyNowPrice:', buyNowPrice);
 
     if (!sellerUsername || !itemId) {
         return {
@@ -24,17 +22,6 @@ exports.handler = async (event) => {
                 "Access-Control-Allow-Headers": "*"
             },
             body: JSON.stringify({ message: 'Missing sellerUsername or itemId' }),
-        };
-    }
-
-    if (!buyNowPrice) {
-        return {
-            statusCode: 400,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*"
-            },
-            body: JSON.stringify({ message: 'Missing Buy Now Price' }),
         };
     }
 
@@ -50,8 +37,9 @@ exports.handler = async (event) => {
         connection = await mysql.createConnection(connectConfig);
         console.log('Connection to database successful');
 
-        const isBuyNowQuery = `SELECT isBuyNow FROM Item WHERE id = ? AND sellerUsername = ?`;
+        const isBuyNowQuery = `SELECT currentPrice, isBuyNow FROM Item WHERE id = ? AND sellerUsername = ?`;
         const [isBuyNowRows] = await connection.execute(isBuyNowQuery, [itemId, sellerUsername]);
+
         if (isBuyNowRows.length === 0) {
             return {
                 statusCode: 404,
@@ -63,16 +51,18 @@ exports.handler = async (event) => {
             };
         }
         let isBuyNow = isBuyNowRows[0].isBuyNow;
+        const currentPrice = isBuyNowRows[0].currentPrice;
+
+        const newIsBuyNow = isBuyNow === 1 ? 0 : 1;
+
         const updateQuery = `
             UPDATE Item
             SET 
-                isBuyNow = ?, 
-                buyNowPrice = ?
+                isBuyNow = ?
             WHERE id = ? AND sellerUsername = ?`;
         
         await connection.execute(updateQuery, [
-            isBuyNow ? 0: 1,
-            isBuyNow ? null : buyNowPrice,
+            newIsBuyNow,
             itemId,
             sellerUsername
         ]);
@@ -83,7 +73,11 @@ exports.handler = async (event) => {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Headers": "*"
             },
-            body: JSON.stringify({ message: 'Item updated to Buy Now successfully' }),
+            body: JSON.stringify({
+                message: `Buy now status updated successfully`,
+                currentPrice: currentPrice,
+                isBuyNow: newIsBuyNow
+            }),
         };
     } catch (error) {
         console.error('Error updating item:', error);
