@@ -17,7 +17,7 @@ function getUsernameFromToken(idToken: string) {
 const SellerAccountPage: React.FC = () => {
   const router = useRouter();
   const [username, setUsername] = useState<string | null>(null);
-  const [balance] = useState<string>("$X.XX"); // Placeholder balance
+  //const [balance] = useState<string>("$X.XX"); // Placeholder balance
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
