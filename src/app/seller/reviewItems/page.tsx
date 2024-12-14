@@ -305,7 +305,7 @@ function SellerReviewItems() {
           alert('Item fulfilled successfully');
           setFilteredItems((prevItems) =>
             prevItems.map((item) =>
-              item.id === itemId ? { ...item, status: 'Fulfilled' } : item
+              item.id === itemId ? { ...item, status: 'Archived' } : item
             )
           );
         } else {
