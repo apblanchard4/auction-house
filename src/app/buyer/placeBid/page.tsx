@@ -72,11 +72,14 @@ function BuyerPlaceBid() {
                 }
             );
             console.log(response);
-            if (response.status === 200) {
+            const result = await response.json();
+            const parsedBody = JSON.parse(result.body);
+
+            if (parsedBody.statusCode === 200) {
                 alert('Bid placed successfully!');
-                router.push('/buyer/reviewItems');
+                router.push('/buyer/viewItem?itemID=' + itemId);
             } else {
-                alert('Failed to place bid.');
+                alert(parsedBody.message || 'Failed to place bid.');
             }
         } else {
             alert('No token found. Please log in.');
