@@ -46,6 +46,7 @@ exports.handler = async (event) => {
             i.requestUnfrozen,
             i.startDate, 
             i.length,
+            i.isBuyNow,
             (SELECT COUNT(*) FROM Bid WHERE Bid.itemId = i.id) AS bidCount
         FROM 
             Item AS i
@@ -60,7 +61,7 @@ exports.handler = async (event) => {
 
         items.forEach(item => {
             console.log('item:', item);
-            const { id, itemName, price, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBuyNow, bidCount } = item;
+            let { id, itemName, price, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBuyNow, bidCount } = item;
       
             // Check if startDate or endDate is null, and set the appropriate message
             let startDateObj = startDate ? new Date(startDate) : 'Publish item to set start date';
@@ -68,6 +69,11 @@ exports.handler = async (event) => {
             if (startDate !== null) {
               endDateObj.setDate(endDateObj.getDate() + length);
             }
+            if (isBuyNow) {
+                bidCount = 1;
+                console.log("Bid Count: " + bidCount);
+            }
+
 
             let status;
 
