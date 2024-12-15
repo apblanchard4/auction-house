@@ -46,6 +46,8 @@ exports.handler = async (event) => {
             i.requestUnfrozen,
             i.startDate, 
             i.length,
+            i.isBuyNow,
+            i.isBoughtNow,
             (SELECT COUNT(*) FROM Bid WHERE Bid.itemId = i.id) AS bidCount
         FROM 
             Item AS i
@@ -60,32 +62,37 @@ exports.handler = async (event) => {
 
         items.forEach(item => {
             console.log('item:', item);
-            const { id, itemName, price, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBuyNow, bidCount } = item;
-      
+            let { id, itemName, price, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBoughtNow, isBuyNow, bidCount } = item;
+
             // Check if startDate or endDate is null, and set the appropriate message
             let startDateObj = startDate ? new Date(startDate) : 'Publish item to set start date';
             let endDateObj = startDate ? new Date(startDate) : 'Publish item to set end date';
             if (startDate !== null) {
-              endDateObj.setDate(endDateObj.getDate() + length);
+                endDateObj.setDate(endDateObj.getDate() + length);
             }
 
             let status;
 
-            if (frozen && requestUnfrozen) {
-                status = 'Frozen (Unfreeze Requested)';
-            } else if (frozen) {
-                status = 'Frozen';
-            } else if(!published){
-                status = 'Inactive';
-            } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
-                status = 'Active';
-            } else if (published && currentDate >= endDateObj && bidCount === 0 && !archived && !fulfilled) {
-                status = 'Failed';
-            } else if (published && currentDate >= endDateObj && bidCount > 0 && !archived && !fulfilled) {
-                status = 'Completed';
-            } else if (archived || fulfilled) {
-                status = 'Archived';
-            } 
+            if (isBoughtNow) {
+                status = "Completed";
+            } else {
+                if (frozen && requestUnfrozen) {
+                    status = 'Frozen (Unfreeze Requested)';
+                } else if (frozen) {
+                    status = 'Frozen';
+                } else if (!published) {
+                    status = 'Inactive';
+                } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
+                    status = 'Active';
+                } else if (published && currentDate >= endDateObj && bidCount === 0 && !archived && !fulfilled) {
+                    status = 'Failed';
+                } else if (published && currentDate >= endDateObj && bidCount > 0 && !archived && !fulfilled) {
+                    status = 'Completed';
+                } else if (archived || fulfilled) {
+                    status = 'Archived';
+                }
+            }
+
 
             categorizedItems.push({
                 id,
@@ -93,6 +100,8 @@ exports.handler = async (event) => {
                 price,
                 startDate: (startDateObj instanceof Date && !isNaN(startDateObj)) ? startDateObj.toISOString().split('T')[0] : startDateObj,
                 endDate: (endDateObj instanceof Date && !isNaN(endDateObj)) ? endDateObj.toISOString().split('T')[0] : endDateObj,
+                isBuyNow,
+                isBoughtNow,
                 status
             });
         });

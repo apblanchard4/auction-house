@@ -43,12 +43,7 @@ exports.handler = async (event) => {
         // Fetch item details
         const fetchItemQuery = `
             SELECT 
-                sellerUsername, 
-                isBuyNow, 
-                currentPrice, 
-                fulfilled,
-                archived,
-                frozen 
+               *
             FROM Item
             WHERE id = ? AND published = 1
         `;
@@ -156,17 +151,11 @@ exports.handler = async (event) => {
         const updateItemQuery = `
             UPDATE Item
             SET 
-                fulfilled = FALSE,
-                published = FALSE,
-                archived = TRUE
+                archived = FALSE,
+                published = TRUE,
+                isBoughtNow = 1
             WHERE id = ?`;
         await connection.execute(updateItemQuery, [itemId]);
-
-        //Put Buy Now in bids table
-        await connection.execute(
-            'INSERT INTO Bid (buyerUsername, dateMade, itemId, amount, winningBid, isBuyNow) VALUES (?, NOW(), ?, ?, 1, 1)',
-            [buyerUsername, itemId, item.currentPrice]
-        );
 
         // Commit the transaction
         await connection.commit();

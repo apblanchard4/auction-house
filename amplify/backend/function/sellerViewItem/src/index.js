@@ -60,7 +60,7 @@ exports.handler = async (event) => {
 
     items.forEach(item => {
       console.log('item:', item);
-      const { id, name, initialPrice, currentPrice, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBuyNow } = item;
+      const { id, name, initialPrice, currentPrice, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBoughtNow, isBuyNow } = item;
 
       // Check if startDate or endDate is null, and set the appropriate message
       let startDateObj = startDate ? new Date(startDate) : 'publish item to set start Date';
@@ -72,21 +72,28 @@ exports.handler = async (event) => {
       let status;
       let bidCount = bids.length
 
-      if (frozen && requestUnfrozen) {
-        status = 'Frozen (Unfreeze Requested)';
-      } else if (frozen) {
-        status = 'Frozen';
-      } else if(!published){
+      if (isBoughtNow) {
+        status = 'Completed';
+      } else {
+        if (frozen && currentDate < endDateObj) {
+          status = 'Frozen';
+          if (requestUnfrozen) status = 'Frozen (Unfreeze Requested)';
+        } else if (!published && !archived && !fulfilled) {
           status = 'Inactive';
-      } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
+        } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
           status = 'Active';
-      } else if (published && currentDate >= endDateObj && bidCount === 0 && !archived && !fulfilled) {
+        } else if (published && currentDate >= endDateObj && bidCount === 0 && !archived && !fulfilled) {
           status = 'Failed';
-      } else if (published && currentDate >= endDateObj && bidCount > 0 && !archived && !fulfilled) {
+          if (frozen) status = 'Failed (Frozen)'
+        } else if (published && currentDate >= endDateObj && bidCount > 0 && !archived && !fulfilled) {
           status = 'Completed';
-      } else if (archived || fulfilled) {
+          if (frozen) status = 'Completed (Frozen)'
+        } else if (archived || fulfilled) {
           status = 'Archived';
-      } 
+        }
+      }
+
+
 
       let signedImageUrl = image; // Default to the stored URL if public
 
@@ -113,6 +120,7 @@ exports.handler = async (event) => {
           length,
           image: signedImageUrl,
           description,
+          isBoughtNow,
           isBuyNow,
           bids
         });
