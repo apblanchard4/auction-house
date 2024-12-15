@@ -60,25 +60,39 @@ exports.handler = async (event) => {
 
     items.forEach(item => {
       console.log('item:', item);
-      const { id, name, initialPrice, currentPrice, published, archived, fulfilled, startDate, length, description, image } = item;
-      const startDateObj = new Date(startDate);
-      const endDateObj = new Date(startDate);
-      endDateObj.setDate(endDateObj.getDate() + length);
+      const { id, name, initialPrice, currentPrice, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBuyNow } = item;
+
+      // Check if startDate or endDate is null, and set the appropriate message
+      let startDateObj = startDate ? new Date(startDate) : 'publish item to set start Date';
+      let endDateObj = startDate ? new Date(startDate) : 'publish item to set end Date';
+      if (startDate !== null) {
+        endDateObj.setDate(endDateObj.getDate() + length);
+      }
 
       let status;
+      let bidCount = bids.length
 
-
-      if (!published && !archived && !fulfilled) {
-        status = 'inactive';
-      } else if (published && currentDate < endDateObj && !archived && !fulfilled) {
-        status = 'active';
-      } else if (published && currentDate >= endDateObj && !archived && !fulfilled) {
-        status = 'failed';
-      } else if (published && currentDate >= endDateObj && !archived && !fulfilled) {
-        status = 'completed';
-      } else if (archived || fulfilled) {
-        status = 'archived';
+      if (isBuyNow) {
+        bidCount = 1;
+        console.log("bid count: " + bidCount);
       }
+
+      if (frozen && currentDate < endDateObj) {
+        status = 'Frozen';
+        if (requestUnfrozen) status = 'Frozen (Unfreeze Requested)'; 
+      } else if(!published && !archived && !fulfilled){
+          status = 'Inactive';
+      } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
+          status = 'Active';
+      } else if (published && currentDate >= endDateObj && bidCount === 0 && !archived && !fulfilled) {
+          status = 'Failed';
+          if (frozen) status = 'Failed (Frozen)'
+      } else if (published && currentDate >= endDateObj && bidCount > 0 && !archived && !fulfilled) {
+          status = 'Completed';
+          if (frozen) status = 'Completed (Frozen)'
+      } else if (archived || fulfilled) {
+          status = 'Archived';
+      } 
 
       let signedImageUrl = image; // Default to the stored URL if public
 
@@ -99,12 +113,13 @@ exports.handler = async (event) => {
           name,
           initialPrice,
           currentPrice,
-          startDate: startDateObj.toISOString().split('T')[0],
-          endDate: endDateObj.toISOString().split('T')[0],
+          startDate: (startDateObj instanceof Date && !isNaN(startDateObj)) ? startDateObj.toISOString().split('T')[0] : startDateObj,
+          endDate: (endDateObj instanceof Date && !isNaN(endDateObj)) ? endDateObj.toISOString().split('T')[0] : endDateObj,
           status,
           length,
           image: signedImageUrl,
           description,
+          isBuyNow,
           bids
         });
       }
