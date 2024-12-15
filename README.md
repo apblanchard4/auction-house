@@ -1,13 +1,13 @@
 ## Use Cases for Final Iteration
 
-### 1. Admin - Freeze Item
-- **Description**: Freeze an active item
+### 1. Admin - Freeze/Unfreeze Item
+- **Description**: Freeze/Unfreeze an active/frozen item
 
 - **To Test**:
   1. Login as admin with username and password admin
   2. Navigate to item list
   3. Find an Item with the name "Freeze Me"
-  4. Select Toggle Item Frozen in Admin Actions and then click Perform Action to toggle Freeze
+  4. Select Toggle Item Frozen in Admin Actions and then click Perform Action to toggle Freeze/Unfreeze
 
 ### 2. Admin - Forensics Report
 - **Description**: Displays forensics information about the auction house
