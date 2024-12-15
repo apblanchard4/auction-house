@@ -1,7 +1,7 @@
 ## Use Cases for Final Iteration
 
 ### 1. Admin - Freeze Item
-- **Description**: Freeze and active item
+- **Description**: Freeze an active item
 
 - **To Test**:
   1. Login as admin with username and password admin
@@ -22,7 +22,7 @@
 - **To Test**:
   1. Login as admin with username and password admin
   2. Navigate to Auction Report
-  3. Information will display on loading of the page
+  3. Information will display on loading of the page (Total Auction house earnings at bottom of page)
 
 ### 4. Seller - Request Unfreeze
 - **Description**: Seller Request admin to unfreeze frozen item
