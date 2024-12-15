@@ -72,18 +72,24 @@ exports.handler = async (event) => {
       let status;
       let bidCount = bids.length
 
-      if (frozen && requestUnfrozen) {
-        status = 'Frozen (Unfreeze Requested)';
-      } else if (frozen) {
+      if (isBuyNow) {
+        bidCount = 1;
+        console.log("bid count: " + bidCount);
+      }
+
+      if (frozen && currentDate < endDateObj) {
         status = 'Frozen';
-      } else if(!published){
+        if (requestUnfrozen) status = 'Frozen (Unfreeze Requested)'; 
+      } else if(!published && !archived && !fulfilled){
           status = 'Inactive';
       } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
           status = 'Active';
       } else if (published && currentDate >= endDateObj && bidCount === 0 && !archived && !fulfilled) {
           status = 'Failed';
+          if (frozen) status = 'Failed (Frozen)'
       } else if (published && currentDate >= endDateObj && bidCount > 0 && !archived && !fulfilled) {
           status = 'Completed';
+          if (frozen) status = 'Completed (Frozen)'
       } else if (archived || fulfilled) {
           status = 'Archived';
       } 

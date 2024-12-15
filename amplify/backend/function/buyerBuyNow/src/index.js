@@ -43,12 +43,7 @@ exports.handler = async (event) => {
         // Fetch item details
         const fetchItemQuery = `
             SELECT 
-                sellerUsername, 
-                isBuyNow, 
-                currentPrice, 
-                fulfilled,
-                archived,
-                frozen 
+               *
             FROM Item
             WHERE id = ? AND published = 1
         `;
@@ -156,9 +151,9 @@ exports.handler = async (event) => {
         const updateItemQuery = `
             UPDATE Item
             SET 
-                fulfilled = FALSE,
-                published = FALSE,
-                archived = TRUE
+                archived = FALSE,
+                published = TRUE,
+                length = 0
             WHERE id = ?`;
         await connection.execute(updateItemQuery, [itemId]);
 
