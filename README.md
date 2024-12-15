@@ -58,7 +58,7 @@
 ### 8. Buyer - Buy Now
 - **Description**: Buyer can immediately buy an item now for its list price
 - **To Test**:
-  1. Login as a buyer (username: testBuyer1 password: testBuyer1)
+  1. Login as a buyer (username: lowerbuyer password: lowerbuyer)
   2. Select the item that was just created or set to buy now
   3. Click on the buy now button
   4. The item has now been purchased
