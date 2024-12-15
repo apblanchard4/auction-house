@@ -24,6 +24,7 @@ interface Item {
     length: string;
     image: string;
     description: string;
+    isBuyNow: number;
     bids: Bid[];
 }
 
@@ -223,12 +224,15 @@ function SellerViewItem() {
                             body: JSON.stringify({ sellerUsername: username, itemId: itemId }),
                         }
                     );
+
+                    const result = await response.json();
+                    const parsedBody = JSON.parse(result.body);
+
                     if (response.ok) {
-                        alert("Item removed successfully.");
+                        alert(parsedBody.message || "Item removed successfully");
                         router.push("/seller/reviewItems");
                     } else {
-                        const result = await response.json();
-                        alert(result.message || "Failed to remove item.");
+                        alert(parsedBody.message || "Failed to remove item.");
                     }
                 } catch {
                     alert("An error occurred while removing the item.");
@@ -295,7 +299,38 @@ function SellerViewItem() {
                     alert("An error occurred while archiving the item.");
                 }
                 break;
-
+            case 'unfreeze':
+                if (item?.status !== 'Frozen') {
+                    alert('Item is not frozen, unfreeze cannot be requested');
+                    return;
+                }
+            
+                try {
+                    const response = await fetch(
+                    `https://b59dq9imok.execute-api.us-east-1.amazonaws.com/prod/seller/requestUnfreezeItem`,
+                    {
+                        method: 'POST',
+                        headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                        sellerUsername: username,
+                        itemId: itemId,
+                        }),
+                    }
+                    );
+                    const result = await response.json();
+                    if (response.status === 200) {
+                    alert('Item unfreeze requested successfully');
+                    window.location.reload();
+                    } else {
+                    alert(result.message || 'Failed to request item be unfrozen');
+                    }
+                } catch {
+                    alert('An error occurred while requesting the item be unfrozen');
+                }
+                break;
             case 'fulfill':
                 if (item?.status !== 'Completed') {
                     alert('Item cannot be fulfilled because it is not completed');
@@ -403,7 +438,27 @@ function SellerViewItem() {
 
                     <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-3">Bids</h3>
                     <div className="space-y-4">
+                    {/* Green block */}
+                    {item.isBuyNow ? (
+                        <div className="">
+                            <p className="inline-block bg-green-500 p-4 rounded-lg text-xl font-bold text-black-500">Item is set for Buy Now</p>
                         {item.bids.map((bid) => (
+                            <div key={bid.id} className="bg-white rounded-lg shadow-md p-4">
+                                <p><strong>Item has been Purchased!</strong></p>
+                                <p>
+                                    <strong>Buyer:</strong> {bid.buyerUsername}
+                                </p>
+                                <p>
+                                    <strong>Amount:</strong> ${bid.amount}
+                                </p>
+                                <p>
+                                    <strong>Date:</strong> {bid.dateMade}
+                                </p>
+                            </div>
+                        ))}
+                        </div>
+                    ) : (
+                        item.bids.map((bid) => (
                             <div key={bid.id} className="bg-white rounded-lg shadow-md p-4">
                                 <p>
                                     <strong>Bidder:</strong> {bid.buyerUsername}
@@ -413,18 +468,16 @@ function SellerViewItem() {
                                 </p>
                                 <p>
                                     <strong>Date:</strong> {bid.dateMade}
-
                                 </p>
                                 <p>
                                     <strong>Price:</strong> {Number(bid.amount) + Number(item.initialPrice)}
-
                                 </p>
                             </div>
-                        ))}
-                    </div>
-
+                        ))
+                    )}
                 </div>
             </div>
+        </div>
         </div >
     );
 }
