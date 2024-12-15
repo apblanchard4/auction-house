@@ -10,7 +10,7 @@ AWS.config.update({ region: 'us-east-1' });
 exports.handler = async (event) => {
     const sellerUsername = event.username;
     const itemId = event.itemId;
-    
+
     console.log('sellerUsername:', sellerUsername);
     console.log('itemId:', itemId);
 
@@ -60,7 +60,7 @@ exports.handler = async (event) => {
             SET 
                 isBuyNow = ?
             WHERE id = ? AND sellerUsername = ?`;
-        
+
         await connection.execute(updateQuery, [
             newIsBuyNow,
             itemId,

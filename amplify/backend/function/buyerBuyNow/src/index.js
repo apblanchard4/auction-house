@@ -153,15 +153,9 @@ exports.handler = async (event) => {
             SET 
                 archived = FALSE,
                 published = TRUE,
-                length = 0
+                isBoughtNow = 1
             WHERE id = ?`;
         await connection.execute(updateItemQuery, [itemId]);
-
-        //Put Buy Now in bids table
-        await connection.execute(
-            'INSERT INTO Bid (buyerUsername, dateMade, itemId, amount, winningBid, isBuyNow) VALUES (?, NOW(), ?, ?, 1, 1)',
-            [buyerUsername, itemId, item.currentPrice]
-        );
 
         // Commit the transaction
         await connection.commit();
