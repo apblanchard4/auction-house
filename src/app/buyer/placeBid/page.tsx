@@ -46,9 +46,11 @@ function BuyerPlaceBid() {
         if (bidAmount <= currentCost) {
             if (lastBidAmount == 0) {
                 alert("Bid must be greater than the initial price.");
+                return
             }
             else {
                 alert("Bid must be at least $1 higher than the current cost.");
+                return
             }
         }
 
