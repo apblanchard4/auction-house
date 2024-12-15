@@ -1,11 +1,6 @@
 const AWS = require('aws-sdk');
 const mysql = require('mysql2/promise');
-
 AWS.config.update({ region: 'us-east-1' });
-
-/**
- * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- */
 
 exports.handler = async (event) => {
   const connectConfig = {
@@ -15,110 +10,106 @@ exports.handler = async (event) => {
     database: process.env.DB_NAME,
   };
 
-  const { startDate, endDate } = event;
-
   let connection;
 
   try {
     connection = await mysql.createConnection(connectConfig);
     console.log('Connection to database successful');
 
-    // Fetch bids and item information within the date range
-    const [bids] = await connection.execute(
-      `
+    // Query to get all bids and items, including the "isBuyNow" status in bids
+    const [bidsAndItems] = await connection.execute(`
       SELECT 
         b.id AS bidId, 
         b.buyerUsername, 
         b.amount, 
         b.dateMade, 
+        b.isBuyNow AS bidIsBuyNow, 
         i.id AS itemId, 
         i.name AS itemName, 
-        i.fulfilled AS itemFulfilled
-      FROM Bid b
-      JOIN Item i ON b.itemId = i.id
-      WHERE b.dateMade BETWEEN ? AND ?
-      `,
-      [startDate, endDate]
-    );
+        i.fulfilled, 
+        i.currentPrice, 
+        i.startDate
+      FROM Item i
+      LEFT JOIN Bid b ON b.itemId = i.id
+    `);
 
-    if (bids.length === 0) {
-      return {
-        statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-        },
-        body: JSON.stringify({ message: 'No data found for the selected date range' }),
-      };
-    }
-
-    // Data analysis
-    let totalBids = bids.length;
-    let totalEarnings = 0;
-    let totalFulfilledItems = 0;
-    let totalBidAmount = 0;
-    let highestBid = { amount: 0, buyerUsername: null, itemName: null };
-    let buyerSpends = {};
-
-    let dailyBids = {};
-    let itemCounts = {};
-    let auctionDetails = [];
-
-    bids.forEach((bid) => {
-      // Convert bid.amount to a number
-      const bidAmount = parseFloat(bid.amount);
-      totalBidAmount += bidAmount;
-
-      // Accumulate earnings
-      if (bid.itemFulfilled) {
-        const commission = bid.amount * 0.05;
-        totalEarnings += commission;
-        totalFulfilledItems += 1;
-      }
-
-      // Update highest bid
-      if (bidAmount > highestBid.amount) {
-        highestBid = {
-          amount: bidAmount,
-          buyerUsername: bid.buyerUsername,
-          itemName: bid.itemName,
+    // Group data by itemId
+    const groupedItems = bidsAndItems.reduce((acc, entry) => {
+      if (!acc[entry.itemId]) {
+        acc[entry.itemId] = {
+          itemName: entry.itemName,
+          fulfilled: entry.fulfilled === 1,
+          currentPrice: entry.currentPrice || 0,
+          startDate: entry.startDate || null,
+          bids: []
         };
       }
 
-      // Track spending per buyer
-      buyerSpends[bid.buyerUsername] = (buyerSpends[bid.buyerUsername] || 0) + bidAmount;
+      if (entry.bidId) {
+        acc[entry.itemId].bids.push(entry);
+      }
 
-      // Daily activity
-      const date = new Date(bid.dateMade).toISOString().split('T')[0];
-      dailyBids[date] = (dailyBids[date] || 0) + 1;
+      return acc;
+    }, {});
 
-      // Item bid counts
-      itemCounts[bid.itemId] = (itemCounts[bid.itemId] || 0) + 1;
+    let auctionReport = [];
+    let totalAuctionEarnings = 0;
 
-      // Detailed auction record
-      auctionDetails.push({
-        bidId: bid.bidId,
-        itemId: bid.itemId,
-        itemName: bid.itemName,
-        buyerUsername: bid.buyerUsername,
-        amount: bidAmount.toFixed(2),
-        dateMade: bid.dateMade,
-        fulfilled: bid.itemFulfilled === 1,
-        commission: bid.itemFulfilled === 1 ? (bidAmount * 0.05).toFixed(2) : "0.00",
+    // Process each item
+    for (const itemId in groupedItems) {
+      const { itemName, fulfilled, bids, currentPrice, startDate } = groupedItems[itemId];
+
+      // Separate "Buy Now" bids and regular bids
+      const buyNowBids = bids.filter(bid => bid.bidIsBuyNow === 1);
+      const regularBids = bids.filter(bid => bid.bidIsBuyNow !== 1);
+
+      // Determine the highest regular bid
+      const highestRegularBid = regularBids.reduce((max, bid) => (bid.amount > max.amount ? bid : max), { amount: 0 });
+
+      let earnings = 0;
+
+      if (fulfilled) {
+        // Calculate earnings for "Buy Now" bids
+        buyNowBids.forEach(buyNowBid => {
+          const buyNowEarnings = buyNowBid.amount * 0.05;
+          totalAuctionEarnings += buyNowEarnings;
+
+          // Add "Buy Now" bid to report
+          auctionReport.push({
+            bidId: buyNowBid.bidId,
+            itemId: buyNowBid.itemId,
+            itemName: buyNowBid.itemName,
+            buyerUsername: buyNowBid.buyerUsername,
+            amount: parseFloat(buyNowBid.amount).toFixed(2),
+            dateMade: buyNowBid.dateMade,
+            fulfilled: true,
+            earnings: buyNowEarnings.toFixed(2),
+            isBuyNow: true,
+          });
+        });
+
+        // Calculate earnings for the highest regular bid
+        if (highestRegularBid.amount > 0) {
+          earnings = highestRegularBid.amount * 0.05;
+          totalAuctionEarnings += earnings;
+        }
+      }
+
+      // Include all regular bids for this item in the report
+      regularBids.forEach((bid) => {
+        auctionReport.push({
+          bidId: bid.bidId,
+          itemId: bid.itemId,
+          itemName: bid.itemName,
+          buyerUsername: bid.buyerUsername,
+          amount: parseFloat(bid.amount).toFixed(2),
+          dateMade: bid.dateMade,
+          fulfilled: fulfilled,
+          earnings: bid.bidId === highestRegularBid.bidId && fulfilled ? earnings.toFixed(2) : "0.00",
+          isBuyNow: false,
+        });
       });
-    });
-
-    // Top buyer
-    const topBuyer = Object.entries(buyerSpends).reduce(
-      (max, [buyer, spend]) => (spend > max.spend ? { buyer, spend } : max),
-      { buyer: null, spend: 0 }
-    );
-
-    // Sort items by popularity
-    const popularItems = Object.entries(itemCounts)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 5)
-      .map(([itemId, count]) => ({ itemId, count }));
+    }
 
     return {
       statusCode: 200,
@@ -127,19 +118,8 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Headers": "*",
       },
       body: JSON.stringify({
-        summary: {
-          totalBids,
-          totalEarnings: totalEarnings.toFixed(2),
-          totalFulfilledItems,
-          averageBidAmount: (totalBidAmount / totalBids).toFixed(2),
-          highestBid,
-          topBuyer,
-        },
-        trends: {
-          dailyBids,
-          popularItems,
-        },
-        details: auctionDetails,
+        auctionReport,
+        totalAuctionEarnings: totalAuctionEarnings.toFixed(2),
       }),
     };
   } catch (error) {
@@ -150,7 +130,7 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*",
       },
-      body: JSON.stringify({ message: 'Failed to generate forensics report' }),
+      body: JSON.stringify({ message: 'Failed to generate auction report' }),
     };
   } finally {
     if (connection && connection.end) {

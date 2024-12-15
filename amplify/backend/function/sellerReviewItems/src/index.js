@@ -69,11 +69,11 @@ exports.handler = async (event) => {
             if (startDate !== null) {
               endDateObj.setDate(endDateObj.getDate() + length);
             }
-
             if (isBuyNow) {
                 bidCount = 1;
                 console.log("Bid Count: " + bidCount);
             }
+
 
             let status;
 

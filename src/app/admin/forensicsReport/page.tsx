@@ -15,6 +15,7 @@ interface ForensicsData {
     amount: number;
     dateMade: string;
     fulfilled: boolean;
+    isBuyNow: boolean;
     commission: string;
 }
 
@@ -52,6 +53,7 @@ const downloadExcel = async (forensicsData: ForensicsData[]) => {
         { header: "Bid Amount", key: "amount", width: 15 },
         { header: "Date Made", key: "dateMade", width: 15 },
         { header: "Fulfilled", key: "fulfilled", width: 10 },
+        { header: "Is Buy Now", key: "isBuyNow", width: 15 },
         { header: "Commission", key: "commission", width: 15 },
     ];
 
@@ -65,6 +67,7 @@ const downloadExcel = async (forensicsData: ForensicsData[]) => {
             amount: `$${Number(entry.amount || 0).toFixed(2)}`,
             dateMade: new Date(entry.dateMade).toLocaleDateString(),
             fulfilled: entry.fulfilled ? "Yes" : "No",
+            isBuyNow: entry.isBuyNow ? "Yes" : "No",
             commission: `$${Number(entry.commission || 0).toFixed(2)}`,
         });
     });
@@ -259,6 +262,7 @@ function ForensicsReport() {
                                     <th className="py-2 px-4 border-b">Bid Amount</th>
                                     <th className="py-2 px-4 border-b">Date Made</th>
                                     <th className="py-2 px-4 border-b">Fulfilled</th>
+                                    <th className="py-2 px-4 border-b">Is Buy Now</th>
                                     <th className="py-2 px-4 border-b">Commission</th>
                                 </tr>
                             </thead>
@@ -275,6 +279,7 @@ function ForensicsReport() {
                                                 {new Date(entry.dateMade).toLocaleDateString()}
                                             </td>
                                             <td className="py-2 px-4 border-b">{entry.fulfilled ? "Yes" : "No"}</td>
+                                            <td className="py-2 px-4 border-b">{entry.isBuyNow ? "Yes" : "No"}</td>
                                             <td className="py-2 px-4 border-b">${entry.commission}</td>
                                         </tr>
                                     ))

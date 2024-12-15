@@ -139,16 +139,19 @@ function SellerReviewItems() {
             body: body,
           }
         );
+
         const result = await response.json();
+        const parsedBody = JSON.parse(result.body);
         if (response.ok) {
-          alert('Item published successfully');
+          alert(parsedBody.message || 'Item published successfully');
           setFilteredItems((prevItems) =>
             prevItems.map((item) =>
               item.id === itemId ? { ...item, status: 'Active' } : item
             )
           );
+          window.location.reload();
         } else {
-          alert(result.message || 'Failed to publish item');
+          alert(parsedBody.message || 'Failed to publish item');
         }
       } catch {
         alert('An error occurred while publishing the item');
@@ -197,7 +200,7 @@ function SellerReviewItems() {
         const parsedBody = JSON.parse(result.body);
 
         if (response.status === 200) {
-          alert("Item removed successfully.");
+          alert(parsedBody.message || "Item removed successfully.");
           window.location.reload();
         } else {
           alert(parsedBody.message || "Failed to remove item.");
@@ -210,7 +213,7 @@ function SellerReviewItems() {
     if (action === 'Unfreeze') {
       const item = filteredItems.find((item) => item.id === itemId);
       if (item?.status !== 'Frozen') {
-        alert('Item is not frozen and and request Unfreeze is invalid');
+        alert(`Item is ${item?.status || 'undefined'}, and unfreeze cannot be requested`);
         return;
       }
 
@@ -262,17 +265,17 @@ function SellerReviewItems() {
         );
         const result = await response.json();
         if (response.status === 200) {
-          alert('Item unpublished successfully');
+          alert('Item archived successfully');
           setFilteredItems((prevItems) =>
             prevItems.map((item) =>
-              item.id === itemId ? { ...item, status: 'Inactive' } : item
+              item.id === itemId ? { ...item, status: 'Archived' } : item
             )
           );
         } else {
-          alert(result.message || 'Failed to unpublish item');
+          alert(result.message || 'Failed to archive item');
         }
       } catch {
-        alert('An error occurred while unpublishing the item');
+        alert('An error occurred while archiving the item');
       }
     }
     if (action === 'Fulfill') {
@@ -302,7 +305,7 @@ function SellerReviewItems() {
           alert('Item fulfilled successfully');
           setFilteredItems((prevItems) =>
             prevItems.map((item) =>
-              item.id === itemId ? { ...item, status: 'Fulfilled' } : item
+              item.id === itemId ? { ...item, status: 'Archived' } : item
             )
           );
         } else {

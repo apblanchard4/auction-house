@@ -24,6 +24,7 @@ interface Item {
     status: string;
     image: string;
     description: string;
+    isBuyNow: number;
     bids: Bid[];
 }
 
@@ -51,6 +52,14 @@ function SellerEditItem() {
         setItemId(itemIdFromUrl);
     }, []);
 
+    // Add this useEffect to sync isBuyNow with item data
+    useEffect(() => {
+        if (item) {
+            setIsBuyNow(item.isBuyNow === 1); // Assuming item.isBuyNow is 1 for true and 0 for false
+        }
+    }, [item]);
+
+    console.log("Is Buy Now", isBuyNow);
     async function toggleBuyNow() {
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) {
@@ -69,8 +78,9 @@ function SellerEditItem() {
             return;
         }
 
+
         try {
-            const response = await fetch (
+            const response = await fetch(
                 "https://5jd0tanpxi.execute-api.us-east-1.amazonaws.com/prod/seller/buyNow",
                 {
                     method: "POST",
@@ -82,13 +92,14 @@ function SellerEditItem() {
                 }
             );
 
-            const data = await response.json();
+            const result = await response.json();
+            const parsedBody = JSON.parse(result.body);
 
-            if (data.statusCode === 200) {
+            if (result.statusCode === 200) {
                 setIsBuyNow(!isBuyNow);
-                alert(data.message)
+                alert(parsedBody.message)
             } else {
-                alert(data.message);
+                alert(parsedBody.message);
             }
         } catch (error) {
             console.error('An error occurred while toggling buy now:', error);
@@ -239,8 +250,13 @@ function SellerEditItem() {
                             }),
                         }
                     );
+
+                    const result = await response.json();
+                    const parsedBody = JSON.parse(result.body);
+                    console.log("Parsed Body:", parsedBody.message);
+
                     if (response.ok) {
-                        alert("Changes saved successfully.");
+                        alert(parsedBody.message || "Changes saved successfully.");
                         console.log("Post Save:", {
                             sellerUsername: username,
                             itemId: item.id,
@@ -251,8 +267,7 @@ function SellerEditItem() {
                         });
                         router.push(`/seller/viewItem?itemId=${item.id}`);
                     } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || "Failed to save changes.");
+                        alert(parsedBody.message);
                     }
                 } catch (error) {
                     if (error instanceof Error) {
@@ -338,10 +353,10 @@ function SellerEditItem() {
                     <div className="flex justify-end w-full mt-4">
                         {item?.status !== "active" && ( // Only show if not active
                             <button
-                                className={`py-2 px-4 rounded-lg ${isBuyNow ?  'bg-gray-700 text-white' : 'bg-green-500 text-white'}`}
+                                className={`py-2 px-4 rounded-lg ${isBuyNow ? 'bg-green-500 text-white' : 'bg-gray-700 text-white'}`}
                                 onClick={toggleBuyNow}
                             >
-                                {isBuyNow ? 'Enable Buy Now' : 'Buy Now Enabled'}
+                                {isBuyNow ? 'Buy Now Enabled' : 'Enable Buy Now'}
                             </button>
                         )}
                     </div>

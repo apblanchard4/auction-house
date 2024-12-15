@@ -169,10 +169,11 @@ function AddItem() {
                 }
             );
 
-            const responseData = await response.json();
+            const result = await response.json();
+            const parsedBody = JSON.parse(result.body);
 
             // Check if `message` exists in the response
-            const alertMessage = responseData.message || 'Item added successfully.';
+            const alertMessage = parsedBody.message || 'Item added successfully.';
             alert(alertMessage);
 
             setItem({  // Reset form after successful submission
