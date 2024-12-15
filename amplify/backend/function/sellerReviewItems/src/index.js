@@ -63,13 +63,17 @@ exports.handler = async (event) => {
         items.forEach(item => {
             console.log('item:', item);
             let { id, itemName, price, published, archived, fulfilled, startDate, length, description, image, frozen, requestUnfrozen, isBoughtNow, isBuyNow, bidCount } = item;
-
             // Check if startDate or endDate is null, and set the appropriate message
             let startDateObj = startDate ? new Date(startDate) : 'Publish item to set start date';
             let endDateObj = startDate ? new Date(startDate) : 'Publish item to set end date';
             if (startDate !== null) {
                 endDateObj.setDate(endDateObj.getDate() + length);
             }
+            if (isBuyNow) {
+                bidCount = 1;
+                console.log("Bid Count: " + bidCount);
+            }
+
 
             let status;
 

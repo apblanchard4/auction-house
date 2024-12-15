@@ -79,6 +79,7 @@ exports.handler = async (event) => {
           status = 'Frozen';
           if (requestUnfrozen) status = 'Frozen (Unfreeze Requested)';
         } else if (!published && !archived && !fulfilled) {
+
           status = 'Inactive';
         } else if (published && currentDate < endDateObj && bidCount >= 0 && !archived && !fulfilled) {
           status = 'Active';
@@ -89,6 +90,7 @@ exports.handler = async (event) => {
           status = 'Completed';
           if (frozen) status = 'Completed (Frozen)'
         } else if (archived || fulfilled) {
+
           status = 'Archived';
         }
       }
